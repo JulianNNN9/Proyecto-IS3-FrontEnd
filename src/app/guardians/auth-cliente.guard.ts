@@ -1,6 +1,6 @@
 import { ActivatedRouteSnapshot, CanActivate, GuardResult, MaybeAsync, Router, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { TokenService } from '../servicios/token.service';
+import { TokenService } from '../services/token.service';
 
 @Injectable()
 export class AuthClienteGuard implements CanActivate {
