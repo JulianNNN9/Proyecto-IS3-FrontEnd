@@ -1,10 +1,10 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { TokenService } from '../servicios/token.service';
+import { TokenService } from '../services/token.service';
 import { inject } from '@angular/core';
 import { catchError, switchMap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { PublicoService } from '../servicios/publico.service';
-import { AuthService } from '../servicios/auth.service';
+import { PublicoService } from '../services/publico.service';
+import { AuthService } from '../services/auth.service';
 
 export const usuarioInterceptor: HttpInterceptorFn = (req, next) => {
   const tokenService = inject(TokenService);
