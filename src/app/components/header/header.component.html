@@ -1,0 +1,169 @@
+<div class="container">
+  <header class="d-flex flex-wrap align-items-center justify-content-between py-3">
+    
+    <!-- Logo o título -->
+    <div class="d-inline-flex align-items-center mb-2 mb-md-0">
+      <a routerLink="" class="link-body-emphasis text-decoration-none d-flex align-items-center">
+        <i class="fa-solid fa-ticket fs-3"></i>
+        <span class="fs-4 ms-3 me-3">{{ title }}</span>
+      </a>
+    </div>
+
+    <!-- Menú de navegación horizontal -->
+    <div class="d-flex align-items-center mb-2 mb-md-0">
+      <ul *ngIf="isAdmin()" class="nav">
+        <li class="nav-item ms-3">
+          <a routerLink="/gestion-eventos" class="nav-link px-2">Gestión de eventos</a>
+        </li>
+        <li class="nav-item ms-3">
+          <a routerLink="/gestion-cupones" class="nav-link px-2">Gestión de Cupones</a>
+        </li>
+      </ul>
+      <ul *ngIf="isCliente()" class="nav">
+        <li class="nav-item ms-3">
+          <a routerLink="/historial-compras" class="nav-link px-2">Historial de Compras</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Contenedor de botones y Bienvenido, alineado a la derecha -->
+    <div class="d-flex justify-content-end align-items-center">
+      <div *ngIf="isAutenticado()" class="dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+          <i class="fas fa-user"></i> Bienvenido {{ loggedInUser }}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <!-- Redirigir con el id del usuario -->
+            <a class="dropdown-item" [routerLink]="['/editar-cuenta', getIdUsuario()]">
+              <i class="fas fa-user-cog"></i> Mi Cuenta
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="!isAutenticado()">
+        <button
+          type="button"
+          class="btn btn-outline-primary me-2"
+          routerLink="/login"
+        >
+          Login
+        </button>
+      </div>
+      <div *ngIf="!isAutenticado()">
+        <button type="button" class="btn btn-primary" routerLink="/registro">
+          Registro
+        </button>
+      </div>
+      <div *ngIf="isAutenticado()">
+        <a style="cursor: pointer" (click)="logout()" class="nav-link">
+          <i class="fas fa-user-times"></i> Salir
+        </a>
+      </div>
+    </div>
+
+    <!-- Carrito y notificaciones -->
+    <div class="d-flex justify-content-end align-items-center">
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        routerLink="/carrito-compras"
+      >
+        <i class="fa-solid fa-shopping-cart"></i> Carrito
+      </button>
+      <button
+        type="button"
+        class="btn position-relative me-2"
+        id="notification-btn"
+        (click)="mostrarNotificaciones()"
+      >
+        <i class="fa-solid fa-bell fs-5"></i>
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        >
+          {{ cantidadNotificaciones() }}
+        </span>
+      </button>
+    </div>
+  </header>
+</div>
+
+<!-- Modal de Notificaciones -->
+<div
+  *ngIf="modalVisible"
+  class="modal fade show"
+  id="notificationsModal"
+  tabindex="-1"
+  aria-labelledby="notificationsModalLabel"
+  aria-hidden="true"
+  style="display: block"
+>
+  <div class="modal-dialog">
+    <div class="modal-content custom-modal">
+      <div class="modal-header">
+        <h4 class="modal-title" id="notificationsModalLabel">
+          Notificaciones de Eventos
+        </h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="cerrarModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="notificaciones.length > 0; else noNotifications">
+          <ul class="list-group">
+            <li
+              *ngFor="let notificacion of notificaciones"
+              class="list-group-item d-flex align-items-center"
+            >
+              <!-- Imagen de Portada -->
+              <img
+                *ngIf="notificacion.imagenPortada"
+                [src]="notificacion.imagenPortada"
+                alt="Imagen del Evento"
+                class="me-3"
+                style="width: 120px; height: 150px; object-fit: cover"
+              />
+
+              <!-- Contenido de la notificación -->
+              <div>
+                <h4>
+                  <strong>Nombre:</strong> {{ notificacion.nombreEvento }}
+                </h4>
+                <p>
+                  <strong>Fecha:</strong>
+                  {{ notificacion.fechaEvento | date }}
+                </p>
+                <p>
+                  <strong>Descripcion:</strong>
+                  {{ notificacion.descripcionEvento | slice : 0 : 100 }}...
+                </p>
+                <p>
+                  <strong>Ubicación:</strong> {{ notificacion.ciudadEvento }}
+                </p>
+                <a
+                  [routerLink]="['/detalle-evento', notificacion._id]"
+                  class="btn btn-info btn-sm"
+                  (click)="cerrarModal()"
+                  >Detalle</a
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+        <ng-template #noNotifications>
+          <p>No tienes notificaciones de eventos en este momento.</p>
+        </ng-template>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
