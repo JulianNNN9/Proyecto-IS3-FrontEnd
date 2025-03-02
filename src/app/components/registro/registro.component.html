@@ -1,0 +1,176 @@
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="card" style="width: 30%">
+    <div class="card-header p-4">
+      <h4 class="mb-0"><i class="fa-solid fa-user-plus me-3"></i>Registro</h4>
+    </div>
+    <div class="card-body p-4">
+      
+      <form #clienteForm="ngForm" (ngSubmit)="registrar(clienteForm)">
+        <div class="modal-body">
+          <!-- Campo para Cédula -->
+          <div class="mb-3">
+            <label for="cedula" class="form-label">Cédula</label>
+            <input
+              type="text"
+              name="cedula"
+              class="form-control"
+              [(ngModel)]="cliente.cedula"
+              #cedula="ngModel"
+              required
+              maxlength="10"
+              [ngClass]="{ 'is-invalid': cedula.errors && cedula.touched }"
+            />
+            <div *ngIf="cedula.errors && cedula.touched" class="text-danger">
+              <div *ngIf="cedula.errors['required']">Cédula es requerida.</div>
+              <div *ngIf="cedula.errors['maxlength']">
+                Máximo 10 caracteres.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo para Nombre Completo -->
+          <div class="mb-3">
+            <label for="nombreCompleto" class="form-label"
+              >Nombre Completo</label
+            >
+            <input
+              type="text"
+              name="nombreCompleto"
+              class="form-control"
+              [(ngModel)]="cliente.nombreCompleto"
+              #nombreCompleto="ngModel"
+              required
+              maxlength="30"
+              [ngClass]="{
+                'is-invalid': nombreCompleto.errors && nombreCompleto.touched
+              }"
+            />
+            <div
+              *ngIf="nombreCompleto.errors && nombreCompleto.touched"
+              class="text-danger"
+            >
+              <div *ngIf="nombreCompleto.errors['required']">
+                Nombre completo es requerido.
+              </div>
+              <div *ngIf="nombreCompleto.errors['maxlength']">
+                Máximo 30 caracteres.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo para Dirección -->
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input
+              type="text"
+              name="direccion"
+              class="form-control"
+              [(ngModel)]="cliente.direccion"
+              #direccion="ngModel"
+              maxlength="50"
+              [ngClass]="{
+                'is-invalid': direccion.errors && direccion.touched
+              }"
+            />
+            <div
+              *ngIf="direccion.errors && direccion.touched"
+              class="text-danger"
+            >
+              <div *ngIf="direccion.errors['maxlength']">
+                Máximo 50 caracteres.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo para Teléfono -->
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input
+              type="text"
+              name="telefono"
+              class="form-control"
+              [(ngModel)]="cliente.telefono"
+              #telefono="ngModel"
+              maxlength="10"
+              [ngClass]="{ 'is-invalid': telefono.errors && telefono.touched }"
+            />
+            <div
+              *ngIf="telefono.errors && telefono.touched"
+              class="text-danger"
+            >
+              <div *ngIf="telefono.errors['maxlength']">
+                Máximo 10 caracteres.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo para Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              [(ngModel)]="cliente.email"
+              #email="ngModel"
+              required
+              maxlength="100"
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+              [ngClass]="{ 'is-invalid': email.errors && email.touched }"
+            />
+            <div *ngIf="email.errors && email.touched" class="text-danger">
+              <div *ngIf="email.errors['required']">Email es requerido.</div>
+              <div *ngIf="email.errors['maxlength']">
+                Máximo 100 caracteres.
+              </div>
+              <div *ngIf="email.errors['pattern']">
+                Formato de email no válido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo para Contraseña -->
+          <div class="mb-3">
+            <label for="contrasenia" class="form-label">Contraseña</label>
+            <input
+              type="password"
+              name="contrasenia"
+              class="form-control"
+              [(ngModel)]="cliente.contrasenia"
+              #contrasenia="ngModel"
+              required
+              minlength="8"
+              maxlength="24"
+              pattern="^[A-Z](.*[!@#$%^&*])$"
+              [ngClass]="{
+                'is-invalid': contrasenia.errors && contrasenia.touched
+              }"
+            />
+            <div
+              *ngIf="contrasenia.errors && contrasenia.touched"
+              class="text-danger"
+            >
+              <div *ngIf="contrasenia.errors['required']">
+                Contraseña es requerida.
+              </div>
+              <div *ngIf="contrasenia.errors['minlength']">
+                Debe contener al menos 8 caracteres.
+              </div>
+              <div *ngIf="contrasenia.errors['maxlength']">
+                Máximo 24 caracteres.
+              </div>
+              <div *ngIf="contrasenia.errors['pattern']">
+                La contraseña debe comenzar con una letra mayúscula y terminar
+                con un carácter especial.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+        <jjwins-alert-messages></jjwins-alert-messages>
+      </form>
+    </div>
+  </div>
+</div>
