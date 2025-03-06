@@ -77,3 +77,7 @@
 .list-group-item a:hover {
   background-color: #5a8fb4; /* Color de fondo del botón cuando se pasa el ratón */
 }
+
+.bg-gold {
+  background-color: #b29555 !important; /* Oro mate */
+}
