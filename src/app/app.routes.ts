@@ -2,6 +2,10 @@ import { Routes } from '@angular/router';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegistrarseComponent } from './components/registrarse/registrarse.component';
+import { ServiciosComponent } from './components/servicios/servicios.component';
+import { CitasComponent } from './components/citas/citas.component';
 
 
 
@@ -9,5 +13,9 @@ export const routes: Routes = [
     { path: '', component: InicioComponent },
     { path: 'header', component: HeaderComponent},
     { path: 'footer', component: FooterComponent},
+    { path: 'login', component: LoginComponent},
+    { path: 'registrarse', component: RegistrarseComponent},
+    { path: 'servicios', component: ServiciosComponent},
+    { path: 'citas', component: CitasComponent},
     { path: "**", pathMatch: "full", redirectTo: "" }
 ];
