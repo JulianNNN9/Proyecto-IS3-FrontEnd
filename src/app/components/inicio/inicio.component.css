@@ -1,48 +1,3 @@
-.inicio-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 20px;
-  background: black;
-}
-
-.bg-custom {
-  background: black;
-}
-
-/* Sección de información de la barbería */
-.info-barberia {
-  flex: 2;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 0% 20%;
-}
-
-.info-barberia ul {
-  list-style: none;
-  padding: 10%;
-}
-
-.info-barberia li {
-  margin-bottom: 10px;
-}
-
-/* Sección de comentarios */
-.comentarios-clientes {
-  flex: 1;
-  background-color: #fafaf8;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  font-size: 18px;
-}
-
-.comentarios-clientes h2 {
-  font-size: 22px;
-  margin-bottom: 10px;
-}
-
 /* Posición del botón de ayuda */
 .pqrs-button {
   position: fixed;
@@ -90,4 +45,41 @@
 
 .pqrs-option:hover {
   background-color: #e64a19;
+}
+
+.carousel-img {
+  height: 60vh; /* Hace que el carrusel tenga una buena altura en pantallas grandes */
+  object-fit: cover;
+}
+
+.carousel-caption {
+  bottom: 20%; /* Mantiene el texto en una buena posición */
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .carousel-img {
+    height: 80vh; /* Hace que el carrusel sea más grande en móviles */
+  }
+
+  .carousel-caption {
+    bottom: 10%; /* Ajusta el texto más abajo */
+  }
+
+  .carousel-caption h5 {
+    font-size: 1.3rem; /* Ajusta tamaño de los textos */
+  }
+
+  .carousel-caption p {
+    font-size: 1rem;
+  }
+
+  .carousel-caption .btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
 }
