@@ -47,6 +47,7 @@
   background-color: #e64a19;
 }
 
+/* Estilos para el carrusel */
 .carousel-img {
   height: 60vh; /* Hace que el carrusel tenga una buena altura en pantallas grandes */
   object-fit: cover;
@@ -82,8 +83,13 @@
     padding: 0.5rem 1rem;
     font-size: 1rem;
   }
+  .carousel-item img {
+    object-fit: cover;
+    height: 600px;
+    filter: brightness(0.8);
+  }
 }
 
-.text-custom{
+.text-custom {
   color: #ffffff;
 }

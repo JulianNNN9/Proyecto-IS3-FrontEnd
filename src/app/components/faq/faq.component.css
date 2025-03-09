@@ -1,0 +1,65 @@
+/* Estilos generales del contenedor */
+.faq-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo del título */
+  .faq-title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos de la acordeón */
+  .faq-accordion {
+    border-radius: 10px;
+  }
+  
+  /* Preguntas */
+  .faq-question {
+    font-size: 18px;
+    font-weight: 600;
+    background: #3498db;
+    color: white;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    border-radius: 5px;
+  }
+  
+  .faq-question:hover {
+    background: #2980b9;
+    transform: scale(1.02);
+  }
+  
+  /* Respuestas */
+  .faq-answer {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Sombra y animación */
+  .accordion-item {
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .accordion-button:focus {
+    box-shadow: none;
+  }
+  
+  .accordion-button:not(.collapsed) {
+    background: #2c3e50;
+    color: white;
+  }

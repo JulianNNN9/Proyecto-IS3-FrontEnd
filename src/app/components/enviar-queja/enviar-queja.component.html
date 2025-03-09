@@ -1,0 +1,29 @@
+<!-- Enviar Queja/Sugerencia -->
+<div class="container mt-5">
+    <div class="card shadow-lg custom-card">
+        <div class="card-header bg-primary text-white text-center custom-header">
+            <h4>Enviar Queja o Sugerencia</h4>
+        </div>
+        <div class="card-body">
+            <form (submit)="enviarPQRS(); $event.preventDefault()">
+                <div class="mb-3">
+                    <label class="form-label">Tipo</label>
+                    <select class="form-select" [(ngModel)]="pqrs.tipo" name="tipo" required>
+                        <option value="Queja">Queja</option>
+                        <option value="Sugerencia">Sugerencia</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" [(ngModel)]="pqrs.cliente" name="cliente" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    <textarea class="form-control" [(ngModel)]="pqrs.descripcion" name="descripcion" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success w-100 custom-btn">Enviar</button>
+                <p *ngIf="mensaje" class="text-success mt-3">{{ mensaje }}</p>
+            </form>
+        </div>
+    </div>
+</div>

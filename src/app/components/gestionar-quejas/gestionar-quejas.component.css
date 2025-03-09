@@ -1,0 +1,78 @@
+.gestionar-queja-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+}
+
+.card-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: #6c757d;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+}
+
+.table th {
+    text-align: center;
+    background-color: #343a40;
+    color: white;
+}
+
+.table td {
+    text-align: center;
+}
+
+.badge {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+}
+
+.bg-warning {
+    background-color: #ffc107;
+    color: black;
+}
+
+.bg-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.bg-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn {
+    border-radius: 20px;
+    font-weight: bold;
+    padding: 6px 12px;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}

@@ -1,0 +1,21 @@
+<div class="faq-container">
+  <h2 class="faq-title">❓ Preguntas Frecuentes</h2>
+  <div class="accordion faq-accordion" id="faqAccordion">
+  
+    <div *ngFor="let pregunta of preguntas; let i = index" class="accordion-item">
+      <h2 class="accordion-header" [id]="'faqHeading' + i">
+        <button class="accordion-button faq-question" type="button" data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#faqCollapse' + i" aria-expanded="false" [attr.aria-controls]="'faqCollapse' + i">
+          {{ pregunta.pregunta }}
+        </button>
+      </h2>
+      <div [id]="'faqCollapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'faqHeading' + i"
+        data-bs-parent="#faqAccordion">
+        <div class="accordion-body faq-answer">
+          {{ pregunta.respuesta }}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

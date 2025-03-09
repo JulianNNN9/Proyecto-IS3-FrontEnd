@@ -1,0 +1,54 @@
+<!-- Gestión de Quejas/Sugerencias -->
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-secondary text-white text-center">
+            <h4>Gestión de Quejas y Sugerencias</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Cliente</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Fecha de Envío</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of quejas">
+                        <td>{{ item.tipo }}</td>
+                        <td>{{ item.cliente }}</td>
+                        <td>{{ item.descripcion }}</td>
+                        <td>
+                            <span class="badge" [ngClass]="{
+                                'bg-warning': item.estado === 'Recibido',
+                                'bg-info': item.estado === 'En proceso',
+                                'bg-success': item.estado === 'Resuelto'
+                            }">
+                                {{ item.estado }}
+                            </span>
+                        </td>
+                        <td>{{ item.fechaEnvio | date:'dd/MM/yyyy HH:mm' }}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm me-2" 
+                                (click)="actualizarEstado(item.id, 'En proceso')"
+                                [disabled]="item.estado !== 'Recibido'">
+                                Procesar
+                            </button>
+                            <button class="btn btn-success btn-sm" 
+                                (click)="actualizarEstado(item.id, 'Resuelto')"
+                                [disabled]="item.estado === 'Resuelto'">
+                                Resolver
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="quejas.length === 0" class="alert alert-warning text-center mt-3">
+                No hay quejas ni sugerencias registradas.
+            </div>
+        </div>
+    </div>
+</div>

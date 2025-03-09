@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
@@ -10,6 +11,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
+  
+constructor(private router: Router) { }
 
   mostrarOpciones = false;
 
@@ -20,6 +23,9 @@ export class InicioComponent {
   seleccionarOpcion(opcion: string) {
     console.log('Opción seleccionada:', opcion);
     this.mostrarOpciones = false; // Opcional: Cerrar la ventana después de seleccionar
+  }
+  irAPreguntasFrecuentes() {
+    this.router.navigate(['/faq']); // Redirige al componente de preguntas frecuentes
   }
   
 }
