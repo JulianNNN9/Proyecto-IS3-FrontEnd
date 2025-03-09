@@ -1,23 +1,39 @@
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>Nueva Queja</h2>
-      <a class="btn btn-info" routerLink="/mis-quejas">Mis Quejas</a>
+<div class="container d-flex align-items-center justify-content-center vh-100">
+  <div class="row justify-content-center w-100">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-lg p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="text-center w-100">Nueva Queja</h2>
+          <a class="btn btn-info d-none d-md-inline" routerLink="/mis-quejas">Mis Quejas</a>
+        </div>
+        <form [formGroup]="quejaForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="tipoServicio" class="form-label">Tipo de Servicio</label>
+            <select id="tipoServicio" formControlName="tipoServicio" class="form-control" required>
+              <option value="" disabled selected>Seleccione un tipo de servicio</option>
+              <option *ngFor="let servicio of servicios" [value]="servicio">{{ servicio }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="estilista" class="form-label">Estilista que Atendió</label>
+            <select id="estilista" formControlName="estilista" class="form-control" required>
+              <option value="" disabled selected>Seleccione un estilista</option>
+              <option *ngFor="let estilista of estilistas" [value]="estilista">{{ estilista }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción de la Queja</label>
+            <textarea id="descripcion" formControlName="descripcion" class="form-control" rows="5" placeholder="Escribe tu queja aquí" required></textarea>
+          </div>
+          <div class="d-flex flex-column gap-2 d-md-flex flex-md-row justify-content-between">
+            <button type="button" class="btn btn-secondary w-100 w-md-auto" (click)="onClear()">Limpiar</button>
+            <button type="submit" class="btn btn-primary w-100 w-md-auto">Enviar</button>
+          </div>
+          <div class="text-center mt-3 d-md-none">
+            <a class="btn btn-info w-100" routerLink="/mis-quejas">Mis Quejas</a>
+          </div>
+        </form>
+      </div>
     </div>
-    <form [formGroup]="quejaForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="tipoServicio">Tipo de Servicio</label>
-        <select id="tipoServicio" formControlName="tipoServicio" class="form-control" required>
-          <option value="" disabled selected>Seleccione un tipo de servicio</option>
-          <option *ngFor="let servicio of servicios" [value]="servicio">{{ servicio }}</option>
-        </select>
-      </div>
-      <div class="form-group mt-3">
-        <label for="descripcion">Descripción de la Queja</label>
-        <textarea id="descripcion" formControlName="descripcion" class="form-control" rows="5" required></textarea>
-      </div>
-      <div class="form-group mt-3">
-        <button type="button" class="btn btn-secondary" (click)="onClear()">Limpiar</button>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-      </div>
-    </form>
   </div>
+</div>
