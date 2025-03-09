@@ -27,5 +27,8 @@ export class InicioComponent {
       this.router.navigate(['/nueva-queja']);
     }
   }
+  irAPreguntasFrecuentes() {
+    this.router.navigate(['/faq']); // Redirige al componente de preguntas frecuentes
+  }
   
 }

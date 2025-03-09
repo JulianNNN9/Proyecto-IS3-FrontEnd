@@ -12,6 +12,8 @@ import { ReporteGraficosComponent } from './components/reporte-graficos/reporte-
 import { FaqComponent } from './components/faq/faq.component';
 import { NuevaQuejaComponent } from './components/nueva-queja/nueva-queja.component';
 import { MisQuejasComponent } from './components/mis-quejas/mis-quejas.component';
+import { ActivarCuentaComponent } from './components/activar-cuenta/activar-cuenta.component';
+import { OlvidarContraseniaComponent } from './components/olvidar-contrasenia/olvidar-contrasenia.component';
 
 
 export const routes: Routes = [
@@ -20,6 +22,8 @@ export const routes: Routes = [
     { path: 'footer', component: FooterComponent},
     { path: 'login', component: LoginComponent},
     { path: 'registrarse', component: RegistrarseComponent},
+    { path: 'activar-cuenta', component: ActivarCuentaComponent},
+    { path: 'olvidar-contrasenia', component: OlvidarContraseniaComponent},
     { path: 'servicios', component: ServiciosComponent},
     { path: 'enviar-queja', component: EnviarQuejaComponent},
     { path: 'gestionar-queja', component: GestionarQuejasComponent},
