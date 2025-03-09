@@ -16,4 +16,41 @@ import { MensajeDTO } from '../../dto/mensaje-dto';
 export class HeaderComponent {
 
   title: string = 'LAOS'; // Declarar la variable title
+  isLoggedIn: boolean;
+  loggedInUser: string | null;
+
+  constructor(
+    private tokenService: TokenService,
+    private publicoService: PublicoService,
+  ){
+    
+  }
+
+  ngOnInit() {
+    if(this.tokenService.isLogged()){
+      this.loggedInUser = this.tokenService.getNombre();
+    }
+
+  }
+
+  isAutenticado(){
+    return this.tokenService.isLogged();
+  }
+
+  logout(){
+    this.tokenService.logout();
+  }
+  isAdmin(){
+    if(this.isAutenticado() && this.tokenService.getRol() === 'ADMINISTRADOR'){
+      return true;
+    }
+    return false;
+  }
+  isCliente(){
+    if(this.isAutenticado() && this.tokenService.getRol() === 'CLIENTE'){
+      return true;
+    }
+    return false;
+  }
+
 }
