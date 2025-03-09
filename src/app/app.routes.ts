@@ -12,13 +12,10 @@ import { ReporteGraficosComponent } from './components/reporte-graficos/reporte-
 import { FaqComponent } from './components/faq/faq.component';
 import { NuevaQuejaComponent } from './components/nueva-queja/nueva-queja.component';
 import { MisQuejasComponent } from './components/mis-quejas/mis-quejas.component';
-<<<<<<< HEAD
 import { ActivarCuentaComponent } from './components/activar-cuenta/activar-cuenta.component';
 import { OlvidarContraseniaComponent } from './components/olvidar-contrasenia/olvidar-contrasenia.component';
-=======
 import { SugerenciasComponent } from './components/sugerencias/sugerencias.component';
 import { HistorialSugerenciasComponent } from './components/historial-sugerencias/historial-sugerencias.component';
->>>>>>> origin
 
 
 export const routes: Routes = [
