@@ -34,7 +34,7 @@ export class LoginComponent {
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      contrasenia: ['', [Validators.required, Validators.minLength(6)]],
+      contrasenia: ['', Validators.required],
     });
   }
 
@@ -43,39 +43,55 @@ export class LoginComponent {
   }
 
   onLogin() {
-    if (this.loginForm.invalid) {
-      this.alertMessageService.show('Formulario Inválido', {
-        cssClass: 'alerts-error',
-        timeOut: 3000,
-      });
-      return;
-    }
+    const { value, valid, controls } = this.loginForm;
+    if (!valid) {
+      console.log('Formulario inválido');
+      // Crear un array para almacenar los campos inválidos
+      const camposInvalidos = [];
 
-    this.publicoService.iniciarSesion(this.loginForm.value).subscribe({
-      next: (data) => {
-        Swal.fire({
-          title: 'Inicio de Sesión',
-          text: 'Ha iniciado sesión correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.tokenService.login(data.respuesta.token);
-          }
-        });
-      },
-      error: (error) => {
-        Swal.fire({
-          title: 'Error',
-          text: error.error.respuesta,
-          icon: 'error',
-          confirmButtonText: 'Aceptar',
-        }).then((result) => {
-          if (result.isConfirmed && error.error.respuesta === 'Esta cuenta aún no ha sido activada') {
-            this.router.navigate(['/activar-cuenta']);
-          }
-        });
-      },
-    });
+      // Iterar sobre los controles del formulario
+      for (const controlName in controls) {
+        if (controls[controlName].invalid) {
+          camposInvalidos.push(controlName);
+        }
+      }
+
+      // Mostrar un mensaje de error con los campos inválidos
+      this.alertMessageService.show(
+        `Por favor llena el formulario correctamente. Campos inválidos: ${camposInvalidos.join(
+          ', '
+        )}`,
+        { cssClass: 'alerts-error', timeOut: 4000 }
+      );
+      return;
+    } else {
+      console.log('Formulario válido');
+      this.publicoService.iniciarSesion(value).subscribe({
+        next: (data) => {
+          Swal.fire({
+            title: 'Inicio de Sesión',
+            text: 'Ha iniciado sesión correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.tokenService.login(data.respuesta.token);
+            }
+          });
+        },
+        error: (error) => {
+          Swal.fire({
+            title: 'Error',
+            text: error.error.respuesta,
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+          }).then((result) => {
+            if (result.isConfirmed && error.error.respuesta === 'Esta cuenta aún no ha sido activada') {
+              this.router.navigate(['/activar-cuenta']);
+            }
+          });
+        },
+      });
+    }
   }
 }
