@@ -1,0 +1,5 @@
+.readonly-input {
+    background-color: #c2c2c2;
+    color: gray;
+    cursor: not-allowed;
+  }

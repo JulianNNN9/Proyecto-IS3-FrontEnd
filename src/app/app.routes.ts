@@ -16,6 +16,7 @@ import { ActivarCuentaComponent } from './components/activar-cuenta/activar-cuen
 import { OlvidarContraseniaComponent } from './components/olvidar-contrasenia/olvidar-contrasenia.component';
 import { SugerenciasComponent } from './components/sugerencias/sugerencias.component';
 import { HistorialSugerenciasComponent } from './components/historial-sugerencias/historial-sugerencias.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 
 export const routes: Routes = [
@@ -36,5 +37,6 @@ export const routes: Routes = [
     { path: 'mis-quejas', component: MisQuejasComponent},
     { path: 'sugerencias', component: SugerenciasComponent},
     { path: 'historial_sugerencias', component: HistorialSugerenciasComponent},
+    { path: 'perfil', component: PerfilComponent},
     { path: "**", pathMatch: "full", redirectTo: "" }
 ];
