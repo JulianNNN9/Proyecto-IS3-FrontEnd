@@ -12,8 +12,6 @@ import { Router } from '@angular/router';
 })
 export class InicioComponent {
   
-constructor(private router: Router) { }
-
   mostrarOpciones = false;
 
   constructor(private router: Router) {}
