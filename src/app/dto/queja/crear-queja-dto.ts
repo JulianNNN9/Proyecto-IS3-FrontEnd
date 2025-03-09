@@ -5,4 +5,5 @@ export interface CrearQuejaDTO {
   descripcion: string;
   fecha: Date;
   servicioId: string;
+  estilista: string;
 }

@@ -12,7 +12,6 @@ import { AlertMessagesService } from 'jjwins-angular-alert-messages';
 import { AlertMessagesModule } from 'jjwins-angular-alert-messages';
 import Swal from 'sweetalert2';
 import { CrearQuejaDTO } from '../../dto/queja/crear-queja-dto';
-;
 
 @Component({
   selector: 'app-nueva-queja',
@@ -23,51 +22,44 @@ import { CrearQuejaDTO } from '../../dto/queja/crear-queja-dto';
 })
 export class NuevaQuejaComponent implements OnInit {
   quejaForm: FormGroup;
-  servicios = ['Servicio 1', 'Servicio 2', 'Servicio 3']; // Ajusta según tus servicios
+  servicios = ['Corte de Cabello', 'Tinte', 'Alisado', 'Peinado']; // Ajusta según tus servicios
+  estilistas = ['Ana Pérez', 'Carlos Gómez', 'Luisa Fernández', 'Pedro Ramírez']; // Ajusta según tu equipo
 
   constructor(
     private formBuilder: FormBuilder,
     private alertMessageService: AlertMessagesService,
-    //private clienteService: ClienteService,
     private router: Router
   ) {
     this.quejaForm = this.formBuilder.group({
       tipoServicio: ['', Validators.required],
+      estilista: ['', Validators.required],  // Se agregó el estilista
       descripcion: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
 
   ngOnInit(): void {
-    // Agregar los tipos de servicio que se ofrecen
+    // Se podrían cargar servicios y estilistas desde la API en el futuro
   }
 
   onSubmit() {
-    /*if (this.quejaForm.valid) {
+    if (this.quejaForm.valid) {
       const crearQuejaDTO: CrearQuejaDTO = {
         clienteId: '12345', // Cambiar por el ID del cliente actual
         descripcion: this.quejaForm.value.descripcion,
         fecha: new Date(),
-        servicioId: this.quejaForm.value.tipoServicio
+        servicioId: this.quejaForm.value.tipoServicio,
+        estilista: this.quejaForm.value.estilista // Se incluye el estilista seleccionado
       };
 
-      this.clienteService.crearQueja(crearQuejaDTO).subscribe({
-        next: (response) => {
-          Swal.fire({
-            title: 'Queja enviada',
-            text: 'Tu queja ha sido enviada correctamente',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.router.navigate(['/mis-quejas']);
-            }
-          });
-        },
-        error: (error) => {
-          this.alertMessageService.show('Error al enviar la queja', {
-            cssClass: 'alerts-error',
-            timeOut: 3000,
-          });
+      // Aquí iría la lógica para enviar la queja a la API
+      Swal.fire({
+        title: 'Queja enviada',
+        text: 'Tu queja ha sido enviada correctamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/mis-quejas']);
         }
       });
     } else {
@@ -75,7 +67,7 @@ export class NuevaQuejaComponent implements OnInit {
         cssClass: 'alerts-error',
         timeOut: 3000,
       });
-    }*/
+    }
   }
 
   onClear() {
