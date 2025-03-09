@@ -6,7 +6,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrarseComponent } from './components/registrarse/registrarse.component';
 import { ServiciosComponent } from './components/servicios/servicios.component';
 import { CitasComponent } from './components/citas/citas.component';
-
+import { NuevaQuejaComponent } from './components/nueva-queja/nueva-queja.component';
+import { MisQuejasComponent } from './components/mis-quejas/mis-quejas.component';
 
 
 export const routes: Routes = [
@@ -17,5 +18,7 @@ export const routes: Routes = [
     { path: 'registrarse', component: RegistrarseComponent},
     { path: 'servicios', component: ServiciosComponent},
     { path: 'citas', component: CitasComponent},
+    { path: 'nueva-queja', component: NuevaQuejaComponent},
+    { path: 'mis-quejas', component: MisQuejasComponent},	
     { path: "**", pathMatch: "full", redirectTo: "" }
 ];

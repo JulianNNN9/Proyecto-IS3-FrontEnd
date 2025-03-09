@@ -1,13 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MensajeDTO } from '../dto/mensaje-dto';
 import { Observable } from 'rxjs';
-import { CrearCuponDTO } from '../dto/cupon/crear-cupon-dto';
-import { EditarCuponDTO } from '../dto/cupon/editar-cupon-dto';
-import { EliminarCuponesDTO } from '../dto/cupon/eliminar-cupones-dto';
-import { InformacionUsuarioDTO } from '../dto/cuenta/informacion-usuario-dto';
-import { EditarUsuarioDTO } from '../dto/cuenta/editar-usuario-dto';
-import { CambiarContraseniaDTO } from '../dto/cuenta/cambiar-contrasenia-dto';
+import { MensajeDTO } from '../dto/mensaje-dto';
+//import { QuejaDTO } from '../dto/queja/queja-dto';
+import { Queja } from '../model/queja';
 
 @Injectable({
   providedIn: 'root'
@@ -18,4 +14,40 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
+  eliminarQueja(id: string): Observable<MensajeDTO<string>> {
+    return this.http.delete<MensajeDTO<string>>(`${this.authURL}/eliminar-queja/${id}`);
+  }
+
+  obtenerQuejaPorId(id: string): Observable<MensajeDTO<Queja>> {
+    return this.http.get<MensajeDTO<Queja>>(`${this.authURL}/queja/${id}`);
+  }
+
+  obtenerQuejasPorServicioId(servicioId: string): Observable<MensajeDTO<Queja[]>> {
+    const params = new HttpParams().set('servicioId', servicioId);
+    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/quejas/servicio`, { params });
+  }
+
+  obtenerQuejasPorClienteId(clienteId: string): Observable<MensajeDTO<Queja[]>> {
+    const params = new HttpParams().set('clienteId', clienteId);
+    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/quejas/cliente`, { params });
+  }
+
+  obtenerQuejasPorEstado(estadoQueja: string): Observable<MensajeDTO<Queja[]>> {
+    const params = new HttpParams().set('estadoQueja', estadoQueja);
+    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/quejas/estado`, { params });
+  }
+
+  obtenerQuejasPorFecha(startDate: string, endDate: string): Observable<MensajeDTO<Queja[]>> {
+    const params = new HttpParams().set('startDate', startDate).set('endDate', endDate);
+    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/quejas/fecha`, { params });
+  }
+
+  obtenerQuejasPorFechaUnica(fecha: string): Observable<MensajeDTO<Queja[]>> {
+    const params = new HttpParams().set('fecha', fecha);
+    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/quejas/fecha-unica`, { params });
+  }
+
+  listarQuejas(): Observable<MensajeDTO<Queja[]>> {
+    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/quejas`);
+  }
 }

@@ -1,0 +1,19 @@
+<div class="container mt-4">
+    <h2>Mis Quejas</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Descripción</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let queja of quejas">
+          <td>{{ queja.descripcion }}</td>
+          <td>{{ queja.fecha | date }}</td>
+          <td>{{ queja.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
