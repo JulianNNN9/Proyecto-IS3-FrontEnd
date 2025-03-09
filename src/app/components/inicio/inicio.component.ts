@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
-
+  
   mostrarOpciones = false;
 
   constructor(private router: Router) {}
@@ -27,4 +27,5 @@ export class InicioComponent {
       this.router.navigate(['/nueva-queja']);
     }
   }
+  
 }
