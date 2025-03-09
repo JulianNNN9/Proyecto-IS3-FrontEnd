@@ -16,6 +16,8 @@ constructor(private router: Router) { }
 
   mostrarOpciones = false;
 
+  constructor(private router: Router) {}
+
   togglePQRS() {
     this.mostrarOpciones = !this.mostrarOpciones;
   }
@@ -23,9 +25,9 @@ constructor(private router: Router) { }
   seleccionarOpcion(opcion: string) {
     console.log('Opción seleccionada:', opcion);
     this.mostrarOpciones = false; // Opcional: Cerrar la ventana después de seleccionar
-  }
-  irAPreguntasFrecuentes() {
-    this.router.navigate(['/faq']); // Redirige al componente de preguntas frecuentes
+    if (opcion === 'nueva-queja') {
+      this.router.navigate(['/nueva-queja']);
+    }
   }
   
 }

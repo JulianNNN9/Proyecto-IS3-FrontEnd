@@ -10,7 +10,8 @@ import { EnviarQuejaComponent } from './components/enviar-queja/enviar-queja.com
 import { GestionarQuejasComponent } from './components/gestionar-quejas/gestionar-quejas.component';
 import { ReporteGraficosComponent } from './components/reporte-graficos/reporte-graficos.component';
 import { FaqComponent } from './components/faq/faq.component';
-
+import { NuevaQuejaComponent } from './components/nueva-queja/nueva-queja.component';
+import { MisQuejasComponent } from './components/mis-quejas/mis-quejas.component';
 
 
 export const routes: Routes = [
@@ -25,5 +26,7 @@ export const routes: Routes = [
     { path: 'reporte-graficos', component: ReporteGraficosComponent},
     { path: 'faq', component: FaqComponent},
     { path: 'citas', component: CitasComponent},
+    { path: 'nueva-queja', component: NuevaQuejaComponent},
+    { path: 'mis-quejas', component: MisQuejasComponent},	
     { path: "**", pathMatch: "full", redirectTo: "" }
 ];

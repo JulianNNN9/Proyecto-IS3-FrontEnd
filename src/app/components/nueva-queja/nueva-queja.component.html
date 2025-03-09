@@ -1,0 +1,23 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Nueva Queja</h2>
+      <a class="btn btn-info" routerLink="/mis-quejas">Mis Quejas</a>
+    </div>
+    <form [formGroup]="quejaForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="tipoServicio">Tipo de Servicio</label>
+        <select id="tipoServicio" formControlName="tipoServicio" class="form-control" required>
+          <option value="" disabled selected>Seleccione un tipo de servicio</option>
+          <option *ngFor="let servicio of servicios" [value]="servicio">{{ servicio }}</option>
+        </select>
+      </div>
+      <div class="form-group mt-3">
+        <label for="descripcion">Descripción de la Queja</label>
+        <textarea id="descripcion" formControlName="descripcion" class="form-control" rows="5" required></textarea>
+      </div>
+      <div class="form-group mt-3">
+        <button type="button" class="btn btn-secondary" (click)="onClear()">Limpiar</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+    </form>
+  </div>
