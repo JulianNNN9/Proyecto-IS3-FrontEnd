@@ -43,13 +43,12 @@
             {{ loggedInUser }}
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/perfil">Mi Perfil</a></li>
-            <li><a class="dropdown-item" href="/historial-citas">Historial de Citas</a></li>
-            <li><a class="dropdown-item" href="/mis-quejas">Mis PQRs</a></li>
-            <li *ngIf="isAdmin()"><a class="dropdown-item" href="/admin">Panel de Admin</a></li>
+            <li *ngFor="let item of menuFiltrado">
+              <a class="dropdown-item" [routerLink]="item.ruta">{{ item.nombre }}</a>
+            </li>
             <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item text-danger" (click)="logout()">Cerrar Sesión</a></li>
-          </ul>
+          </ul>          
         </li>
       </ul>
     </div>
