@@ -25,6 +25,8 @@ export class InicioComponent {
     this.mostrarOpciones = false; // Opcional: Cerrar la ventana después de seleccionar
     if (opcion === 'nueva-queja') {
       this.router.navigate(['/nueva-queja']);
+    } else if (opcion === 'sugerencia') {
+      this.router.navigate(['/sugerencias']);
     }
   }
   

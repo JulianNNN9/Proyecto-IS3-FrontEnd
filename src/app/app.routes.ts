@@ -12,6 +12,8 @@ import { ReporteGraficosComponent } from './components/reporte-graficos/reporte-
 import { FaqComponent } from './components/faq/faq.component';
 import { NuevaQuejaComponent } from './components/nueva-queja/nueva-queja.component';
 import { MisQuejasComponent } from './components/mis-quejas/mis-quejas.component';
+import { SugerenciasComponent } from './components/sugerencias/sugerencias.component';
+import { HistorialSugerenciasComponent } from './components/historial-sugerencias/historial-sugerencias.component';
 
 
 export const routes: Routes = [
@@ -27,6 +29,8 @@ export const routes: Routes = [
     { path: 'faq', component: FaqComponent},
     { path: 'citas', component: CitasComponent},
     { path: 'nueva-queja', component: NuevaQuejaComponent},
-    { path: 'mis-quejas', component: MisQuejasComponent},	
+    { path: 'mis-quejas', component: MisQuejasComponent},
+    { path: 'sugerencias', component: SugerenciasComponent},
+    { path: 'historial_sugerencias', component: HistorialSugerenciasComponent},
     { path: "**", pathMatch: "full", redirectTo: "" }
 ];
