@@ -1,85 +1,191 @@
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100"
+>
   <div class="card shadow-lg" style="max-width: 500px; width: 100%">
-      <div class="card-header bg-primary text-white text-center">
-          <h4 class="mb-0"><i class="fa-solid fa-user-plus me-2"></i>Registro</h4>
-      </div>
-      <div class="card-body">
+    <div class="card-header bg-primary text-white text-center">
+      <h4 class="mb-0"><i class="fa-solid fa-user-plus me-2"></i>Registro</h4>
+    </div>
+    <div class="card-body">
       <form #clienteForm="ngForm" (ngSubmit)="registrar(clienteForm)">
-              <div class="row">
-                  <!-- Cédula -->
-                  <div class="col-12 mb-3">
-                      <label for="cedula" class="form-label">Cédula</label>
-                      <input type="text" name="cedula" class="form-control" [(ngModel)]="cliente.cedula" #cedula="ngModel" required maxlength="10" 
-                          [ngClass]="{ 'is-invalid': cedula.errors && cedula.touched }">
-                      <div *ngIf="cedula.errors && cedula.touched" class="invalid-feedback">
-                          <span *ngIf="cedula.errors['required']">Cédula es requerida.</span>
-                          <span *ngIf="cedula.errors['maxlength']">Máximo 10 caracteres.</span>
-                      </div>
-                  </div>
-                  
-                  <!-- Nombre Completo -->
-                  <div class="col-12 mb-3">
-                      <label for="nombreCompleto" class="form-label">Nombre Completo</label>
-                      <input type="text" name="nombreCompleto" class="form-control" [(ngModel)]="cliente.nombreCompleto" #nombreCompleto="ngModel" required maxlength="30"
-                          [ngClass]="{ 'is-invalid': nombreCompleto.errors && nombreCompleto.touched }">
-                      <div *ngIf="nombreCompleto.errors && nombreCompleto.touched" class="invalid-feedback">
-                          <span *ngIf="nombreCompleto.errors['required']">Nombre completo es requerido.</span>
-                          <span *ngIf="nombreCompleto.errors['maxlength']">Máximo 30 caracteres.</span>
-                      </div>
-                  </div>
-                  
-                  <!-- Dirección -->
-                  <div class="col-12 mb-3">
-                      <label for="direccion" class="form-label">Dirección</label>
-                      <input type="text" name="direccion" class="form-control" [(ngModel)]="cliente.direccion" #direccion="ngModel" maxlength="50"
-                          [ngClass]="{ 'is-invalid': direccion.errors && direccion.touched }">
-                      <div *ngIf="direccion.errors && direccion.touched" class="invalid-feedback">
-                          <span *ngIf="direccion.errors['maxlength']">Máximo 50 caracteres.</span>
-                      </div>
-                  </div>
-                  
-                  <!-- Teléfono -->
-                  <div class="col-md-6 mb-3">
-                      <label for="telefono" class="form-label">Teléfono</label>
-                      <input type="text" name="telefono" class="form-control" [(ngModel)]="cliente.telefono" #telefono="ngModel" maxlength="10"
-                          [ngClass]="{ 'is-invalid': telefono.errors && telefono.touched }">
-                      <div *ngIf="telefono.errors && telefono.touched" class="invalid-feedback">
-                          <span *ngIf="telefono.errors['maxlength']">Máximo 10 caracteres.</span>
-                      </div>
-                  </div>
-                  
-                  <!-- Email -->
-                  <div class="col-md-6 mb-3">
-                      <label for="email" class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control" [(ngModel)]="cliente.email" #email="ngModel" required maxlength="100"
-                          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                          [ngClass]="{ 'is-invalid': email.errors && email.touched }">
-                      <div *ngIf="email.errors && email.touched" class="invalid-feedback">
-                          <span *ngIf="email.errors['required']">Email es requerido.</span>
-                          <span *ngIf="email.errors['maxlength']">Máximo 100 caracteres.</span>
-                          <span *ngIf="email.errors['pattern']">Formato de email no válido.</span>
-                      </div>
-                  </div>
-                  
-                  <!-- Contraseña -->
-                  <div class="col-12 mb-3">
-                      <label for="contrasenia" class="form-label">Contraseña</label>
-                      <input type="password" name="contrasenia" class="form-control" [(ngModel)]="cliente.contrasenia" #contrasenia="ngModel" required minlength="8" maxlength="24"
-                          pattern="^[A-Z](.*[!@#$%^&*])$"
-                          [ngClass]="{ 'is-invalid': contrasenia.errors && contrasenia.touched }">
-                      <div *ngIf="contrasenia.errors && contrasenia.touched" class="invalid-feedback">
-                          <span *ngIf="contrasenia.errors['required']">Contraseña es requerida.</span>
-                          <span *ngIf="contrasenia.errors['minlength']">Debe contener al menos 8 caracteres.</span>
-                          <span *ngIf="contrasenia.errors['maxlength']">Máximo 24 caracteres.</span>
-                          <span *ngIf="contrasenia.errors['pattern']">Debe iniciar con mayúscula y terminar con un carácter especial.</span>
-                      </div>
-                  </div>
-              </div>
-              <div class="d-grid">
-                  <button type="submit" class="btn btn-primary">Registrarse</button>
-              </div>
-              <jjwins-alert-messages></jjwins-alert-messages>
-          </form>
-      </div>
+        <div class="row">
+          <!-- Cédula -->
+          <div class="col-12 mb-3">
+            <label for="cedula" class="form-label">Cédula</label>
+            <input
+              type="text"
+              name="cedula"
+              class="form-control"
+              [(ngModel)]="cliente.cedula"
+              #cedula="ngModel"
+              required
+              maxlength="10"
+              pattern="[0-9]*"
+              inputmode="numeric"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              [ngClass]="{ 'is-invalid': cedula.errors && cedula.touched }"
+            />
+            <div
+              *ngIf="cedula.errors && cedula.touched"
+              class="invalid-feedback"
+            >
+              <span *ngIf="cedula.errors['required']"
+                >Cédula es requerida.</span
+              >
+              <span *ngIf="cedula.errors['maxlength']"
+                >Máximo 10 caracteres.</span
+              >
+            </div>
+          </div>
+
+          <!-- Nombre Completo -->
+          <div class="col-12 mb-3">
+            <label for="nombreCompleto" class="form-label"
+              >Nombre Completo</label
+            >
+            <input
+              type="text"
+              name="nombreCompleto"
+              class="form-control"
+              [(ngModel)]="cliente.nombreCompleto"
+              #nombreCompleto="ngModel"
+              required
+              maxlength="30"
+              [ngClass]="{
+                'is-invalid': nombreCompleto.errors && nombreCompleto.touched
+              }"
+            />
+            <div
+              *ngIf="nombreCompleto.errors && nombreCompleto.touched"
+              class="invalid-feedback"
+            >
+              <span *ngIf="nombreCompleto.errors['required']"
+                >Nombre Completo es requerido.</span
+              >
+              <span *ngIf="nombreCompleto.errors['maxlength']"
+                >Máximo 100 caracteres.</span
+              >
+            </div>
+          </div>
+          <!-- Dirección -->
+          <div class="col-12 mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input
+              type="text"
+              name="direccion"
+              class="form-control"
+              [(ngModel)]="cliente.direccion"
+              #direccion="ngModel"
+              maxlength="50"
+              [ngClass]="{
+                'is-invalid': direccion.errors && direccion.touched
+              }"
+            />
+            <div
+              *ngIf="direccion.errors && direccion.touched"
+              class="invalid-feedback"
+            >
+              <span *ngIf="direccion.errors['maxlength']"
+                >Máximo 50 caracteres.</span
+              >
+            </div>
+          </div>
+
+          <!-- Teléfono -->
+          <div class="col-md-6 mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input
+              type="text"
+              name="telefono"
+              class="form-control"
+              [(ngModel)]="cliente.telefono"
+              #telefono="ngModel"
+              required
+              maxlength="10"
+              pattern="[0-9]*"
+              inputmode="numeric"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              [ngClass]="{ 'is-invalid': telefono.errors && telefono.touched }"
+            />
+            <div
+              *ngIf="telefono.errors && telefono.touched"
+              class="invalid-feedback"
+            >
+              <span *ngIf="telefono.errors['required']"
+                >Teléfono es requerido.</span
+              >
+              <span *ngIf="telefono.errors['maxlength']"
+                >Máximo 10 caracteres.</span
+              >
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6 mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              [(ngModel)]="cliente.email"
+              #email="ngModel"
+              required
+              maxlength="100"
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+              [ngClass]="{ 'is-invalid': email.errors && email.touched }"
+            />
+            <div *ngIf="email.errors && email.touched" class="invalid-feedback">
+              <span *ngIf="email.errors['required']">Email es requerido.</span>
+              <span *ngIf="email.errors['maxlength']"
+                >Máximo 100 caracteres.</span
+              >
+              <span *ngIf="email.errors['pattern']"
+                >Formato de email no válido.</span
+              >
+            </div>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="col-12 mb-3">
+            <label for="contrasenia" class="form-label">Contraseña</label>
+            <input
+              type="password"
+              name="contrasenia"
+              class="form-control"
+              [(ngModel)]="cliente.contrasenia"
+              #contrasenia="ngModel"
+              required
+              minlength="8"
+              maxlength="24"
+              pattern="^[A-Z](.*[!@#$%^&*])$"
+              [ngClass]="{
+                'is-invalid': contrasenia.errors && contrasenia.touched
+              }"
+            />
+            <div
+              *ngIf="contrasenia.errors && contrasenia.touched"
+              class="invalid-feedback"
+            >
+              <span *ngIf="contrasenia.errors['required']"
+                >Contraseña es requerida.</span
+              >
+              <span *ngIf="contrasenia.errors['minlength']"
+                >Debe contener al menos 8 caracteres.</span
+              >
+              <span *ngIf="contrasenia.errors['maxlength']"
+                >Máximo 24 caracteres.</span
+              >
+              <span *ngIf="contrasenia.errors['pattern']"
+                >Debe iniciar con mayúscula y terminar con un carácter
+                especial.</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Registrarse</button>
+        </div>
+        <jjwins-alert-messages></jjwins-alert-messages>
+      </form>
+    </div>
   </div>
 </div>

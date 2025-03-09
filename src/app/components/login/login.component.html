@@ -2,7 +2,7 @@
   <div class="card shadow-lg login-card">
     <div class="card-header bg-primary text-white p-4 text-center rounded-top">
       <h4 class="mb-0">
-        <i class="fa-solid fa-sign-in-alt me-2"></i>Iniciar Sesión
+        <i class="fa-solid fa-sign-in-alt me-2"></i> Iniciar Sesión
       </h4>
     </div>
     <div class="card-body p-4">
@@ -11,14 +11,35 @@
         <div class="mb-3">
           <label for="email" class="form-label">Correo Electrónico</label>
           <div class="input-group">
-            <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+            <span class="input-group-text"
+              ><i class="fa-solid fa-envelope"></i
+            ></span>
             <input
               type="email"
               id="email"
+              formControlName="email"
               class="form-control form-control-lg"
               placeholder="Ingrese su correo"
-              required
+              [ngClass]="{
+                'is-invalid':
+                  loginForm.get('email')?.invalid &&
+                  loginForm.get('email')?.touched
+              }"
             />
+            <div
+              *ngIf="
+                loginForm.get('email')?.invalid &&
+                loginForm.get('email')?.touched
+              "
+              class="invalid-feedback"
+            >
+              <span *ngIf="loginForm.get('email')?.errors?.['required']"
+                >Correo es requerido.</span
+              >
+              <span *ngIf="loginForm.get('email')?.errors?.['email']"
+                >Formato de correo inválido.</span
+              >
+            </div>
           </div>
         </div>
 
@@ -29,21 +50,45 @@
             <input
               [type]="showPassword ? 'text' : 'password'"
               id="contrasenia"
+              formControlName="contrasenia"
               class="form-control form-control-lg"
               placeholder="Ingrese su contraseña"
-              required
+              [ngClass]="{
+                'is-invalid':
+                  loginForm.get('contrasenia')?.invalid &&
+                  loginForm.get('contrasenia')?.touched
+              }"
             />
-            <button 
-              type="button" 
-              class="btn btn-outline-secondary" 
-              (click)="showPassword = !showPassword">
-              <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="showPassword = !showPassword"
+            >
+              <i
+                class="fa"
+                [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+              ></i>
             </button>
+            <div
+              *ngIf="
+                loginForm.get('contrasenia')?.invalid &&
+                loginForm.get('contrasenia')?.touched
+              "
+              class="invalid-feedback"
+            >
+              <span *ngIf="loginForm.get('contrasenia')?.errors?.['required']"
+                >Contraseña es requerida.</span
+              >
+            </div>
           </div>
         </div>
 
         <!-- Botón de Iniciar Sesión -->
-        <button type="submit" class="btn btn-primary btn-lg w-100">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg w-100"
+          [disabled]="loginForm.invalid"
+        >
           <i class="fa-solid fa-sign-in-alt"></i> Iniciar Sesión
         </button>
       </form>
