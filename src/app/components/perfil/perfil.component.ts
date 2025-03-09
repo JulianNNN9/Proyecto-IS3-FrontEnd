@@ -79,7 +79,7 @@ export class PerfilComponent {
 
   cambiarContrasena() {
     // Lógica para cambiar la contraseña
-    console.log('Cambiar contraseña');
+    this.router.navigate(['/cambiar-contrasenia']);
   }
 
   irAMisQuejas() {
@@ -87,7 +87,6 @@ export class PerfilComponent {
   }
 
   cerrarSesion() {
-    // Lógica para cerrar sesión
-    console.log('Cerrar sesión');
+    this.tokenService.logout();
   }
 }

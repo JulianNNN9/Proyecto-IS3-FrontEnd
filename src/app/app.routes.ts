@@ -17,6 +17,7 @@ import { OlvidarContraseniaComponent } from './components/olvidar-contrasenia/ol
 import { SugerenciasComponent } from './components/sugerencias/sugerencias.component';
 import { HistorialSugerenciasComponent } from './components/historial-sugerencias/historial-sugerencias.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { CambiarContraseniaComponent } from './components/cambiar-contrasenia/cambiar-contrasenia.component';
 
 
 export const routes: Routes = [
@@ -38,5 +39,6 @@ export const routes: Routes = [
     { path: 'sugerencias', component: SugerenciasComponent},
     { path: 'historial_sugerencias', component: HistorialSugerenciasComponent},
     { path: 'perfil', component: PerfilComponent},
+    { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent},
     { path: "**", pathMatch: "full", redirectTo: "" }
 ];
