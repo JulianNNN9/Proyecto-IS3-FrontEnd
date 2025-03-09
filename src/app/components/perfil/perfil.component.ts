@@ -6,6 +6,8 @@ import { AlertMessagesModule } from 'jjwins-angular-alert-messages';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TokenService } from '../../services/token.service';
 import { ClienteService } from '../../services/cliente.service';
+import { EditarUsuarioDTO } from '../../dto/cuenta/editar-usuario-dto';
+import { MensajeDTO } from '../../dto/mensaje-dto';
 
 @Component({
   selector: 'app-perfil',
@@ -51,7 +53,27 @@ export class PerfilComponent {
   }
 
   actualizarPerfil() {
+    const editarUsuarioDTO: EditarUsuarioDTO = {
+      idUsuario: this.loggedInUser,
+      nombreCompleto: this.perfil.nombreCompleto,
+      direccion: this.perfil.direccion,
+      telefono: this.perfil.telefono
+    };
+
+    this.clienteService.editarUsuario(editarUsuarioDTO).subscribe({
+      next: (response: MensajeDTO<string>) => {
+        console.log(response.respuesta);
+        // Puedes mostrar un mensaje de éxito al usuario aquí
+      },
+      error: (err) => {
+        console.error('Error al actualizar el perfil:', err);
+        // Puedes mostrar un mensaje de error al usuario aquí
+      }
+    });
+    
     // Lógica para actualizar el perfil
+
+    
     console.log('Perfil actualizado:', this.perfil);
   }
 
