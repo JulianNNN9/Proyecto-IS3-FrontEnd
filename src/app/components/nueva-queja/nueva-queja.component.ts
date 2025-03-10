@@ -11,64 +11,118 @@ import { ClienteService } from '../../services/cliente.service';
 import { AlertMessagesService } from 'jjwins-angular-alert-messages';
 import { AlertMessagesModule } from 'jjwins-angular-alert-messages';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 import { CrearQuejaDTO } from '../../dto/queja/crear-queja-dto';
+import { ServicioDTO } from '../../dto/servicio/servicio-dto';
+import { EstilistaDTO } from '../../dto/estilista/estilista-dto';
+import { MensajeDTO } from '../../dto/mensaje-dto';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-nueva-queja',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AlertMessagesModule, RouterModule],
+  imports: [FormsModule, ReactiveFormsModule, AlertMessagesModule, RouterModule, CommonModule],
   templateUrl: './nueva-queja.component.html',
   styleUrls: ['./nueva-queja.component.css']
 })
 export class NuevaQuejaComponent implements OnInit {
   quejaForm: FormGroup;
-  servicios = ['Corte de Cabello', 'Tinte', 'Alisado', 'Peinado']; // Ajusta según tus servicios
-  estilistas = ['Ana Pérez', 'Carlos Gómez', 'Luisa Fernández', 'Pedro Ramírez']; // Ajusta según tu equipo
+  servicios: ServicioDTO[] = [];
+  estilistas: EstilistaDTO[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private alertMessageService: AlertMessagesService,
-    private router: Router
+    private router: Router,
+    private clienteService: ClienteService,
+    private authService: AuthService,
   ) {
     this.quejaForm = this.formBuilder.group({
       tipoServicio: ['', Validators.required],
-      estilista: ['', Validators.required],  // Se agregó el estilista
+      estilista: ['', Validators.required],
       descripcion: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
 
-  ngOnInit(): void {
-    // Se podrían cargar servicios y estilistas desde la API en el futuro
+  ngOnInit() {
+    this.obtenerEstilistas();
+    this.obtenerServicios();
   }
 
-  onSubmit() {
-    if (this.quejaForm.valid) {
-      const crearQuejaDTO: CrearQuejaDTO = {
-        clienteId: '12345', // Cambiar por el ID del cliente actual
-        descripcion: this.quejaForm.value.descripcion,
-        fecha: new Date(),
-        servicioId: this.quejaForm.value.tipoServicio,
-        estilista: this.quejaForm.value.estilista // Se incluye el estilista seleccionado
-      };
-
-      // Aquí iría la lógica para enviar la queja a la API
-      Swal.fire({
-        title: 'Queja enviada',
-        text: 'Tu queja ha sido enviada correctamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.router.navigate(['/mis-quejas']);
+  obtenerServicios() {
+    this.clienteService.obtenerServicios().subscribe(
+      (data) => {
+        if (data.respuesta) {
+          this.servicios = data.respuesta;
+        } else {
+          console.error('Error: Respuesta de servicios vacía o inválida');
         }
-      });
-    } else {
-      this.alertMessageService.show('Formulario inválido', {
-        cssClass: 'alerts-error',
-        timeOut: 3000,
+      },
+      (error) => {
+        console.error('Error obteniendo servicios', error);
+      }
+    );
+  }
+
+  obtenerEstilistas() {
+    this.clienteService.obtenerEstilistas().subscribe(
+      (data) => {
+        if (data.respuesta) {
+          this.estilistas = data.respuesta;
+        } else {
+          console.error('Error: Respuesta de estilistas vacía o inválida');
+        }
+      },
+      (error) => {
+        console.error('Error obteniendo estilistas', error);
+      }
+    );
+  }
+  
+
+  onSubmit(): void {
+
+    const usuario = this.authService.obtenerIdUsuario();
+  
+  
+    if (this.quejaForm.valid) {
+
+      if (!usuario) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo obtener la información del usuario. Intenta iniciar sesión nuevamente.',
+          confirmButtonColor: '#d33'
+        });
+        return;
+      }
+      
+      console.log('Usuario autenticado:', usuario.id);
+  
+  
+      this.clienteService.crearQueja(this.quejaForm.value.descripcion, this.quejaForm.value.tipoServicio, this.quejaForm.value.estilista).subscribe({
+        next: (response: MensajeDTO<string>) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Queja enviada',
+            text: 'Queja creada correctamente',
+            confirmButtonColor: '#3085d6'
+          });
+          this.quejaForm.reset();
+        },
+        error: (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un problema al enviar la queja. Inténtalo de nuevo.',
+            confirmButtonColor: '#d33'
+          });
+          console.error('Error al enviar la queja:', error);
+        }
       });
     }
   }
+  
 
   onClear() {
     this.quejaForm.reset();

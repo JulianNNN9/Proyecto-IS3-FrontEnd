@@ -10,6 +10,8 @@ import { InformacionUsuarioDTO } from '../dto/cuenta/informacion-usuario-dto';
 import { EditarUsuarioDTO } from '../dto/cuenta/editar-usuario-dto';
 import { RecuperarContraseniaDTO } from '../dto/cuenta/recuperar-contrasenia-dto';
 import { CambiarContraseniaDTO } from '../dto/cuenta/cambiar-contrasenia-dto';
+import { EstilistaDTO } from '../dto/estilista/estilista-dto';
+import { ServicioDTO } from '../dto/servicio/servicio-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +22,27 @@ export class ClienteService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  crearQueja(crearQuejaDTO: CrearQuejaDTO): Observable<MensajeDTO<string>> {
-    return this.http.post<MensajeDTO<string>>(`${this.authURL}/crear-queja`, crearQuejaDTO);
+  crearQueja(descripcion: string, nombreServicio: string, nombreEstilista: string): Observable<MensajeDTO<string>> {
+    const usuario = this.authService.obtenerIdUsuario();
+  
+    if (!usuario) {
+      console.warn('No se pudo obtener el usuario autenticado');
+      return new Observable();
+    }
+  
+    console.log(nombreServicio,nombreEstilista)
+    
+    const queja  = {
+      clienteId: usuario.id,
+      descripcion: descripcion,
+      fecha: new Date(),
+      nombreServicio: nombreServicio,
+      nombreEstilista: nombreEstilista
+    };
+  
+    return this.http.post<MensajeDTO<string>>(`${this.authURL}/crear-queja`, queja);
   }
-
+  
 
   crearSugerencia(motivo: string, mensaje: string): Observable<MensajeDTO<string>> {
     const usuario = this.authService.obtenerUsuarioAutenticado();
@@ -69,4 +88,13 @@ export class ClienteService {
   cambiarContrasenia(cambiarContraseniaDTO: CambiarContraseniaDTO): Observable<MensajeDTO<string>> {
     return this.http.put<MensajeDTO<string>>(`${this.authURL}/cambiar-contrasenia`, cambiarContraseniaDTO);
   }
+
+  obtenerEstilistas(): Observable<MensajeDTO<EstilistaDTO[]>> {
+    return this.http.get<MensajeDTO<EstilistaDTO[]>>(`${this.authURL}/obtener-estilistas`);
+  }
+
+  obtenerServicios(): Observable<MensajeDTO<ServicioDTO[]>> {
+    return this.http.get<MensajeDTO<ServicioDTO[]>>(`${this.authURL}/obtener-servicios`);
+  }
+
 }
