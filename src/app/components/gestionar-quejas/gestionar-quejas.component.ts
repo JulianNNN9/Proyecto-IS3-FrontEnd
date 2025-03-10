@@ -40,4 +40,5 @@ export class GestionarQuejasComponent {
       console.error('Error al actualizar estado:', error);
     });
   }
+  
 }

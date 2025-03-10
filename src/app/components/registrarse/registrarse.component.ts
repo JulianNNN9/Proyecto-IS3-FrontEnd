@@ -39,7 +39,6 @@ export class RegistrarseComponent {
   ) {}
 
   public registrar(clienteForm: NgForm) {
-    console.log("Método registrar() ejecutado", clienteForm);
     const { value, valid, controls } = clienteForm;
     if (!valid) {
       // Crear un array para almacenar los campos inválidos
