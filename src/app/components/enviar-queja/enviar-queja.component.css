@@ -31,3 +31,11 @@
 .custom-btn:hover {
     background-color: #218838;
 }
+
+/* Estilo para campos deshabilitados */
+.readonly-input {
+    background-color: #f0f0f0; /* Fondo gris claro */
+    color: #888; /* Texto gris */
+    cursor: not-allowed; /* Cursor en forma de prohibido */
+    border-color: #ddd; /* Borde suave para campos deshabilitados */
+  }

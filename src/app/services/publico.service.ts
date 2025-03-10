@@ -61,4 +61,14 @@ export class PublicoService {
       recuperarContraseniaDTO
     );
   }
+  public listarTiposPqrs(): Observable<MensajeDTO<string[]>> {
+    return this.http.get<MensajeDTO<string[]>>(
+      `${this.authURL}/quejas-sugerencias/listar-tipos`
+    );
+  }
+  public listarEstadosPqrs(): Observable<MensajeDTO<string[]>> {
+    return this.http.get<MensajeDTO<string[]>>(
+      `${this.authURL}/quejas-sugerencias/listar-estados`
+    );
+  }
 }

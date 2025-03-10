@@ -1,29 +1,61 @@
-<!-- Enviar Queja/Sugerencia -->
 <div class="container mt-5">
     <div class="card shadow-lg custom-card">
-        <div class="card-header bg-primary text-white text-center custom-header">
-            <h4>Enviar Queja o Sugerencia</h4>
-        </div>
-        <div class="card-body">
-            <form (submit)="enviarPQRS(); $event.preventDefault()">
-                <div class="mb-3">
-                    <label class="form-label">Tipo</label>
-                    <select class="form-select" [(ngModel)]="pqrs.tipo" name="tipo" required>
-                        <option value="Queja">Queja</option>
-                        <option value="Sugerencia">Sugerencia</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="pqrs.cliente" name="cliente" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Descripción</label>
-                    <textarea class="form-control" [(ngModel)]="pqrs.descripcion" name="descripcion" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-success w-100 custom-btn">Enviar</button>
-                <p *ngIf="mensaje" class="text-success mt-3">{{ mensaje }}</p>
-            </form>
-        </div>
+      <div class="card-header bg-primary text-white text-center custom-header">
+        <h4>Enviar Queja o Sugerencia</h4>
+      </div>
+      <div class="card-body">
+        <form (submit)="enviarPQRS(); $event.preventDefault()">
+          <div class="mb-3">
+            <label class="form-label">Tipo</label>
+            <select class="form-select" [(ngModel)]="pqrs.tipo" name="tipo" required>
+              <option value="">Seleccionar Tipo</option>
+              <option *ngFor="let tipo of tiposPqrs" [value]="tipo">{{ tipo }}</option>
+            </select>
+          </div>
+  
+          <!-- Mostrar Nombre y Correo solo si no es anónimo -->
+          <div *ngIf="!esAnonimo">
+            <div class="mb-3">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control readonly-input" [(ngModel)]="pqrs.cliente" name="cliente" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Correo</label>
+              <input type="email" class="form-control readonly-input" [(ngModel)]="pqrs.correo" name="correo" readonly>
+            </div>
+          </div>
+  
+          <!-- Checkbox para enviar anónimamente -->
+          <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="esAnonimo" name="esAnonimo">
+            <label class="form-check-label">Enviar anónimamente</label>
+          </div>
+  
+          <!-- Advertencia si se envía anónimamente -->
+          <div *ngIf="esAnonimo" class="alert alert-warning">
+            <small>Las quejas o sugerencias anónimas no recibirán respuesta por parte del administrador.</small>
+          </div>
+  
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea 
+              class="form-control" 
+              [(ngModel)]="pqrs.descripcion" 
+              name="descripcion" 
+              rows="3"
+              (blur)="validarDescripcion()" 
+              (input)="descripcionVacia = false">
+            </textarea>
+            <small *ngIf="descripcionVacia" class="text-danger">
+              La descripción no puede estar vacía.
+            </small>
+          </div>
+          
+  
+          <button type="submit" class="btn btn-success w-100 custom-btn">Enviar</button>
+          <jjwins-alert-messages></jjwins-alert-messages>
+
+        </form>
+      </div>
     </div>
-</div>
+  </div>

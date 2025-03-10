@@ -15,12 +15,15 @@ export class QuejaSugerenciaService {
   constructor(private http: HttpClient) {}
 
   enviarQuejaSugerencia(data: EnviarQuejaSugerenciaDTO): Observable<MensajeDTO<string>> {
-    return this.http.post<MensajeDTO<string>>(this.apiUrl, data);
+    return this.http.post<MensajeDTO<string>>(
+      `${this.apiUrl}/crear`
+      , data
+    );
   }
 
   obtenerQuejas(): Observable<MensajeDTO<QuejaSugerenciaDTO[]>> {
     return this.http.get<MensajeDTO<QuejaSugerenciaDTO[]>>(
-      `${this.apiUrl}/listar-quejas-sugerencias`
+      `${this.apiUrl}/listar-todos`
     );
   }
 
