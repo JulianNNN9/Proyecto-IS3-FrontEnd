@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class InicioComponent {
   
-  esAdmin = false;
+  esCliente = false;
   mostrarOpciones = false;
 
   constructor(private router: Router, private authService: AuthService) {}
@@ -21,8 +21,8 @@ export class InicioComponent {
   ngOnInit() {
     const usuario = this.authService.obtenerRolUsuario();
     
-    if (usuario && usuario.rol === 'ADMIN') {
-      this.esAdmin = true; // Si el usuario es ADMIN, esAdmin será true
+    if (usuario && usuario.rol === 'CLIENTE') {
+      this.esCliente = true; // Si el usuario es ADMIN, esAdmin será true
     }
   }
 
