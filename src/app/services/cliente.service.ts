@@ -17,7 +17,7 @@ import { TokenService } from './token.service';
 })
 export class ClienteService {
 
-  private authURL = 'http://localhost:8080/api/usuario';
+  private authURL = 'https://proyecto-is3-backend-production.up.railway.app:8080/api/usuario';
 
   constructor(private http: HttpClient, private authService: AuthService, private tokenService: TokenService) {}
 

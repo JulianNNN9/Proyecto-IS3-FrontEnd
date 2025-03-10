@@ -10,7 +10,7 @@ import { SugerenciaDTO } from '../dto/sugerencia/sugerencia-dto';
 })
 export class AdminService {
 
-  private authURL = 'http://localhost:8080/api/admin';
+  private authURL = 'https://proyecto-is3-backend-production.up.railway.app:8080/api/admin';
 
   constructor(private http: HttpClient) {}
 
