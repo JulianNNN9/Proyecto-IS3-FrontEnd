@@ -1,0 +1,31 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg responder-queja-card">
+    <div class="card-header bg-primary text-white p-4 text-center rounded-top">
+      <h4 class="mb-0">
+        <i class="fa-solid fa-reply me-2"></i> Responder Queja
+      </h4>
+    </div>
+    <div class="card-body p-4">
+      <div *ngIf="!showForm">
+        <button class="btn btn-primary btn-lg w-100" (click)="showForm = true">
+          <i class="fa-solid fa-reply"></i> Responder Queja
+        </button>
+      </div>
+      <div *ngIf="showForm">
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción de la Queja</label>
+          <textarea id="descripcion" class="form-control form-control-lg" rows="3" readonly>
+            <!-- Aquí va la descripción completa de la queja -->
+          </textarea>
+        </div>
+        <div class="mb-3">
+          <label for="respuesta" class="form-label">Tu Respuesta</label>
+          <textarea id="respuesta" class="form-control form-control-lg" rows="3" placeholder="Escribe tu respuesta"></textarea>
+        </div>
+        <button class="btn btn-primary btn-lg w-100" (click)="onResponder()">
+          <i class="fa-solid fa-paper-plane"></i> Enviar Respuesta
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
