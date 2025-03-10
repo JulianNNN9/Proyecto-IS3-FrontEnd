@@ -1,10 +1,9 @@
-import { EstadoQueja } from './estado-queja';
-
 export interface QuejaDTO {
   id: string;
   clienteId: string;
+  nombreCliente: string;
   descripcion: string;
   fecha: Date;
-  estadoQueja: EstadoQueja;
+  estadoQueja: string;
   servicioId: string;
 }

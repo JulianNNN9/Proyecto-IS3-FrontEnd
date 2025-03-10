@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { QuejaSugerenciaService } from '../../services/queja-sugerencia.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { QuejaSugerenciaDTO } from '../../dto/quejasugerencia/queja-sugerencia-dto';
+import { QuejaDTO } from '../../dto/queja/queja-dto';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-gestionar-quejas',
@@ -12,32 +12,22 @@ import { QuejaSugerenciaDTO } from '../../dto/quejasugerencia/queja-sugerencia-d
   styleUrl: './gestionar-quejas.component.css'
 })
 export class GestionarQuejasComponent {
-  quejas: QuejaSugerenciaDTO[] = []; // Lista de quejas
+  quejas: QuejaDTO[] = []; // Lista de quejas
 
-  constructor(private service: QuejaSugerenciaService) {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit() {
     this.cargarQuejas();
   }
 
   cargarQuejas(): void {
-    this.service.obtenerQuejas().subscribe({
+    this.adminService.listarQuejas().subscribe({
       next: (data) => {
         this.quejas = data.respuesta; // Asegurar que se accede a la propiedad correcta
       },
       error: (error) => {
         console.error('Error al obtener quejas:', error);
       }
-    });
-  }
-
-  actualizarEstado(id: string, estado: 'En proceso' | 'Resuelto') {
-    const mensaje = estado === 'Resuelto' ? 'Se ha atendido su solicitud' : 'En proceso de revisión';
-
-    this.service.actualizarEstado(id, estado, mensaje).subscribe(() => {
-      this.cargarQuejas(); // Recargar la lista después de actualizar
-    }, error => {
-      console.error('Error al actualizar estado:', error);
     });
   }
 }

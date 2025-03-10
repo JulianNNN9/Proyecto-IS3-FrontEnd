@@ -2,8 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MensajeDTO } from '../dto/mensaje-dto';
-//import { QuejaDTO } from '../dto/queja/queja-dto';
-import { Queja } from '../model/queja';
+import { QuejaDTO } from '../dto/queja/queja-dto';
 import { SugerenciaDTO } from '../dto/sugerencia/sugerencia-dto';
 
 @Injectable({
@@ -19,37 +18,37 @@ export class AdminService {
     return this.http.delete<MensajeDTO<string>>(`${this.authURL}/eliminar-queja/${id}`);
   }
 
-  obtenerQuejaPorId(id: string): Observable<MensajeDTO<Queja>> {
-    return this.http.get<MensajeDTO<Queja>>(`${this.authURL}/obtener-queja/${id}`);
+  obtenerQuejaPorId(id: string): Observable<MensajeDTO<QuejaDTO>> {
+    return this.http.get<MensajeDTO<QuejaDTO>>(`${this.authURL}/obtener-queja/${id}`);
   }
 
-  obtenerQuejasPorServicioId(servicioId: string): Observable<MensajeDTO<Queja[]>> {
+  obtenerQuejasPorServicioId(servicioId: string): Observable<MensajeDTO<QuejaDTO[]>> {
     const params = new HttpParams().set('servicioId', servicioId);
-    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/obtener-quejas-por/servicio`, { params });
+    return this.http.get<MensajeDTO<QuejaDTO[]>>(`${this.authURL}/obtener-quejas-por/servicio`, { params });
   }
 
-  obtenerQuejasPorClienteId(clienteId: string): Observable<MensajeDTO<Queja[]>> {
+  obtenerQuejasPorClienteId(clienteId: string): Observable<MensajeDTO<QuejaDTO[]>> {
     const params = new HttpParams().set('clienteId', clienteId);
-    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/obtener-quejas-por/cliente`, { params });
+    return this.http.get<MensajeDTO<QuejaDTO[]>>(`${this.authURL}/obtener-quejas-por/cliente`, { params });
   }
 
-  obtenerQuejasPorEstado(estadoQueja: string): Observable<MensajeDTO<Queja[]>> {
+  obtenerQuejasPorEstado(estadoQueja: string): Observable<MensajeDTO<QuejaDTO[]>> {
     const params = new HttpParams().set('estadoQueja', estadoQueja);
-    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/obtener-quejas-por/estado`, { params });
+    return this.http.get<MensajeDTO<QuejaDTO[]>>(`${this.authURL}/obtener-quejas-por/estado`, { params });
   }
 
-  obtenerQuejasPorFecha(startDate: string, endDate: string): Observable<MensajeDTO<Queja[]>> {
+  obtenerQuejasPorFecha(startDate: string, endDate: string): Observable<MensajeDTO<QuejaDTO[]>> {
     const params = new HttpParams().set('startDate', startDate).set('endDate', endDate);
-    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/obtener-quejas-por/fecha`, { params });
+    return this.http.get<MensajeDTO<QuejaDTO[]>>(`${this.authURL}/obtener-quejas-por/fecha`, { params });
   }
 
-  obtenerQuejasPorFechaUnica(fecha: string): Observable<MensajeDTO<Queja[]>> {
+  obtenerQuejasPorFechaUnica(fecha: string): Observable<MensajeDTO<QuejaDTO[]>> {
     const params = new HttpParams().set('fecha', fecha);
-    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/obtener-quejas-por/fecha-unica`, { params });
+    return this.http.get<MensajeDTO<QuejaDTO[]>>(`${this.authURL}/obtener-quejas-por/fecha-unica`, { params });
   }
 
-  listarQuejas(): Observable<MensajeDTO<Queja[]>> {
-    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/obtener-quejas`);
+  listarQuejas(): Observable<MensajeDTO<QuejaDTO[]>> {
+    return this.http.get<MensajeDTO<QuejaDTO[]>>(`${this.authURL}/obtener-quejas`);
   }
 
   obtenerSugerencias(): Observable<MensajeDTO<SugerenciaDTO[]>> {

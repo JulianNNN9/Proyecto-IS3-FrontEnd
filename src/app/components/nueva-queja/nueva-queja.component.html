@@ -8,8 +8,8 @@
         <form [formGroup]="quejaForm" (ngSubmit)="onSubmit()">
           <!-- Tipo de Servicio -->
           <div class="mb-3">
-            <label for="tipoServicio" class="form-label">Tipo de Servicio</label>
-            <select id="tipoServicio" formControlName="tipoServicio" class="form-control">
+            <label for="nombreServicio" class="form-label">Tipo de Servicio</label>
+            <select id="nombreServicio" formControlName="nombreServicio" class="form-control">
               <option value="" disabled selected>Seleccione un tipo de servicio</option>
               <option *ngFor="let servicio of servicios" [value]="servicio.nombre">{{ servicio.nombre }}</option>
             </select>
@@ -17,8 +17,8 @@
 
           <!-- Estilista -->
           <div class="mb-3">
-            <label for="estilista" class="form-label">Estilista que Atendió</label>
-            <select id="estilista" formControlName="estilista" class="form-control">
+            <label for="nombreEstilista" class="form-label">Estilista que Atendió</label>
+            <select id="nombreEstilista" formControlName="nombreEstilista" class="form-control">
               <option value="" disabled selected>Seleccione un estilista</option>
               <option *ngFor="let estilista of estilistas" [value]="estilista.nombre">{{ estilista.nombre }}</option>
             </select>

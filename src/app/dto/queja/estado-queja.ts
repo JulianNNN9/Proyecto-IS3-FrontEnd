@@ -1,5 +1,0 @@
-export enum EstadoQueja {
-  PENDIENTE = 'PENDIENTE',
-  RESUELTA = 'RESUELTA',
-  EN_PROCESO = 'EN_PROCESO'
-}
