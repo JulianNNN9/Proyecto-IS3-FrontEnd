@@ -1,44 +1,67 @@
 <!-- Gestión de Quejas -->
 <div class="container mt-5">
-    <div class="card shadow-lg">
-        <div class="card-header bg-secondary text-white text-center">
-            <h4>Gestión de Quejas</h4>
-        </div>
-        <div class="card-body">
-            <table class="table table-striped table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Cliente</th>
-                        <th>Descripción</th>
-                        <th>Estado</th>
-                        <th>Fecha de Envío</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of quejas">
-                        <td>{{ item.nombreCliente }}</td>
-                        <td>{{ item.descripcion }}</td>
-                        <td>
-                            <span class="badge" [ngClass]="{
-                                'bg-warning': item.estadoQueja === 'Recibido',
-                                'bg-info': item.estadoQueja === 'En proceso',
-                                'bg-success': item.estadoQueja === 'Resuelto'
-                            }">
-                                {{ item.estadoQueja }}
-                            </span>
-                        </td>
-                        <td>{{ item.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm me-2">
-                                Responder Queja
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div *ngIf="quejas.length === 0" class="alert alert-warning text-center mt-3">
-                No hay quejas registradas.
+    <h2 class="text-center mb-4">Gestión de Quejas</h2>
+
+    <!-- Tabla de Quejas -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Cliente</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Fecha de Envío</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of quejas">
+                    <td>{{ item.nombreCliente }}</td>
+                    <td>{{ item.descripcion | slice:0:50 }}...</td>
+                    <td>
+                        <span class="badge" [ngClass]="{
+                            'bg-warning': item.estadoQueja === 'Recibido',
+                            'bg-info': item.estadoQueja === 'En proceso',
+                            'bg-success': item.estadoQueja === 'Resuelto'
+                        }">
+                            {{ item.estadoQueja }}
+                        </span>
+                    </td>
+                    <td>{{ item.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" (click)="abrirModal(item)">
+                            Responder Queja
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="quejas.length === 0" class="alert alert-warning text-center mt-3">
+        No hay quejas registradas.
+    </div>
+</div>
+
+<!-- Modal para responder queja -->
+<div class="modal fade" id="modalResponderQueja" tabindex="-1" aria-labelledby="modalResponderQuejaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalResponderQuejaLabel">Responder Queja</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Cliente:</strong> {{ quejaSeleccionada?.nombreCliente }}</p>
+                <p><strong>Descripción:</strong> {{ quejaSeleccionada?.descripcion }}</p>
+                <div class="mb-3">
+                    <label for="respuesta" class="form-label">Tu respuesta:</label>
+                    <textarea id="respuesta" class="form-control" [(ngModel)]="respuestaQueja" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" (click)="enviarRespuesta()">Enviar</button>
             </div>
         </div>
     </div>

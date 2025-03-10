@@ -58,4 +58,8 @@ export class AdminService {
   marcarComoRevisado(id: string): Observable<MensajeDTO<string>> {
     return this.http.put<MensajeDTO<string>>(`${this.authURL}/sugerencias/marcar-revisado`, id);
   }
+
+  responderQueja(idQueja: string, respuesta: string): Observable<MensajeDTO<string>> {
+    return this.http.put<MensajeDTO<string>>(`${this.authURL}/responder-queja/${idQueja}`, respuesta);
+  }
 }
