@@ -1,0 +1,83 @@
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="card" style="width: 30%">
+      <div class="card-header p-4">
+        <h4 class="mb-0"><i class="fa-solid fa-key me-3"></i>Cambiar Contraseña</h4>
+      </div>
+      <div class="card-body p-4">
+        <form #cambiarContraseniaForm="ngForm" (ngSubmit)="cambiarContrasenia(cambiarContraseniaForm)">
+          <div class="modal-body">
+  
+            <!-- Campo para Contraseña Antigua -->
+            <div class="mb-3">
+              <label for="contraseniaAntigua" class="form-label">Contraseña Antigua</label>
+              <input
+                type="password"
+                name="contraseniaAntigua"
+                class="form-control"
+                [(ngModel)]="contrasenia.contraseniaAntigua"
+                #contraseniaAntigua="ngModel"
+                required
+                minlength="8"
+                maxlength="24"
+                [ngClass]="{ 'is-invalid': contraseniaAntigua.errors && contraseniaAntigua.touched }"
+              />
+              <div *ngIf="contraseniaAntigua.errors && contraseniaAntigua.touched" class="text-danger">
+                <div *ngIf="contraseniaAntigua.errors['required']">La contraseña antigua es requerida.</div>
+                <div *ngIf="contraseniaAntigua.errors['minlength']">Debe contener al menos 8 caracteres.</div>
+                <div *ngIf="contraseniaAntigua.errors['maxlength']">Máximo 24 caracteres.</div>
+              </div>
+            </div>
+  
+            <!-- Campo para Nueva Contraseña -->
+            <div class="mb-3">
+              <label for="contraseniaNueva" class="form-label">Nueva Contraseña</label>
+              <input
+                type="password"
+                name="contraseniaNueva"
+                class="form-control"
+                [(ngModel)]="contrasenia.contraseniaNueva"
+                #contraseniaNueva="ngModel"
+                required
+                minlength="8"
+                maxlength="24"
+                pattern="^[A-Z](.*[!@#$%^&*])$"
+                [ngClass]="{ 'is-invalid': contraseniaNueva.errors && contraseniaNueva.touched }"
+              />
+              <div *ngIf="contraseniaNueva.errors && contraseniaNueva.touched" class="text-danger">
+                <div *ngIf="contraseniaNueva.errors['required']">La nueva contraseña es requerida.</div>
+                <div *ngIf="contraseniaNueva.errors['minlength']">Debe contener al menos 8 caracteres.</div>
+                <div *ngIf="contraseniaNueva.errors['maxlength']">Máximo 24 caracteres.</div>
+                <div *ngIf="contraseniaNueva.errors['pattern']">Debe iniciar con una letra mayúscula y terminar con un carácter especial.</div>
+              </div>
+            </div>
+  
+            <!-- Campo para Confirmar Nueva Contraseña -->
+            <div class="mb-3">
+              <label for="confirmarContraseniaNueva" class="form-label">Confirmar Nueva Contraseña</label>
+              <input
+                type="password"
+                name="confirmarContraseniaNueva"
+                class="form-control"
+                [(ngModel)]="contrasenia.confirmarContraseniaNueva"
+                #confirmarContraseniaNueva="ngModel"
+                required
+                minlength="8"
+                maxlength="24"
+                [ngClass]="{ 'is-invalid': confirmarContraseniaNueva.errors && confirmarContraseniaNueva.touched }"
+              />
+              <div *ngIf="confirmarContraseniaNueva.errors && confirmarContraseniaNueva.touched" class="text-danger">
+                <div *ngIf="confirmarContraseniaNueva.errors['required']">La confirmación de la nueva contraseña es requerida.</div>
+                <div *ngIf="confirmarContraseniaNueva.errors['minlength']">Debe contener al menos 8 caracteres.</div>
+                <div *ngIf="confirmarContraseniaNueva.errors['maxlength']">Máximo 24 caracteres.</div>
+              </div>
+            </div>
+  
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+          <jjwins-alert-messages></jjwins-alert-messages>
+        </form>
+      </div>
+    </div>
+  </div>

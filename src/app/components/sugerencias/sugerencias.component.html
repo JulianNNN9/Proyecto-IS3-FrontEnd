@@ -5,16 +5,12 @@
           <h2 class="text-center mb-4">Formulario de Sugerencias</h2>
           <form [formGroup]="sugerenciasForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-              <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Tu nombre" required>
+              <label for="motivo" class="form-label">Motivo</label>
+              <input type="text" class="form-control" id="motivo" formControlName="motivo" placeholder="Motivo" required>
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Correo Electrónico</label>
-              <input type="email" class="form-control" id="email" formControlName="email" placeholder="tucorreo@example.com" required>
-            </div>
-            <div class="mb-3">
-              <label for="sugerencia" class="form-label">Tu Sugerencia</label>
-              <textarea class="form-control" id="sugerencia" formControlName="sugerencia" rows="4" placeholder="Escribe tu sugerencia aquí" required></textarea>
+              <label for="mensaje" class="form-label">Tu Sugerencia</label>
+              <textarea class="form-control" id="mensaje" formControlName="mensaje" rows="4" placeholder="Escribe tu sugerencia aquí" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary w-100" [disabled]="sugerenciasForm.invalid">Enviar</button>
           </form>

@@ -112,10 +112,10 @@ export class EnviarQuejaComponent {
   cargarCliente() {
     this.clienteService
       .obtenerInformacionUsuario(this.tokenService.getIDCuenta())
-      .subscribe((respuesta: MensajeDTO<InformacionUsuarioDTO>) => {
-        if (respuesta.respuesta) {
-          this.pqrs.cliente = respuesta.respuesta.nombreCompleto;
-          this.pqrs.correo = respuesta.respuesta.email;
+      .subscribe((respuesta: InformacionUsuarioDTO) => {
+        if (respuesta) {
+          this.pqrs.cliente = respuesta.nombreCompleto;
+          this.pqrs.correo = respuesta.email;
         }
       });
   }
