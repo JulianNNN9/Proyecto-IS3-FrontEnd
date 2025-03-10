@@ -38,8 +38,8 @@ export class NuevaQuejaComponent implements OnInit {
     private authService: AuthService,
   ) {
     this.quejaForm = this.formBuilder.group({
-      tipoServicio: ['', Validators.required],
-      estilista: ['', Validators.required],
+      nombreServicio: ['', Validators.required],
+      nombreEstilista: ['', Validators.required],
       descripcion: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
@@ -100,7 +100,7 @@ export class NuevaQuejaComponent implements OnInit {
       console.log('Usuario autenticado:', usuario.id);
   
   
-      this.clienteService.crearQueja(this.quejaForm.value.descripcion, this.quejaForm.value.tipoServicio, this.quejaForm.value.estilista).subscribe({
+      this.clienteService.crearQueja(this.quejaForm.value.nombreServicio, this.quejaForm.value.nombreEstilista, this.quejaForm.value.descripcion).subscribe({
         next: (response: MensajeDTO<string>) => {
           Swal.fire({
             icon: 'success',

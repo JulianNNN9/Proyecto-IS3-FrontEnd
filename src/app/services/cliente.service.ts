@@ -2,9 +2,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MensajeDTO } from '../dto/mensaje-dto';
-import { CrearQuejaDTO } from '../dto/queja/crear-queja-dto';
-import { Queja } from '../model/queja';
-import { CrearSugerenciaDTO } from '../dto/sugerencia/crear-sugerencia-dto';
 import { AuthService } from './auth.service';
 import { InformacionUsuarioDTO } from '../dto/cuenta/informacion-usuario-dto';
 import { EditarUsuarioDTO } from '../dto/cuenta/editar-usuario-dto';
@@ -12,6 +9,8 @@ import { RecuperarContraseniaDTO } from '../dto/cuenta/recuperar-contrasenia-dto
 import { CambiarContraseniaDTO } from '../dto/cuenta/cambiar-contrasenia-dto';
 import { EstilistaDTO } from '../dto/estilista/estilista-dto';
 import { ServicioDTO } from '../dto/servicio/servicio-dto';
+import { QuejaDTO } from '../dto/queja/queja-dto';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +19,10 @@ export class ClienteService {
 
   private authURL = 'http://localhost:8080/api/usuario';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService, private tokenService: TokenService) {}
 
-  crearQueja(descripcion: string, nombreServicio: string, nombreEstilista: string): Observable<MensajeDTO<string>> {
+  crearQueja(nombreServicio: string, nombreEstilista: string, descripcion: string): Observable<MensajeDTO<string>> {
+
     const usuario = this.authService.obtenerIdUsuario();
   
     if (!usuario) {
@@ -31,9 +31,14 @@ export class ClienteService {
     }
   
     console.log(nombreServicio,nombreEstilista)
+
+    const nombre = this.tokenService.getNombre();
+
+    console.log(nombre)
     
     const queja  = {
       clienteId: usuario.id,
+      nombreCliente: nombre,
       descripcion: descripcion,
       fecha: new Date(),
       nombreServicio: nombreServicio,
@@ -64,9 +69,9 @@ export class ClienteService {
   
   
 
-  obtenerQuejasPorClienteId(clienteId: string): Observable<MensajeDTO<Queja[]>> {
+  obtenerQuejasPorClienteId(clienteId: string): Observable<MensajeDTO<QuejaDTO[]>> {
     const params = new HttpParams().set('clienteId', clienteId);
-    return this.http.get<MensajeDTO<Queja[]>>(`${this.authURL}/quejas`, { params });
+    return this.http.get<MensajeDTO<QuejaDTO[]>>(`${this.authURL}/quejas`, { params });
   }
 
   editarUsuario(editarUsuarioDTO: EditarUsuarioDTO): Observable<MensajeDTO<string>> {

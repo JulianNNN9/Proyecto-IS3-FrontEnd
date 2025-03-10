@@ -2,9 +2,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { routes } from './app.routes';
-import { QuejaSugerenciaService } from './services/queja-sugerencia.service';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { ReporteService } from './services/reporte.service';
 import { usuarioInterceptor } from './interceptor/usuario.interceptor';
 import { AdminService } from './services/admin.service';
 import { TokenService } from './services/token.service';
@@ -20,10 +18,8 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([usuarioInterceptor])),
     AdminService,
     TokenService,
-    ReporteService,
     PublicoService,
     ClienteService,
-    AuthService,
-    QuejaSugerenciaService, provideAnimationsAsync()
+    AuthService, provideAnimationsAsync()
   ]
 };
