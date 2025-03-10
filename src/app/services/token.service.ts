@@ -14,8 +14,11 @@ export class TokenService {
     window.sessionStorage.setItem(TOKEN_KEY, token);
   }
 
-  public getToken(): string | null {
-    return sessionStorage.getItem(TOKEN_KEY);
+  getToken(): string | null {
+    if (typeof window !== 'undefined' && window.sessionStorage) {
+      return sessionStorage.getItem(TOKEN_KEY);
+    }
+    return null;
   }
 
   public isLogged(): boolean {
