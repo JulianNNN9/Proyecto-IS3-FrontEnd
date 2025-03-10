@@ -80,16 +80,18 @@
       </div>
     </div>
 
-    <!-- Botón flotante de PQRS -->
-    <button class="pqrs-button" (click)="togglePQRS()">
+      <!-- Botón flotante de PQRS (solo visible si NO es admin) -->
+    <button class="pqrs-button" *ngIf="!esAdmin" (click)="togglePQRS()">
       <i class="fas fa-question-circle"></i> Ayuda
     </button>
 
-    <div *ngIf="mostrarOpciones" class="pqrs-popup">
+  <!-- Opciones de PQRS (solo visibles si NO es admin) -->
+    <div *ngIf="mostrarOpciones && !esAdmin" class="pqrs-popup">
       <button class="pqrs-option" (click)="seleccionarOpcion('nueva-queja')">🛑 Quejas</button>
       <button class="pqrs-option" (click)="seleccionarOpcion('sugerencia')">💡 Sugerencias</button>
       <button class="pqrs-option" (click)="irAPreguntasFrecuentes()">❓ Preguntas Frecuentes</button>
     </div>
+
 
   </div>
 </div>

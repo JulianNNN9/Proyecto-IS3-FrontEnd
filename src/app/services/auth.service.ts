@@ -64,4 +64,24 @@ export class AuthService {
       return null;
     }
   }
+
+  obtenerIdUsuario() {
+    const token = sessionStorage.getItem('AuthToken');
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const decodedToken: any = jwtDecode(token);
+
+      console.log('Token decodificado:', decodedToken);
+
+      return {
+        id: decodedToken.id,
+      };
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return null;
+    }
+  }
 }

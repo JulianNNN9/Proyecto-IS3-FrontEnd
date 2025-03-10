@@ -31,7 +31,6 @@ export class SugerenciasComponent {
     
 
     if (this.sugerenciasForm.valid) {
-      const usuario = this.authService.obtenerUsuarioAutenticado();
   
       if (!usuario) {
         Swal.fire({
