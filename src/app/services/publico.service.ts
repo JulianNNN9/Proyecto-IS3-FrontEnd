@@ -13,7 +13,7 @@ import { CrearUsuarioDTO } from '../dto/crear-usuario-dto';
   providedIn: 'root',
 })
 export class PublicoService {
-  private authURL = 'https://locproyecto-is3-backend-production.up.railway.appalhost:8080/api/publico';
+  private authURL = 'http://localhost:8080/api/publico';
 
   constructor(
     private http: HttpClient,
