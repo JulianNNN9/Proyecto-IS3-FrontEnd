@@ -67,11 +67,8 @@ export class ClienteService {
     return this.http.post<MensajeDTO<string>>(`${this.authURL}/crear-sugerencia`, sugerencia);
   }
   
-  
-
   obtenerQuejasPorClienteId(clienteId: string): Observable<MensajeDTO<QuejaDTO[]>> {
-    const params = new HttpParams().set('clienteId', clienteId);
-    return this.http.get<MensajeDTO<QuejaDTO[]>>(`${this.authURL}/quejas`, { params });
+    return this.http.get<MensajeDTO<QuejaDTO[]>>(`${this.authURL}/quejas/${clienteId}`);
   }
 
   editarUsuario(editarUsuarioDTO: EditarUsuarioDTO): Observable<MensajeDTO<string>> {
