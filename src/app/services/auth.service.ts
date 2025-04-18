@@ -65,29 +65,32 @@ export class AuthService {
     }
   }
 
-  /**
+    /**
    * Obtiene el rol del usuario autenticado actualmente
    * Extrae y decodifica el rol del token JWT almacenado
    * @returns Objeto con el rol del usuario, o null si no está autenticado
    */
   obtenerRolUsuario() {
-    const token = sessionStorage.getItem('AuthToken');
-    if (!token) {
-      return null;
+    // Verificar si estamos en el navegador antes de acceder a sessionStorage
+    if (typeof window !== 'undefined') {
+      const token = sessionStorage.getItem('AuthToken');
+      if (!token) {
+        return null;
+      }
+
+      try {
+        const decodedToken: any = jwtDecode(token);
+        console.log('Token decodificado:', decodedToken);
+        return {
+          rol: decodedToken.rol,
+        };
+      } catch (error) {
+        console.error('Error al decodificar el token:', error);
+        return null;
+      }
     }
-
-    try {
-      const decodedToken: any = jwtDecode(token);
-
-      console.log('Token decodificado:', decodedToken);
-
-      return {
-        rol: decodedToken.rol,
-      };
-    } catch (error) {
-      console.error('Error al decodificar el token:', error);
-      return null;
-    }
+    // Si estamos en el servidor, devolvemos null
+    return null;
   }
 
   /**
