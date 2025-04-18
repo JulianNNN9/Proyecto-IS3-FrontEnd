@@ -10,16 +10,24 @@ import { PublicoService } from './services/publico.service';
 import { ClienteService } from './services/cliente.service';
 import { AuthService } from './services/auth.service';
 
+/**
+ * Configuración principal de la aplicación
+ * Define todos los proveedores y servicios necesarios para el funcionamiento de la app
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes), 
-    provideHttpClient(
-      withFetch(),
-      withInterceptors([usuarioInterceptor])),
-    AdminService,
-    TokenService,
-    PublicoService,
-    ClienteService,
-    AuthService, provideAnimationsAsync()
+    provideRouter(routes),  // Proveedor para el enrutamiento de la aplicación
+    provideHttpClient(      // Configuración del cliente HTTP
+      withFetch(),          // Utiliza la API fetch para las peticiones HTTP
+      withInterceptors([usuarioInterceptor])),  // Agrega interceptor para manejo de autenticación
+    
+    // Registro de los servicios principales de la aplicación
+    AdminService,     // Servicio para operaciones administrativas
+    TokenService,     // Servicio para gestión de tokens de autenticación
+    PublicoService,   // Servicio para operaciones públicas (sin autenticación)
+    ClienteService,   // Servicio para operaciones de clientes autenticados
+    AuthService,      // Servicio de autenticación
+    
+    provideAnimationsAsync()  // Soporte para animaciones cargadas de forma asíncrona
   ]
 };
