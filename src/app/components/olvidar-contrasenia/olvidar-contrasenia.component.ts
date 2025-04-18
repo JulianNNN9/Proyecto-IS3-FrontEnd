@@ -5,6 +5,10 @@ import { PublicoService } from '../../services/publico.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+/**
+ * Componente para recuperar contraseña olvidada
+ * Permite a los usuarios restablecer su contraseña mediante un código de verificación
+ */
 @Component({
   selector: 'app-olvidar-contrasenia',
   standalone: true,
@@ -13,35 +17,49 @@ import Swal from 'sweetalert2';
   styleUrl: './olvidar-contrasenia.component.css'
 })
 export class OlvidarContraseniaComponent {
-  olvidarContraseniaForm!: FormGroup;
-  resendInProgress = false;
+  olvidarContraseniaForm!: FormGroup; // Formulario para capturar los datos de recuperación
+  resendInProgress = false; // Indica si hay una solicitud de reenvío en progreso
 
+  /**
+   * Constructor del componente
+   * @param fb - Constructor de formularios
+   * @param publicoService - Servicio para operaciones públicas como recuperación de contraseña
+   * @param router - Servicio para navegación entre rutas
+   */
   constructor(
     private fb: FormBuilder,
     private publicoService: PublicoService,
     private router: Router
   ) {}
 
+  /**
+   * Inicializa el componente y configura el formulario con validaciones
+   */
   ngOnInit(): void {
     this.olvidarContraseniaForm = this.fb.group({
-      correoUsuario: ['', [Validators.required, Validators.email]],
-      codigoVerificacion: ['', Validators.required],
+      correoUsuario: ['', [Validators.required, Validators.email]], // Email con validaciones
+      codigoVerificacion: ['', Validators.required], // Código recibido por email
       contraseniaNueva: [
         '', 
         [
           Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(24),
-          Validators.pattern(/^[A-Z].*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/)
+          Validators.minLength(8), // Mínimo 8 caracteres
+          Validators.maxLength(24), // Máximo 24 caracteres
+          Validators.pattern(/^[A-Z].*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/) // Debe comenzar con mayúscula y contener caracteres especiales
         ]
       ],
-      confirmarContraseniaNueva: ['', [Validators.required]]
+      confirmarContraseniaNueva: ['', [Validators.required]] // Campo para confirmar contraseña
     });
   }
 
+  /**
+   * Método principal para restablecer la contraseña
+   * Valida el formulario, compara las contraseñas y realiza la petición al servidor
+   */
   onResetPassword(): void {
     if (this.olvidarContraseniaForm.valid) {
       const formValue = this.olvidarContraseniaForm.value;
+      // Verifica que las contraseñas coincidan
       if (formValue.contraseniaNueva !== formValue.confirmarContraseniaNueva) {
         Swal.fire({
           title: 'Error',
@@ -52,8 +70,10 @@ export class OlvidarContraseniaComponent {
         return;
       }
 
+      // Envía la solicitud para restablecer la contraseña
       this.publicoService.recuperarContrasenia(formValue).subscribe({
         next: (response) => {
+          // Muestra mensaje de éxito y redirige al login
           Swal.fire({
             title: 'Contraseña Restablecida',
             text: response.respuesta,
@@ -63,6 +83,7 @@ export class OlvidarContraseniaComponent {
           this.router.navigate(['/login']);
         },
         error: (error) => {
+          // Muestra mensaje de error
           Swal.fire({
             title: 'Error',
             text: error.error.respuesta || 'No se pudo restablecer la contraseña.',
@@ -74,31 +95,40 @@ export class OlvidarContraseniaComponent {
     }
   }
 
+  /**
+   * Solicita un nuevo código de verificación
+   * Valida que se haya ingresado un correo electrónico válido
+   */
   onResendCode(): void {
     const email = this.olvidarContraseniaForm.get('correoUsuario')?.value;
     if (email && this.olvidarContraseniaForm.get('correoUsuario')?.valid) {
-      this.resendInProgress = true;
+      this.resendInProgress = true; // Indica que hay una solicitud en progreso
+      
+      // Envía la solicitud para obtener un nuevo código
       this.publicoService.enviarCodigoRecuperacion(email).subscribe({
         next: (response) => {
+          // Muestra mensaje de éxito
           Swal.fire({
             title: 'Código reenviado',
             text: response.respuesta,
             icon: 'success',
             confirmButtonText: 'Aceptar'
           });
-          this.resendInProgress = false;
+          this.resendInProgress = false; // Finaliza el indicador de progreso
         },
         error: (error) => {
+          // Muestra mensaje de error
           Swal.fire({
             title: 'Error',
             text: error.error.respuesta || 'No se pudo reenviar el código.',
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });
-          this.resendInProgress = false;
+          this.resendInProgress = false; // Finaliza el indicador de progreso
         }
       });
     } else {
+      // Alerta si no se ha proporcionado un email válido
       Swal.fire({
         title: 'Correo requerido',
         text: 'Ingrese un correo válido antes de solicitar un nuevo código.',
