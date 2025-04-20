@@ -1,19 +1,23 @@
+<!-- Título principal (h1) para evitar el error "Missing first level heading" -->
+<h1 class="visually-hidden">Mis Quejas</h1>
+<!-- H1 oculto para accesibilidad -->
+
 <div class="container mt-4 vh-100">
-    <h2>Mis Quejas</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Descripción</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let queja of quejas">
-          <td>{{ queja.descripcion }}</td>
-          <td>{{ queja.fecha | date }}</td>
-          <td>{{ queja.estadoQueja }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <h2>Mis Quejas</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Descripción</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let queja of quejas">
+        <td>{{ queja.descripcion }}</td>
+        <td>{{ queja.fecha | date }}</td>
+        <td>{{ queja.estadoQueja }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
