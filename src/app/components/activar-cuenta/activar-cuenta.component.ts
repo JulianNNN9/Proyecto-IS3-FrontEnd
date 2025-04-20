@@ -5,6 +5,10 @@ import Swal from 'sweetalert2';
 import { PublicoService } from '../../services/publico.service';
 import { CommonModule } from '@angular/common';
 
+/**
+ * Componente para la activación de cuentas de usuario
+ * Permite a los usuarios activar sus cuentas con un código enviado por correo
+ */
 @Component({
   selector: 'app-activar-cuenta',
   standalone: true,
@@ -12,38 +16,57 @@ import { CommonModule } from '@angular/common';
   templateUrl: './activar-cuenta.component.html',
   styleUrl: './activar-cuenta.component.css'
 })
-export class ActivarCuentaComponent {
+export class ActivarCuentaComponent implements OnInit {
+  // Formulario para capturar los datos de activación
   activarCuentaForm!: FormGroup;
+  // Bandera para controlar el estado del proceso de reenvío
   resendInProgress = false;
 
+  /**
+   * Constructor del componente
+   * @param fb - Servicio para crear formularios reactivos
+   * @param publicoService - Servicio para operaciones con el backend
+   * @param router - Servicio para navegación entre rutas
+   */
   constructor(
     private fb: FormBuilder,
     private publicoService: PublicoService,
     private router: Router
   ) {}
 
+  /**
+   * Inicialización del componente
+   * Configura el formulario con sus validaciones
+   */
   ngOnInit(): void {
     this.activarCuentaForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      codigoActivacion: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]], // Campo para email con validaciones
+      codigoActivacion: ['', Validators.required], // Campo para código de activación
     });
   }
 
-  // Método para activar la cuenta con el código
+  /**
+   * Método principal para activar la cuenta del usuario
+   * Se ejecuta cuando el usuario envía el formulario con su código
+   */
   onActivateAccount(): void {
     if (this.activarCuentaForm.valid) {
       console.log(this.activarCuentaForm.value);
+      // Llama al servicio que comunica con el backend para activar la cuenta
       this.publicoService.activarCuenta(this.activarCuentaForm.value).subscribe({
         next: (response) => {
+          // Muestra mensaje de éxito al usuario
           Swal.fire({
             title: 'Cuenta Activada',
             text: 'Su cuenta ha sido activada correctamente.',
             icon: 'success',
             confirmButtonText: 'Aceptar'
           });
+          // Redirecciona al login una vez activada la cuenta
           this.router.navigate(['/login']);
         },
         error: (error) => {
+          // Manejo de errores con mensaje al usuario
           Swal.fire({
             title: 'Error',
             text: error.error.respuesta || 'No se pudo activar la cuenta.',
@@ -55,31 +78,41 @@ export class ActivarCuentaComponent {
     }
   }
 
+  /**
+   * Método para solicitar un nuevo código de activación
+   * Útil cuando el código original ha expirado o se ha extraviado
+   */
   onResendCode(): void {
     const email = this.activarCuentaForm.get('email')?.value;
+    // Verifica que el email existe y es válido
     if (email && this.activarCuentaForm.get('email')?.valid) {
-      this.resendInProgress = true;
+      this.resendInProgress = true; // Activa indicador de proceso en curso
+      
+      // Llama al servicio para solicitar un nuevo código de activación
       this.publicoService.enviarCodigoActivacion(email).subscribe({
         next: (response) => {
+          // Mensaje de éxito al usuario
           Swal.fire({
             title: 'Código reenviado',
             text: 'Se ha enviado un nuevo código de activación a su correo.',
             icon: 'success',
             confirmButtonText: 'Aceptar'
           });
-          this.resendInProgress = false;
+          this.resendInProgress = false; // Desactiva indicador de proceso
         },
         error: (error) => {
+          // Manejo de errores con mensaje al usuario
           Swal.fire({
             title: 'Error',
             text: error.error.respuesta || 'No se pudo reenviar el código.',
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });
-          this.resendInProgress = false;
+          this.resendInProgress = false; // Desactiva indicador de proceso
         }
       });
     } else {
+      // Alerta si el usuario no ha ingresado un email válido
       Swal.fire({
         title: 'Correo requerido',
         text: 'Ingrese un correo válido antes de solicitar un nuevo código.',

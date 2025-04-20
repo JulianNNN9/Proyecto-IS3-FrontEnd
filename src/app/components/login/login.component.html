@@ -1,19 +1,25 @@
-<div class="container d-flex justify-content-center align-items-center vh-100">
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
   <div class="card shadow-lg login-card">
+
+    <!-- Título principal (h1) para evitar el error "Missing first level heading" -->
+    <h1 class="visually-hidden">Iniciar Sesión</h1> <!-- H1 oculto para accesibilidad -->
+
+    <!-- Título de la sección -->
     <div class="card-header bg-primary text-white p-4 text-center rounded-top">
-      <h4 class="mb-0">
+      <h2 class="mb-0">
         <i class="fa-solid fa-sign-in-alt me-2"></i> Iniciar Sesión
-      </h4>
+      </h2>
     </div>
+    
     <div class="card-body p-4">
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <!-- Correo Electrónico -->
         <div class="mb-3">
           <label for="email" class="form-label">Correo Electrónico</label>
           <div class="input-group">
-            <span class="input-group-text"
-              ><i class="fa-solid fa-envelope"></i
-            ></span>
+            <span class="input-group-text">
+              <i class="fa-solid fa-envelope"></i>
+            </span>
             <input
               type="email"
               id="email"
@@ -33,12 +39,12 @@
               "
               class="invalid-feedback"
             >
-              <span *ngIf="loginForm.get('email')?.errors?.['required']"
-                >Correo es requerido.</span
-              >
-              <span *ngIf="loginForm.get('email')?.errors?.['email']"
-                >Formato de correo inválido.</span
-              >
+              <span *ngIf="loginForm.get('email')?.errors?.['required']">
+                Correo es requerido.
+              </span>
+              <span *ngIf="loginForm.get('email')?.errors?.['email']">
+                Formato de correo inválido.
+              </span>
             </div>
           </div>
         </div>
@@ -62,6 +68,7 @@
             <button
               type="button"
               class="btn btn-outline-secondary"
+              aria-label="Ver detalles"
               (click)="showPassword = !showPassword"
             >
               <i
@@ -76,9 +83,9 @@
               "
               class="invalid-feedback"
             >
-              <span *ngIf="loginForm.get('contrasenia')?.errors?.['required']"
-                >Contraseña es requerida.</span
-              >
+              <span *ngIf="loginForm.get('contrasenia')?.errors?.['required']">
+                Contraseña es requerida.
+              </span>
             </div>
           </div>
         </div>
