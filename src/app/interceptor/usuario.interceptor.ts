@@ -18,6 +18,7 @@ export const usuarioInterceptor: HttpInterceptorFn = (req, next) => {
   const tokenService = inject(TokenService);
   const authService = inject(AuthService);
   
+  
   // Comprueba si la solicitud es para un endpoint público
   const isAPiPublico = req.url.includes("api/publico");
   

@@ -4,7 +4,7 @@
     <a class="navbar-brand d-flex align-items-center" href="#">
       <img
         src="assets/images/Logo_laos.jpg"
-        alt="Logo"
+        alt="Logotipo de la peluquería Laos"
         width="40"
         height="40"
         class="me-2"
@@ -18,7 +18,9 @@
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarNav"
-    >
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -39,15 +41,17 @@
 
         <!-- Mostrar solo si está autenticado -->
         <li class="nav-item dropdown" *ngIf="isAutenticado()">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            {{ loggedInUser }}
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ nombreUsuario }}
           </a>
           <ul class="dropdown-menu">
             <li *ngFor="let item of menuFiltrado">
               <a class="dropdown-item" [routerLink]="item.ruta">{{ item.nombre }}</a>
             </li>
             <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item text-danger" (click)="logout()">Cerrar Sesión</a></li>
+            <li>
+              <a class="dropdown-item text-danger" (click)="logout()">Cerrar Sesión</a>
+            </li>
           </ul>          
         </li>
       </ul>

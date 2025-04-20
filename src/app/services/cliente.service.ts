@@ -17,10 +17,9 @@ import { TokenService } from './token.service';
  * Gestiona las peticiones relacionadas con los usuarios registrados como clientes
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClienteService {
-
   // URL base para las peticiones a la API de usuario
   private authURL = 'http://localhost:8080/api/usuario';
 
@@ -30,7 +29,11 @@ export class ClienteService {
    * @param authService Servicio de autenticación para obtener información del usuario
    * @param tokenService Servicio para gestionar el token de sesión
    */
-  constructor(private http: HttpClient, private authService: AuthService, private tokenService: TokenService) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private tokenService: TokenService
+  ) {}
 
   /**
    * Crea una nueva queja en el sistema
@@ -39,64 +42,80 @@ export class ClienteService {
    * @param descripcion Texto detallado de la queja
    * @returns Observable con mensaje de confirmación
    */
-  crearQueja(nombreServicio: string, nombreEstilista: string, descripcion: string): Observable<MensajeDTO<string>> {
-
+  crearQueja(
+    nombreServicio: string,
+    nombreEstilista: string,
+    descripcion: string
+  ): Observable<MensajeDTO<string>> {
     const usuario = this.authService.obtenerIdUsuario();
-  
+
     if (!usuario) {
       console.warn('No se pudo obtener el usuario autenticado');
       return new Observable();
     }
-  
-    console.log(nombreServicio,nombreEstilista)
+
+    console.log(nombreServicio, nombreEstilista);
 
     const nombre = this.tokenService.getNombre();
 
-    console.log(nombre)
-    
-    const queja  = {
+    console.log(nombre);
+
+    const queja = {
       clienteId: usuario.id,
       nombreCliente: nombre,
       descripcion: descripcion,
       fecha: new Date(),
       nombreServicio: nombreServicio,
-      nombreEstilista: nombreEstilista
+      nombreEstilista: nombreEstilista,
     };
-  
-    return this.http.post<MensajeDTO<string>>(`${this.authURL}/crear-queja`, queja);
+
+    return this.http.post<MensajeDTO<string>>(
+      `${this.authURL}/crear-queja`,
+      queja
+    );
   }
-  
+
   /**
    * Crea una nueva sugerencia en el sistema
    * @param motivo Asunto o razón de la sugerencia
    * @param mensaje Contenido detallado de la sugerencia
    * @returns Observable con mensaje de confirmación
    */
-  crearSugerencia(motivo: string, mensaje: string): Observable<MensajeDTO<string>> {
+  crearSugerencia(
+    motivo: string,
+    mensaje: string
+  ): Observable<MensajeDTO<string>> {
     const usuario = this.authService.obtenerUsuarioAutenticado();
-  
+
     if (!usuario) {
       console.warn('No se pudo obtener el usuario autenticado');
-      return new Observable(); 
+      return new Observable();
     }
-  
+
     const sugerencia = {
       nombre: usuario.nombre,
       email: usuario.email,
       motivo: motivo,
-      mensaje: mensaje
+      mensaje: mensaje,
     };
-  
-    return this.http.post<MensajeDTO<string>>(`${this.authURL}/crear-sugerencia`, sugerencia);
+
+    return this.http.post<MensajeDTO<string>>(
+      `${this.authURL}/crear-sugerencia`,
+      sugerencia
+    );
   }
-  
+
   /**
    * Obtiene las quejas realizadas por un cliente específico
    * @param clienteId Identificador del cliente
    * @returns Observable con lista de quejas del cliente
    */
-  obtenerQuejasPorClienteId(clienteId: string): Observable<MensajeDTO<QuejaDTO[]>> {
-    return this.http.get<MensajeDTO<QuejaDTO[]>>(`${this.authURL}/quejas/${clienteId}`);
+  obtenerQuejasPorClienteId(
+    clienteId: string
+  ): Observable<MensajeDTO<QuejaDTO[]>> {
+    return this.http.get<MensajeDTO<QuejaDTO[]>>(
+      `${this.authURL}/quejas/${clienteId}`
+    );
   }
 
   /**
@@ -104,8 +123,13 @@ export class ClienteService {
    * @param editarUsuarioDTO Objeto con los datos actualizados del usuario
    * @returns Observable con mensaje de confirmación
    */
-  editarUsuario(editarUsuarioDTO: EditarUsuarioDTO): Observable<MensajeDTO<string>> {
-    return this.http.put<MensajeDTO<string>>(`${this.authURL}/editar-usuario`, editarUsuarioDTO);
+  editarUsuario(
+    editarUsuarioDTO: EditarUsuarioDTO
+  ): Observable<MensajeDTO<string>> {
+    return this.http.put<MensajeDTO<string>>(
+      `${this.authURL}/editar-usuario`,
+      editarUsuarioDTO
+    );
   }
 
   /**
@@ -114,7 +138,9 @@ export class ClienteService {
    * @returns Observable con mensaje de confirmación
    */
   eliminarUsuario(id: string): Observable<MensajeDTO<string>> {
-    return this.http.delete<MensajeDTO<string>>(`${this.authURL}/eliminar-usuario/${id}`);
+    return this.http.delete<MensajeDTO<string>>(
+      `${this.authURL}/eliminar-usuario/${id}`
+    );
   }
 
   /**
@@ -122,8 +148,12 @@ export class ClienteService {
    * @param id Identificador del usuario
    * @returns Observable con los datos del usuario
    */
-  obtenerInformacionUsuario(id: string): Observable<InformacionUsuarioDTO> {
-    return this.http.get<InformacionUsuarioDTO>(`${this.authURL}/informacion-usuario/${id}`);
+  obtenerInformacionUsuario(
+    codigo: string
+  ): Observable<MensajeDTO<InformacionUsuarioDTO>> {
+    return this.http.get<MensajeDTO<InformacionUsuarioDTO>>(
+      `${this.authURL}/obtener-usuario/${codigo}`
+    );
   }
 
   /**
@@ -131,8 +161,13 @@ export class ClienteService {
    * @param recuperarContraseniaDTO Objeto con datos para la recuperación (correo, código, nueva contraseña)
    * @returns Observable con mensaje de confirmación
    */
-  recuperarContrasenia(recuperarContraseniaDTO: RecuperarContraseniaDTO): Observable<MensajeDTO<string>> {
-    return this.http.post<MensajeDTO<string>>(`${this.authURL}/recuperar-contrasenia`, recuperarContraseniaDTO);
+  recuperarContrasenia(
+    recuperarContraseniaDTO: RecuperarContraseniaDTO
+  ): Observable<MensajeDTO<string>> {
+    return this.http.post<MensajeDTO<string>>(
+      `${this.authURL}/recuperar-contrasenia`,
+      recuperarContraseniaDTO
+    );
   }
 
   /**
@@ -140,8 +175,13 @@ export class ClienteService {
    * @param cambiarContraseniaDTO Objeto con contraseña actual y nueva
    * @returns Observable con mensaje de confirmación
    */
-  cambiarContrasenia(cambiarContraseniaDTO: CambiarContraseniaDTO): Observable<MensajeDTO<string>> {
-    return this.http.put<MensajeDTO<string>>(`${this.authURL}/cambiar-contrasenia`, cambiarContraseniaDTO);
+  cambiarContrasenia(
+    cambiarContraseniaDTO: CambiarContraseniaDTO
+  ): Observable<MensajeDTO<string>> {
+    return this.http.put<MensajeDTO<string>>(
+      `${this.authURL}/cambiar-contrasenia`,
+      cambiarContraseniaDTO
+    );
   }
 
   /**
@@ -149,7 +189,9 @@ export class ClienteService {
    * @returns Observable con la lista de estilistas
    */
   obtenerEstilistas(): Observable<MensajeDTO<EstilistaDTO[]>> {
-    return this.http.get<MensajeDTO<EstilistaDTO[]>>(`${this.authURL}/obtener-estilistas`);
+    return this.http.get<MensajeDTO<EstilistaDTO[]>>(
+      `${this.authURL}/obtener-estilistas`
+    );
   }
 
   /**
@@ -157,7 +199,8 @@ export class ClienteService {
    * @returns Observable con la lista de servicios
    */
   obtenerServicios(): Observable<MensajeDTO<ServicioDTO[]>> {
-    return this.http.get<MensajeDTO<ServicioDTO[]>>(`${this.authURL}/obtener-servicios`);
+    return this.http.get<MensajeDTO<ServicioDTO[]>>(
+      `${this.authURL}/obtener-servicios`
+    );
   }
-
 }

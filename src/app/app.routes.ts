@@ -34,7 +34,7 @@ export const routes: Routes = [
     { path: 'registrarse', component: RegistrarseComponent},
     { path: 'activar-cuenta', component: ActivarCuentaComponent},
     { path: 'olvidar-contrasenia', component: OlvidarContraseniaComponent},
-    { path: 'perfil', component: PerfilComponent},
+    { path: 'perfil/:id', component: PerfilComponent},
     { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent},
     
     // Rutas para servicios e información
