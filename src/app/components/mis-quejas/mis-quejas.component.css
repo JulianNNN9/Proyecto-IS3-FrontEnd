@@ -1,0 +1,103 @@
+/* Estilos para el contenedor de Mis Quejas */
+.contenedor-quejas {
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #f8f9fa;
+}
+
+/* Tarjeta de Mis Quejas */
+.tarjeta-quejas {
+  width: 100%;
+  max-width: 1200px; /* Aumentar el ancho máximo */
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 0 1rem; /* Espacio adicional a los lados */
+}
+
+/* Cabecera de la tarjeta */
+.cabecera-quejas {
+  background-color: #0d6efd;
+  color: #fff;
+  padding: 1.2rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.cabecera-quejas h2 {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Cuerpo de la tarjeta */
+.cuerpo-quejas {
+  padding: 2rem;
+}
+
+/* Tabla de quejas */
+.tabla-quejas {
+  width: 100%;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+/* Encabezados y celdas de la tabla */
+.tabla-quejas th, .tabla-quejas td {
+  padding: 15px;
+  text-align: center;
+}
+
+.tabla-quejas thead {
+  background-color: #e9ecef;
+}
+
+/* Añadir desplazamiento horizontal en pantallas pequeñas */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Estilos de los estados */
+.estado {
+  padding: 0.4em 1em;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-block;
+}
+
+.estado-resuelta {
+  background-color: #198754;
+  color: white;
+}
+
+.estado-proceso {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.estado-pendiente {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Mensaje vacío cuando no hay quejas */
+.mensaje-vacio {
+  margin-top: 1rem;
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+}
+.texto-truncado {
+  display: inline-block;
+  max-width: 250px;     /* ajusta según el ancho deseado */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}

@@ -1,20 +1,53 @@
 <div class="container d-flex align-items-center justify-content-center vh-100">
-    <div class="row justify-content-center w-100">
-      <div class="col-md-8 col-lg-6">
-        <div class="card shadow-lg p-4">
-          <h2 class="text-center mb-4">Formulario de Sugerencias</h2>
-          <form [formGroup]="sugerenciasForm" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <label for="motivo" class="form-label">Motivo</label>
-              <input type="text" class="form-control" id="motivo" formControlName="motivo" placeholder="Motivo" required>
-            </div>
-            <div class="mb-3">
-              <label for="mensaje" class="form-label">Tu Sugerencia</label>
-              <textarea class="form-control" id="mensaje" formControlName="mensaje" rows="4" placeholder="Escribe tu sugerencia aquí" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary w-100" [disabled]="sugerenciasForm.invalid">Enviar</button>
-          </form>
-        </div>
+  <div class="row justify-content-center w-100">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-lg p-4">
+
+        <!-- Título principal -->
+        <h1 class="main-heading text-center mb-4">💬 Formulario de Sugerencias</h1>
+
+        <!-- Descripción opcional -->
+        <p class="text-muted text-center mb-4">
+          Tu opinión nos ayuda a mejorar. ¡Gracias por tomarte el tiempo de compartirla!
+        </p>
+
+        <form [formGroup]="sugerenciasForm" (ngSubmit)="onSubmit()">
+          <!-- Motivo -->
+          <div class="mb-3">
+            <label for="motivo" class="form-label">Motivo</label>
+            <input
+              type="text"
+              class="form-control"
+              id="motivo"
+              formControlName="motivo"
+              placeholder="¿Cuál es el motivo de tu sugerencia?"
+              required
+            />
+          </div>
+
+          <!-- Sugerencia -->
+          <div class="mb-3">
+            <label for="mensaje" class="form-label">Tu Sugerencia</label>
+            <textarea
+              class="form-control"
+              id="mensaje"
+              formControlName="mensaje"
+              rows="4"
+              placeholder="Escribe tu sugerencia aquí"
+              required
+            ></textarea>
+          </div>
+
+          <!-- Botón de envío -->
+          <button
+            type="submit"
+            class="btn btn-success w-100 fw-bold"
+            [disabled]="sugerenciasForm.invalid"
+          >
+            ✉️ Enviar Sugerencia
+          </button>
+        </form>
       </div>
     </div>
   </div>
+</div>

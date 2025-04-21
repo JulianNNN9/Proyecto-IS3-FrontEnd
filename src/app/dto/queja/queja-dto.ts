@@ -1,3 +1,5 @@
+import { RespuestaQuejaDTO } from "./respuesta-queja-dto";
+
 export interface QuejaDTO {
   id: string;
   clienteId: string;
@@ -5,5 +7,7 @@ export interface QuejaDTO {
   descripcion: string;
   fecha: Date;
   estadoQueja: string;
-  servicioId: string;
+  respuestaQueja: RespuestaQuejaDTO | null; // Puede ser null si no hay respuesta
+  nombreServicio: string;
+  nombreEstilista: string;
 }

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { QuejaDTO } from '../dto/queja/queja-dto';
 import { SugerenciaDTO } from '../dto/sugerencia/sugerencia-dto';
+import { InformacionUsuarioDTO } from '../dto/cuenta/informacion-usuario-dto';
+import { EditarUsuarioDTO } from '../dto/cuenta/editar-usuario-dto';
 
 /**
  * Servicio para operaciones administrativas
@@ -126,4 +128,12 @@ export class AdminService {
   responderQueja(idQueja: string, respuesta: string): Observable<MensajeDTO<string>> {
     return this.http.put<MensajeDTO<string>>(`${this.authURL}/responder-queja/${idQueja}`, respuesta);
   }
+  obtenerInformacionUsuarioAdmin(codigo: string): Observable<MensajeDTO<InformacionUsuarioDTO>> {
+    return this.http.get<MensajeDTO<InformacionUsuarioDTO>>(`${this.authURL}/obtener-usuario/${codigo}`);
+  }
+  editarUsuarioAdmin(editarUsuarioDTO: EditarUsuarioDTO): Observable<MensajeDTO<string>> {
+    return this.http.put<MensajeDTO<string>>(`${this.authURL}/editar-perfil`, editarUsuarioDTO);
+  }
+
+  
 }

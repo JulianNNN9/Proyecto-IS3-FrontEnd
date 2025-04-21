@@ -19,13 +19,18 @@ declare var bootstrap: any;
   standalone: true,
   imports: [CommonModule, HttpClientModule, FormsModule],
   templateUrl: './gestionar-quejas.component.html',
-  styleUrl: './gestionar-quejas.component.css'
+  styleUrls: ['./gestionar-quejas.component.css']
 })
 export class GestionarQuejasComponent {
 
   quejas: QuejaDTO[] = []; // Lista de quejas recuperadas del servidor
-  quejaSeleccionada: any = null; // Almacena la queja que se está respondiendo actualmente
+  quejaSeleccionada: QuejaDTO | null = null;
   respuestaQueja: string = ""; // Texto de la respuesta que se enviará
+  textoDetalle: string = "";
+  tituloDetalle: string = "";
+  fechaRespuesta: Date | null = null; // Fecha de la respuesta
+  nombreServicio: string = "";  // Para almacenar el nombre del servicio
+  nombreEstilista: string = ""; // Para almacenar el nombre del estilista
 
   /**
    * Constructor del componente
@@ -103,5 +108,29 @@ export class GestionarQuejasComponent {
         }
       );
     }
+  }
+  /**
+   * Método para ver el detalle de la queja o respuesta.
+   * Muestra un modal con la información detallada, incluyendo el texto completo
+   * (ya sea la descripción de la queja o la respuesta), el servicio relacionado,
+   * el estilista responsable y la fecha de respuesta si está disponible.
+   *
+   * @param texto Texto que contiene el detalle (puede ser la descripción de la queja o la respuesta del administrador)
+   * @param titulo Título que se mostrará en el encabezado del modal (por ejemplo: "Descripción completa" o "Respuesta completa")
+   * @param servicio Nombre del servicio al que se refiere la queja
+   * @param estilista Nombre del estilista relacionado con la queja
+   * @param fecha (Opcional) Fecha de la respuesta, si está disponible
+   */
+  verDetalle(texto: string, titulo: string, servicio: string, estilista: string, fecha?: Date): void {
+    // Asigna los valores recibidos a las variables del componente
+    this.textoDetalle = texto;
+    this.tituloDetalle = titulo;
+    this.fechaRespuesta = fecha || null;          // Asigna la fecha si está disponible
+    this.nombreServicio = servicio;               // Guarda el nombre del servicio relacionado
+    this.nombreEstilista = estilista;             // Guarda el nombre del estilista involucrado
+
+    // Abre el modal de detalles
+    const modal = new bootstrap.Modal(document.getElementById('modalVerDetalle'));
+    modal.show();
   }
 }

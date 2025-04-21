@@ -1,0 +1,34 @@
+/* Personalización del menú desplegable */
+.custom-dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 200px; /* Controla el ancho del menú */
+  }
+  
+  /* Personalización de los elementos del menú */
+  .custom-dropdown-item {
+    font-size: 1rem; /* Ajusta el tamaño de fuente */
+    padding: 10px 20px; /* Añade algo de espacio alrededor del texto */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para el color de fondo */
+  }
+  
+  .custom-dropdown-item:hover {
+    background-color: #f1f1f1; /* Cambia el fondo al pasar el mouse */
+    color: #007bff; /* Cambia el color del texto al pasar el mouse */
+  }
+  
+  .custom-logout-item:hover {
+    background-color: #f8d7da; /* Cambia el fondo de la opción "Cerrar Sesión" */
+    color: #721c24; /* Cambia el color de texto al pasar el mouse */
+  }
+  
+  /* Estilo para la línea divisoria */
+  .dropdown-divider {
+    border-color: #e0e0e0; /* Color más suave para la línea divisoria */
+  }
+  
+  /* Añadir efectos de sombra al pasar el mouse sobre el botón del usuario */
+  .nav-link.dropdown-toggle:hover {
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil al pasar el mouse */
+  }

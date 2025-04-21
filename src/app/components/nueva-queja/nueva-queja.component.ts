@@ -8,8 +8,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
-import { AlertMessagesService } from 'jjwins-angular-alert-messages';
-import { AlertMessagesModule } from 'jjwins-angular-alert-messages';
+import { AlertMessagesService, AlertMessagesModule } from 'jjwins-angular-alert-messages';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { CrearQuejaDTO } from '../../dto/queja/crear-queja-dto';

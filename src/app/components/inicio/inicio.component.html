@@ -1,40 +1,76 @@
 <div class="container-fluid bg-light text-dark py-5">
   <div class="container">
-    
     <!-- Carrusel -->
-  <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner rounded shadow-lg">
-      <div class="carousel-item active">
-        <img src="https://picsum.photos/1200/600?random=1" class="d-block w-100 rounded" alt="Barbería" style="max-height: 400px; object-fit: cover;" />
-        <div class="carousel-caption text-center">
-          <h3 class="fw-bold text-light text-shadow">Bienvenido a nuestra barbería</h3>
-          <p class="text-light text-shadow">La mejor experiencia en estilo y cuidado personal</p>
-          <a href="/login" class="btn btn-primary fw-bold px-4 py-2 shadow">Iniciar sesión</a>
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner rounded shadow-lg">
+    
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <img
+            src="https://picsum.photos/1200/600?random=1"
+            class="d-block w-100 rounded"
+            alt="Barbería"
+            style="max-height: 400px; object-fit: cover"
+          />
+          <div class="carousel-caption d-flex flex-column align-items-center justify-content-center bg-dark bg-opacity-50 rounded p-4">
+            <h3 class="fw-bold text-light text-shadow mb-3">Bienvenido a nuestra barbería</h3>
+            <p class="text-light text-shadow mb-4 text-center">La mejor experiencia en estilo y cuidado personal</p>
+            <a href="/login" class="btn btn-primary fw-bold px-4 py-2 shadow">Iniciar sesión</a>
+          </div>
         </div>
-      </div>
-      <div class="carousel-item">
-        <img src="https://picsum.photos/1200/600?random=2" class="d-block w-100 rounded" alt="..." style="max-height: 400px; object-fit: cover;" />
-        <div class="carousel-caption text-center">
-          <h3 class="fw-bold text-light text-shadow">Estilo y calidad</h3>
-          <p class="text-light text-shadow">Cortes y barbas diseñados por expertos</p>
+    
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+          <img
+            src="https://picsum.photos/1200/600?random=2"
+            class="d-block w-100 rounded"
+            alt="Estilo y calidad en nuestros servicios"
+            style="max-height: 400px; object-fit: cover"
+          />
+          <div class="carousel-caption d-flex flex-column align-items-center justify-content-center bg-dark bg-opacity-50 rounded p-4">
+            <h3 class="fw-bold text-light text-shadow mb-3">Estilo y calidad</h3>
+            <p class="text-light text-shadow mb-4 text-center">Cortes y barbas diseñados por expertos</p>
+          </div>
         </div>
-      </div>
-      <div class="carousel-item">
-        <img src="https://picsum.photos/1200/600?random=3" class="d-block w-100 rounded" alt="..." style="max-height: 400px; object-fit: cover;" />
-        <div class="carousel-caption text-center">
-          <h3 class="fw-bold text-light text-shadow">Reserva fácil y rápida</h3>
-          <p class="text-light text-shadow">Programa tu cita en línea en segundos</p>
+    
+        <!-- Slide 3 -->
+        <div class="carousel-item">
+          <img
+            src="https://picsum.photos/1200/600?random=3"
+            class="d-block w-100 rounded"
+            alt="Reserva fácil en nuestra barberia"
+            style="max-height: 400px; object-fit: cover"
+          />
+          <div class="carousel-caption d-flex flex-column align-items-center justify-content-center bg-dark bg-opacity-50 rounded p-4">
+            <h3 class="fw-bold text-light text-shadow mb-3">Reserva fácil y rápida</h3>
+            <p class="text-light text-shadow mb-4 text-center">Programa tu cita en línea en segundos</p>
+          </div>
         </div>
+    
       </div>
+    
+      <!-- Botón anterior -->
+      <button
+        type="button"
+        data-bs-target="#carouselExample"
+        data-bs-slide="prev"
+        class="carousel-control-prev"
+        aria-label="Slide anterior"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      </button>
+    
+      <!-- Botón siguiente -->
+      <button
+        type="button"
+        data-bs-target="#carouselExample"
+        data-bs-slide="next"
+        class="carousel-control-next"
+        aria-label="Slide siguiente"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      </button>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    </button>
-  </div>
-
 
     <!-- Sección de beneficios -->
     <div class="row align-items-center mt-5">
@@ -42,13 +78,21 @@
         <h1 class="fw-bold text-dark">💈 ¿Por qué elegirnos?</h1>
         <ul class="list-unstyled">
           <li class="fs-5 p-2">✅ Cortes de calidad con barberos expertos.</li>
-          <li class="fs-5 p-2">✅ Productos premium para el cuidado del cabello y barba.</li>
-          <li class="fs-5 p-2">✅ Ambiente acogedor y atención personalizada.</li>
+          <li class="fs-5 p-2">
+            ✅ Productos premium para el cuidado del cabello y barba.
+          </li>
+          <li class="fs-5 p-2">
+            ✅ Ambiente acogedor y atención personalizada.
+          </li>
           <li class="fs-5 p-2">✅ Reserva en línea rápida y sencilla.</li>
         </ul>
       </div>
       <div class="col-lg-6 text-center">
-        <img src="https://picsum.photos/500/300?random=4" class="img-fluid rounded shadow-lg" alt="Servicios de la barbería">
+        <img
+          src="https://picsum.photos/500/300?random=4"
+          class="img-fluid rounded shadow-lg"
+          alt="Servicios de la barbería"
+        />
       </div>
     </div>
 
@@ -57,22 +101,49 @@
       <div class="col-12">
         <div class="bg-dark text-light p-4 rounded shadow-lg text-center">
           <h2 class="fw-bold">⭐ Testimonios</h2>
-          <div id="testimoniosCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div
+            id="testimoniosCarousel"
+            class="carousel slide"
+            data-bs-ride="carousel"
+          >
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <p>💬 "El mejor corte que he tenido, excelente servicio." - Juan P.</p>
+                <p>
+                  💬 "El mejor corte que he tenido, excelente servicio." - Juan
+                  P.
+                </p>
               </div>
               <div class="carousel-item">
-                <p>💬 "Ambiente genial y atención de primera. ¡Recomendado!" - María G.</p>
+                <p>
+                  💬 "Ambiente genial y atención de primera. ¡Recomendado!" -
+                  María G.
+                </p>
               </div>
               <div class="carousel-item">
-                <p>💬 "Productos de calidad y barbería impecable." - Carlos R.</p>
+                <p>
+                  💬 "Productos de calidad y barbería impecable." - Carlos R.
+                </p>
               </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#testimoniosCarousel" data-bs-slide="prev">
+            <!-- Botón anterior -->
+            <button
+              type="button"
+              data-bs-target="#testimoniosCarousel"
+              data-bs-slide="prev"
+              class="carousel-control-prev"
+              aria-label="Slide anterior"
+            >
               <span class="carousel-control-prev-icon"></span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#testimoniosCarousel" data-bs-slide="next">
+
+            <!-- Botón siguiente -->
+            <button
+              type="button"
+              data-bs-target="#testimoniosCarousel"
+              data-bs-slide="next"
+              class="carousel-control-next"
+              aria-label="Slide siguiente"
+            >
               <span class="carousel-control-next-icon"></span>
             </button>
           </div>
@@ -80,18 +151,22 @@
       </div>
     </div>
 
-      <!-- Botón flotante de PQRS (solo visible si NO es admin) -->
+    <!-- Botón flotante de PQRS (solo visible si NO es admin) -->
     <button class="pqrs-button" *ngIf="esCliente" (click)="togglePQRS()">
       <i class="fas fa-question-circle"></i> Ayuda
     </button>
 
-  <!-- Opciones de PQRS (solo visibles si NO es admin) -->
+    <!-- Opciones de PQRS (solo visibles si NO es admin) -->
     <div *ngIf="mostrarOpciones && esCliente" class="pqrs-popup">
-      <button class="pqrs-option" (click)="seleccionarOpcion('nueva-queja')">🛑 Quejas</button>
-      <button class="pqrs-option" (click)="seleccionarOpcion('sugerencia')">💡 Sugerencias</button>
-      <button class="pqrs-option" (click)="irAPreguntasFrecuentes()">❓ Preguntas Frecuentes</button>
+      <button class="pqrs-option" (click)="seleccionarOpcion('nueva-queja')">
+        🛑 Quejas
+      </button>
+      <button class="pqrs-option" (click)="seleccionarOpcion('sugerencia')">
+        💡 Sugerencias
+      </button>
+      <button class="pqrs-option" (click)="irAPreguntasFrecuentes()">
+        ❓ Preguntas Frecuentes
+      </button>
     </div>
-
-
   </div>
 </div>

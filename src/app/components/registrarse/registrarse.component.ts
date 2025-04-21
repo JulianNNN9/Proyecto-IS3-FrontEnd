@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PublicoService } from '../../services/publico.service';
 import Swal from 'sweetalert2';
 import { CrearUsuarioDTO } from '../../dto/crear-usuario-dto';
-import { AlertMessagesService } from 'jjwins-angular-alert-messages';
-import { AlertMessagesModule } from 'jjwins-angular-alert-messages';
+import { AlertMessagesService, AlertMessagesModule } from 'jjwins-angular-alert-messages';
 import { Router } from '@angular/router';
 
 /**
