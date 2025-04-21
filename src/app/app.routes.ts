@@ -12,6 +12,7 @@ import { NuevaQuejaComponent } from './components/nueva-queja/nueva-queja.compon
 import { MisQuejasComponent } from './components/mis-quejas/mis-quejas.component';
 import { ActivarCuentaComponent } from './components/activar-cuenta/activar-cuenta.component';
 import { OlvidarContraseniaComponent } from './components/olvidar-contrasenia/olvidar-contrasenia.component';
+import { CitasEstilistaComponent } from './components/citas-estilista/citas-estilista.component';
 import { SugerenciasComponent } from './components/sugerencias/sugerencias.component';
 import { GestionarSugerenciasComponent } from './components/gestionar-sugerencias/gestionar-sugerencias.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
@@ -55,6 +56,10 @@ export const routes: Routes = [
     { path: 'gestionar-quejas', component: GestionarQuejasComponent, canActivate: [AuthAdminGuard] },
     { path: 'gestionar_sugerencias', component: GestionarSugerenciasComponent, canActivate: [AuthAdminGuard] },
     
+
+    // Rutas para estilistas
+    { path: 'citas-estilista', component: CitasEstilistaComponent },
+
     // Ruta comodín: redirige a la página principal cuando se ingresa una ruta inexistente
     { path: "**", pathMatch: "full", redirectTo: "" }
 ];
