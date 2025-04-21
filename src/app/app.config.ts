@@ -9,6 +9,10 @@ import { TokenService } from './services/token.service';
 import { PublicoService } from './services/publico.service';
 import { ClienteService } from './services/cliente.service';
 import { AuthService } from './services/auth.service';
+import { AuthAdminClienteGuard } from './guardians/auth-admin-cliente.guard';
+import { AuthAdminGuard } from './guardians/auth-admin.guard';
+import { AuthClienteGuard } from './guardians/auth-cliente.guard';
+import { LoginGuard } from './guardians/login.guard';
 
 /**
  * Configuración principal de la aplicación
@@ -27,7 +31,10 @@ export const appConfig: ApplicationConfig = {
     PublicoService,   // Servicio para operaciones públicas (sin autenticación)
     ClienteService,   // Servicio para operaciones de clientes autenticados
     AuthService,      // Servicio de autenticación
-    
+    AuthAdminClienteGuard,
+    AuthAdminGuard,
+    AuthClienteGuard,
+    LoginGuard,
     provideAnimationsAsync()  // Soporte para animaciones cargadas de forma asíncrona
   ]
 };
