@@ -16,6 +16,9 @@ import { SugerenciasComponent } from './components/sugerencias/sugerencias.compo
 import { GestionarSugerenciasComponent } from './components/gestionar-sugerencias/gestionar-sugerencias.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { CambiarContraseniaComponent } from './components/cambiar-contrasenia/cambiar-contrasenia.component';
+import { MisCitasComponent } from './components/mis-citas/mis-citas.component';
+import { AgendarCitaComponent } from './components/agendar-cita/agendar-cita.component';
+import { HistorialCitasComponent } from './components/historial-citas/historial-citas.component';
 
 /**
  * Configuración de rutas de la aplicación
@@ -41,6 +44,9 @@ export const routes: Routes = [
     { path: 'servicios', component: ServiciosComponent},
     { path: 'faq', component: FaqComponent},
     { path: 'citas', component: CitasComponent},
+    { path: 'mis-citas', component: MisCitasComponent},
+    { path: 'agendar-cita', component: AgendarCitaComponent},
+    { path: 'historial-citas', component: HistorialCitasComponent}, // Redirige a la misma página de citas
     
     // Rutas para el sistema de quejas y sugerencias (PQRS)
     { path: 'nueva-queja', component: NuevaQuejaComponent},
