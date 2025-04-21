@@ -134,4 +134,6 @@ export class AdminService {
   editarUsuarioAdmin(editarUsuarioDTO: EditarUsuarioDTO): Observable<MensajeDTO<string>> {
     return this.http.put<MensajeDTO<string>>(`${this.authURL}/editar-perfil`, editarUsuarioDTO);
   }
+
+  
 }

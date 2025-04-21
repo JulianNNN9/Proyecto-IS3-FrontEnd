@@ -1,0 +1,109 @@
+<div class="contenedor-citas">
+  <div class="tarjeta-citas">
+    <!-- H1 oculto para accesibilidad -->
+    <h1 class="visually-hidden">Mis Citas</h1>
+    <div class="cabecera-citas">
+      <h2><i class="fa-solid fa-calendar me-2"></i>Mis Citas</h2>
+      
+      <!-- Filtro de citas -->
+      <div class="filtro-citas">
+        <label for="filtroEstado" class="form-label me-2">Filtrar por estado:</label>
+        <select id="filtroEstado" class="form-select" [(ngModel)]="filtroEstado" (change)="aplicarFiltro()">
+          <option value="">Todos los estados</option>
+          <option *ngFor="let estado of estadosFiltro" [value]="estado">{{ estado }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Indicador de carga -->
+    <div *ngIf="cargando" class="text-center p-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mt-2">Cargando citas...</p>
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="error" class="alert alert-danger m-3">
+      {{ error }}
+    </div>
+
+    <!-- Tabla de citas -->
+    <div class="cuerpo-citas" *ngIf="!cargando && !error">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle tabla-citas">
+          <thead>
+            <tr>
+              <th>Fecha y Hora</th>
+              <th>Cliente</th>
+              <th>Servicio</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cita of citasFiltradas" [ngClass]="{'fila-historica': esHistorica(cita.fechaHora)}">
+              <td>{{ formatearFecha(cita.fechaHora) }}</td>
+              <td>{{ nombreCliente || cita.usuarioId }}</td>
+              <td>{{ nombreServicio || cita.servicioId }}</td>
+              <td>
+                <span class="estado" [ngClass]="obtenerClaseEstado(cita.estado)">
+                  {{ cita.estado }}
+                </span>
+              </td>
+              <td>
+                <button class="btn btn-outline-primary btn-sm" (click)="verDetalle(cita)">
+                  <i class="fa-solid fa-eye me-1"></i> Ver detalles
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Mensaje si no hay citas -->
+        <div *ngIf="citasFiltradas.length === 0" class="mensaje-vacio">
+          <i class="fa-solid fa-calendar-xmark me-2"></i>No tienes citas programadas.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de detalle de cita -->
+<div class="modal fade" id="modalDetalleCita" tabindex="-1" aria-labelledby="modalDetalleCitaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalDetalleCitaLabel">
+          Detalle de la Cita
+        </h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body" *ngIf="citaSeleccionada">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <h4>Información General</h4>
+            <p><strong>Fecha y hora:</strong> {{ formatearFecha(citaSeleccionada.fechaHora) }}</p>
+            <p><strong>Estado:</strong> 
+              <span class="estado" [ngClass]="obtenerClaseEstado(citaSeleccionada.estado)">
+                {{ citaSeleccionada.estado }}
+              </span>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h4>Cliente y Servicio</h4>
+            <p><strong>Cliente:</strong> {{ nombreCliente || citaSeleccionada.usuarioId }}</p>
+            <p><strong>Servicio:</strong> {{ nombreServicio || citaSeleccionada.servicioId }}</p>
+          </div>
+        </div>
+        
+        <!-- Aquí puedes añadir más información si está disponible en el DTO -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
