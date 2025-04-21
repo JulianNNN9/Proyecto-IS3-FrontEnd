@@ -7,7 +7,7 @@ export class AuthAdminClienteGuard implements CanActivate {
   constructor(private router: Router, private tokenService: TokenService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-    if (this.tokenService.isLogged() && (this.tokenService.getRol() === 'CLIENTE' || this.tokenService.getRol() === 'ADMINISTRADOR')) {
+    if (this.tokenService.isLogged() && (this.tokenService.getRol() === 'CLIENTE' || this.tokenService.getRol() === 'ADMIN')) {
         return true;
       } else {
         this.router.navigate(['/']);
