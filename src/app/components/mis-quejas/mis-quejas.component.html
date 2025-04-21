@@ -1,19 +1,146 @@
-<div class="container mt-4 vh-100">
-    <h2>Mis Quejas</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Descripción</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let queja of quejas">
-          <td>{{ queja.descripcion }}</td>
-          <td>{{ queja.fecha | date }}</td>
-          <td>{{ queja.estadoQueja }}</td>
-        </tr>
-      </tbody>
-    </table>
+<div class="contenedor-quejas">
+  <div class="tarjeta-quejas">
+    <!-- H1 oculto para accesibilidad -->
+    <h1 class="visually-hidden">Mis Quejas</h1>
+    <div class="cabecera-quejas">
+      <h2><i class="fa-solid fa-comment-dots me-2"></i>Mis Quejas</h2>
+    </div>
+    <div class="cuerpo-quejas">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle text-center tabla-quejas">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Estado</th>
+              <th>Respuesta</th>
+              <th>Fecha de Respuesta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let queja of quejas">
+              <td>
+                <span class="texto-truncado">{{ queja.descripcion }}</span>
+                <button
+                  class="btn btn-link btn-sm p-0 ms-2"
+                  (click)="
+                    verDetalle(
+                      queja.descripcion,
+                      'Descripción completa',
+                      queja.nombreServicio,
+                      queja.nombreEstilista,
+                      queja.fecha
+                    )
+                  "
+                >
+                  Ver
+                </button>
+              </td>
+              <td>
+                <span
+                  class="estado"
+                  [ngClass]="{
+                    'estado-resuelta': queja.estadoQueja === 'Resuelta',
+                    'estado-proceso': queja.estadoQueja === 'En proceso',
+                    'estado-pendiente': queja.estadoQueja === 'Pendiente'
+                  }"
+                >
+                  {{ queja.estadoQueja }}
+                </span>
+              </td>
+              <td>
+                <ng-container
+                  *ngIf="
+                    queja.respuestaQueja?.respuesta as respuesta;
+                    else noRespuesta
+                  "
+                >
+                  <span class="texto-truncado">{{ respuesta }}</span>
+                  <button
+                    class="btn btn-link btn-sm p-0 ms-2"
+                    (click)="
+                      verDetalle(
+                        respuesta,
+                        'Respuesta completa',
+                        queja.nombreServicio,
+                        queja.nombreEstilista,
+                        queja.respuestaQueja?.fechaRespuesta
+                      )
+                    "
+                  >
+                    Ver
+                  </button>
+                </ng-container>
+                <ng-template #noRespuesta>
+                  <span class="text-muted fst-italic">Sin responder</span>
+                </ng-template>
+              </td>
+              <td>
+                <ng-container
+                  *ngIf="queja.respuestaQueja?.fechaRespuesta; else sinFecha"
+                >
+                  {{
+                    queja.respuestaQueja?.fechaRespuesta
+                      | date : "dd/MM/yyyy HH:mm"
+                  }}
+                </ng-container>
+                <ng-template #sinFecha>
+                  <span class="text-muted fst-italic">Sin fecha</span>
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="quejas.length === 0" class="mensaje-vacio">
+          <i class="fa-solid fa-face-sad-tear me-2"></i>No tienes quejas
+          registradas.
+        </div>
+      </div>
+    </div>
   </div>
+</div>
+
+<!-- Modal de vista de detalle -->
+<div
+  class="modal fade"
+  id="modalVerDetalle"
+  tabindex="-1"
+  aria-labelledby="modalVerDetalleLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalVerDetalleLabel">
+          {{ tituloDetalle }}
+        </h3>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p style="white-space: pre-wrap">{{ textoDetalle }}</p>
+        <p *ngIf="fechaRespuesta; else noFechaResp">
+          <strong>Fecha:</strong>
+          {{ fechaRespuesta | date : "dd/MM/yyyy HH:mm" }}
+        </p>
+        <ng-template #noFechaResp>
+          <p>
+            <strong>Fecha:</strong>
+            <span class="text-muted fst-italic">Sin fecha</span>
+          </p>
+        </ng-template>
+        <p><strong>Servicio:</strong> {{ nombreServicio }}</p>
+        <p><strong>Estilista:</strong> {{ nombreEstilista }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

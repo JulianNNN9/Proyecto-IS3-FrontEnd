@@ -33,23 +33,25 @@
     padding: 8px 12px;
     font-size: 0.9rem;
     border-radius: 8px;
+    color: #333; /* Aseguramos que el color del texto sea oscuro para buen contraste */
 }
 
 .bg-warning {
     background-color: #ffc107;
-    color: black;
+    color: #333; /* Cambio a color oscuro para mejorar el contraste */
 }
 
 .bg-info {
     background-color: #17a2b8;
-    color: white;
+    color: white; /* Se mantiene blanco, ya que el contraste es suficiente */
 }
 
 .bg-success {
     background-color: #28a745;
-    color: white;
+    color: white; /* Se mantiene blanco, ya que el contraste es suficiente */
 }
 
+/* Estilos para los botones */
 .btn {
     border-radius: 20px;
     font-weight: bold;
@@ -58,21 +60,29 @@
 }
 
 .btn-primary {
-    background-color: #007bff;
+    background-color: #0056b3; /* Un azul más oscuro */
     color: white;
     border: none;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #004085; /* Un azul aún más oscuro */
 }
 
 .btn-success {
-    background-color: #28a745;
+    background-color: #218838; /* Verde más oscuro */
     color: white;
     border: none;
 }
 
 .btn-success:hover {
-    background-color: #218838;
+    background-color: #1e7e34;
 }
+.texto-truncado {
+    display: inline-block;
+    max-width: 250px;     /* ajusta según el ancho deseado */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
