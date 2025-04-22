@@ -11,6 +11,10 @@ import { EstilistaDTO } from '../dto/estilista/estilista-dto';
 import { ServicioDTO } from '../dto/servicio/servicio-dto';
 import { QuejaDTO } from '../dto/queja/queja-dto';
 import { TokenService } from './token.service';
+import { InformacionCitaDTO } from '../dto/mis-citas/informacion-cita-dto';
+import { CrearCitaDTO } from '../dto/mis-citas/crear-cita-dto';
+import { ReprogramarCitaDTO } from '../dto/mis-citas/reprogramar-cita-dto';
+import { CalendarioCitasDTO } from '../dto/cita/calendario-citas-dto';
 
 /**
  * Servicio para operaciones del cliente
@@ -118,6 +122,33 @@ export class ClienteService {
     );
   }
 
+    /**
+   * Obtiene las citas asociadas a un cliente específico
+   * @param clienteId Identificador del cliente
+   * @returns Observable con lista de citas del cliente
+   */
+  obtenerCitasPorClienteId(clienteId: string): Observable<MensajeDTO<InformacionCitaDTO[]>> {
+    return this.http.get<MensajeDTO<InformacionCitaDTO[]>>(`${this.authURL}/obtener-citas/${clienteId}`);
+  }
+
+    /**
+   * Obtiene las citas canceladas y completadas de un cliente específico
+   * @param clienteId Identificador único del cliente
+   * @returns Observable con la lista de citas canceladas o completadas
+   */
+  obtenerCitasCanceladasYCompletadas(clienteId: string): Observable<MensajeDTO<InformacionCitaDTO[]>> {
+    return this.http.get<MensajeDTO<InformacionCitaDTO[]>>(`${this.authURL}/obtener-citas-canceladas-completadas/${clienteId}`);
+  }
+  
+    /**
+   * Cancela una cita programada
+   * @param citaId Identificador único de la cita a cancelar
+   * @returns Observable con mensaje de confirmación
+   */
+  cancelarCita(citaId: string): Observable<MensajeDTO<string>> {
+    return this.http.put<MensajeDTO<string>>(`${this.authURL}/citas/cancelar/${citaId}`, {});
+  }
+
   /**
    * Actualiza la información personal del usuario
    * @param editarUsuarioDTO Objeto con los datos actualizados del usuario
@@ -203,4 +234,31 @@ export class ClienteService {
       `${this.authURL}/obtener-servicios`
     );
   }
+
+  /**
+ * Registra una nueva cita en el sistema
+ * @param crearCitaDTO Objeto con los datos de la cita
+ * @returns Observable con mensaje de confirmación
+ */
+agendarCita(crearCitaDTO: CrearCitaDTO): Observable<MensajeDTO<string>> {
+  return this.http.post<MensajeDTO<string>>(`${this.authURL}/crear-cita`, crearCitaDTO);
+}
+
+/**
+ * Reprograma una cita existente
+ * @param reprogramarCitaDTO Objeto con los datos de la cita a reprogramar
+ * @returns Observable con mensaje de confirmación
+ */
+reprogramarCita(reprogramarCitaDTO: ReprogramarCitaDTO): Observable<MensajeDTO<string>> {
+  return this.http.put<MensajeDTO<string>>(`${this.authURL}/reprogramar-cita`, reprogramarCitaDTO);
+}
+
+/**
+ * Obtiene las citas confirmadas y reprogramadas para el calendario
+ * @returns Observable con la lista de citas confirmadas y reprogramadas
+ */
+obtenerCalendarioCitas(): Observable<MensajeDTO<CalendarioCitasDTO[]>> {
+  return this.http.get<MensajeDTO<CalendarioCitasDTO[]>>(`${this.authURL}/obtener-calendario-citas`);
+}
+
 }

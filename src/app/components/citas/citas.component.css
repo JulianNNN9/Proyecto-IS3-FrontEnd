@@ -1,0 +1,42 @@
+.hero-section {
+    background-image: url('https://picsum.photos/1200/400?random=1');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 0.375rem;
+}
+
+.hero-section * {
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.text-primary {
+    color: #007bff !important;
+}
+
+.bi {
+    font-size: 1.2rem;
+}
+
+.display-4.bi {
+    font-size: 3rem;
+}

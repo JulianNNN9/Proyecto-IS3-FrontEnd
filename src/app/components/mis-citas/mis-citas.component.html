@@ -1,0 +1,57 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Citas Programadas</h2>
+
+  <!-- Botón para ver historial -->
+  <div class="text-center mt-4 p-3">
+    <h5>¿Quieres ver tu historial de citas?</h5>
+    <button class="btn btn-secondary" [routerLink]="'/historial-citas'">Ver Historial de Citas</button>
+  </div>
+
+  <!-- Lista de citas -->
+  <div class="list-group">
+    <div 
+      class="list-group-item d-flex justify-content-between align-items-center p-3 mb-2" 
+      *ngFor="let cita of citas; let i = index">
+      <div>
+        <h5 class="mb-1">Cita con {{ cita.estilistaNombre }}</h5>
+        <p class="mb-1">Fecha y Hora: {{ cita.fechaHora | date: 'dd/MM/yyyy, h:mm a' }}</p>
+        <p class="mb-1">Servicio: {{ cita.servicioNombre }}</p>
+        <p class="mb-1">Estado: {{ cita.estado }}</p>
+      </div>
+      <div>
+        <button class="btn btn-danger btn-sm me-2" (click)="cancelarCita(i)">Cancelar</button>
+        <button class="btn btn-primary btn-sm" (click)="abrirModalReprogramar(i)">Reprogramar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para reprogramar cita -->
+<div class="modal fade" id="modalReprogramar" tabindex="-1" aria-labelledby="modalReprogramarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalReprogramarLabel">Reprogramar Cita</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #reprogramarForm="ngForm">
+          <div class="mb-3">
+            <label for="nuevaFechaHora" class="form-label">Nueva Fecha y Hora</label>
+            <input 
+              type="datetime-local" 
+              id="nuevaFechaHora" 
+              class="form-control" 
+              [(ngModel)]="nuevaFechaHora" 
+              name="nuevaFechaHora" 
+              required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" [disabled]="!nuevaFechaHora" (click)="confirmarReprogramacion()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

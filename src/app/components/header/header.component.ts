@@ -28,6 +28,7 @@ export class HeaderComponent {
     { nombre: 'Gestionar Quejas', ruta: '/gestionar-quejas', rolesPermitidos: ['ADMIN'] },
     { nombre: 'Gestionar Sugerencias', ruta: '/gestionar_sugerencias', rolesPermitidos: ['ADMIN'] },
     { nombre: 'Mis Citas', ruta: '/mis-citas', rolesPermitidos: ['CLIENTE'] },
+    { nombre: 'Agendar una cita', ruta: '/agendar-cita', rolesPermitidos: ['CLIENTE'] },
     { nombre: 'Mis Quejas', ruta: '/mis-quejas', rolesPermitidos: ['CLIENTE'] },
     { nombre: 'Perfil', ruta: '/perfil', rolesPermitidos: ['CLIENTE', 'ADMIN'] }
   ];
