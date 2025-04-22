@@ -16,8 +16,8 @@
       <tbody>
         <tr *ngFor="let cita of historialCitas; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ cita.estilistaId }}</td>
-          <td>{{ cita.servicioId }}</td>
+          <td>{{ cita.estilistaNombre }}</td>
+          <td>{{ cita.servicioNombre }}</td>
           <td>{{ cita.fechaHora | date: 'dd/MM/yyyy, h:mm a' }}</td>
           <td>{{ cita.estado }}</td>
         </tr>
@@ -26,7 +26,7 @@
   </div>
 
   <!-- Botón para regresar -->
-  <div class="text-center mt-4">
+  <div class="text-center mt-4 p-3">
     <button class="btn btn-secondary" (click)="volver()">Volver</button>
   </div>
 </div>

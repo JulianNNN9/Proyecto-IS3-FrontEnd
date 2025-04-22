@@ -1,1 +1,43 @@
-<p>servicios works!</p>
+<div class="container py-5">
+  <!-- Header Section con imagen de fondo -->
+  <div class="text-center mb-5 header-section rounded" 
+       [style.background-image]="'url(https://picsum.photos/1200/400?random=5)'"
+       style="padding: 100px 20px; background-size: cover; background-position: center;">
+    <div class="bg-dark bg-opacity-50 p-4 rounded">
+      <h1 class="display-4 fw-bold text-white">Nuestros Servicios</h1>
+      <p class="lead text-white mb-4">Descubre la mejor experiencia en cuidado del cabello</p>
+      <button (click)="agendarCita()" class="btn btn-primary btn-lg">
+        ¡Agenda tu cita ahora!
+      </button>
+    </div>
+  </div>
+
+  <!-- Services Grid -->
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-3" *ngFor="let servicio of servicios">
+      <div class="card h-100 shadow-sm">
+        <img [src]="servicio.imagen" class="card-img-top" [alt]="servicio.nombre">
+        <div class="card-body">
+          <h5 class="card-title">{{servicio.nombre}}</h5>
+          <p class="card-text">{{servicio.descripcion}}</p>
+          <p class="card-text"><small class="text-muted">{{servicio.precio}}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action Section -->
+  <div class="text-center mt-5">
+    <div class="p-5 bg-light rounded-3" 
+         [style.background-image]="'url(https://picsum.photos/1200/300?random=6)'"
+         style="background-size: cover; background-position: center;">
+      <div class="container-fluid py-5 bg-dark bg-opacity-50 rounded">
+        <h2 class="display-5 fw-bold text-white">¿Listo para un cambio?</h2>
+        <p class="fs-4 text-white">Nuestros estilistas profesionales están aquí para ayudarte a lograr el look que deseas.</p>
+        <button (click)="agendarCita()" class="btn btn-primary btn-lg">
+          Reserva tu cita
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

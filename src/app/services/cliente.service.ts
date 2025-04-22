@@ -14,6 +14,7 @@ import { TokenService } from './token.service';
 import { InformacionCitaDTO } from '../dto/mis-citas/informacion-cita-dto';
 import { CrearCitaDTO } from '../dto/mis-citas/crear-cita-dto';
 import { ReprogramarCitaDTO } from '../dto/mis-citas/reprogramar-cita-dto';
+import { CalendarioCitasDTO } from '../dto/cita/calendario-citas-dto';
 
 /**
  * Servicio para operaciones del cliente
@@ -250,6 +251,14 @@ agendarCita(crearCitaDTO: CrearCitaDTO): Observable<MensajeDTO<string>> {
  */
 reprogramarCita(reprogramarCitaDTO: ReprogramarCitaDTO): Observable<MensajeDTO<string>> {
   return this.http.put<MensajeDTO<string>>(`${this.authURL}/reprogramar-cita`, reprogramarCitaDTO);
+}
+
+/**
+ * Obtiene las citas confirmadas y reprogramadas para el calendario
+ * @returns Observable con la lista de citas confirmadas y reprogramadas
+ */
+obtenerCalendarioCitas(): Observable<MensajeDTO<CalendarioCitasDTO[]>> {
+  return this.http.get<MensajeDTO<CalendarioCitasDTO[]>>(`${this.authURL}/obtener-calendario-citas`);
 }
 
 }
