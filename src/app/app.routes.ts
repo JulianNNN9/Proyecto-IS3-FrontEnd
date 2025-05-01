@@ -24,6 +24,8 @@ import { AuthClienteGuard } from './guardians/auth-cliente.guard';
 import { AuthAdminClienteGuard } from './guardians/auth-admin-cliente.guard';
 import { LoginGuard } from './guardians/login.guard';
 import { AuthAdminGuard } from './guardians/auth-admin.guard';
+import { CrearCuponComponent } from './components/crear-cupon/crear-cupon.component';
+import { CuponesComponent } from './components/cupones/cupones.component';
 
 /**
  * Configuración de rutas de la aplicación
@@ -65,6 +67,10 @@ export const routes: Routes = [
 
     // Rutas para estilistas
     { path: 'citas-estilista', component: CitasEstilistaComponent },
+
+    // Rutas para administradores
+    { path: 'crear-cupon', component: CrearCuponComponent, canActivate: [AuthAdminGuard] },
+    { path: 'cupones', component: CuponesComponent, canActivate: [AuthAdminGuard] },
 
     // Ruta comodín: redirige a la página principal cuando se ingresa una ruta inexistente
     { path: "**", pathMatch: "full", redirectTo: "" }

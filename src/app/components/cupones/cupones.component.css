@@ -1,0 +1,15 @@
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.table {
+  vertical-align: middle;
+}
+
+.btn-group {
+  gap: 0.25rem;
+}
+
+.badge {
+  padding: 0.5em 0.75em;
+}
