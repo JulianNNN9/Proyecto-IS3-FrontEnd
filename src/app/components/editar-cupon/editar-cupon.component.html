@@ -1,0 +1,91 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">Editar Cupón</h3>
+        </div>
+        <div class="card-body">
+          <form #editForm="ngForm" (ngSubmit)="guardarCambios()">
+            <!-- Código -->
+            <div class="mb-3">
+              <label for="codigo" class="form-label">Código del Cupón*</label>
+              <input type="text" 
+                     class="form-control" 
+                     id="codigo" 
+                     name="codigo"
+                     [(ngModel)]="cupon.codigo" 
+                     required
+                     placeholder="Ej: VERANO2024">
+            </div>
+
+            <!-- Nombre -->
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre del Cupón*</label>
+              <input type="text" 
+                     class="form-control" 
+                     id="nombre" 
+                     name="nombre"
+                     [(ngModel)]="cupon.nombre" 
+                     required
+                     placeholder="Ej: Descuento de Verano">
+            </div>
+
+            <!-- Porcentaje de Descuento -->
+            <div class="mb-3">
+              <label for="porcentajeDescuento" class="form-label">Porcentaje de Descuento*</label>
+              <input type="number" 
+                     class="form-control" 
+                     id="porcentajeDescuento" 
+                     name="porcentajeDescuento"
+                     [(ngModel)]="cupon.porcentajeDescuento" 
+                     required
+                     min="1" 
+                     max="100"
+                     placeholder="Ej: 20">
+            </div>
+
+            <!-- Fecha de Vencimiento -->
+            <div class="mb-3">
+              <label for="fechaVencimiento" class="form-label">Fecha de Vencimiento*</label>
+              <input type="datetime-local" 
+                     class="form-control" 
+                     id="fechaVencimiento" 
+                     name="fechaVencimiento"
+                     [(ngModel)]="cupon.fechaVencimiento" 
+                     required>
+            </div>
+
+            <!-- Estado -->
+                       
+            <div class="form-check mb-3">
+                <input type="checkbox" 
+                       class="form-check-input" 
+                       id="estadoCupon" 
+                       name="estadoCupon"
+                       [ngModel]="cupon.estadoCupon === EstadoCupon.ACTIVO"
+                       (ngModelChange)="toggleEstado($event)">
+                <label class="form-check-label" for="estadoCupon">
+                    Cupón {{cupon.estadoCupon === EstadoCupon.ACTIVO ? 'Activo' : 'Inactivo'}}
+                </label>
+            </div>
+
+            <!-- Botones -->
+            <div class="d-flex gap-2">
+              <button type="submit" 
+                      class="btn btn-primary"
+                      [disabled]="!editForm.form.valid">
+                Guardar Cambios
+              </button>
+              <button type="button" 
+                      class="btn btn-secondary"
+                      routerLink="/admin/cupones">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

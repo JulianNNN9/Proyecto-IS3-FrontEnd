@@ -26,6 +26,7 @@ import { LoginGuard } from './guardians/login.guard';
 import { AuthAdminGuard } from './guardians/auth-admin.guard';
 import { CrearCuponComponent } from './components/crear-cupon/crear-cupon.component';
 import { CuponesComponent } from './components/cupones/cupones.component';
+import { EditarCuponComponent } from './components/editar-cupon/editar-cupon.component';
 
 /**
  * Configuración de rutas de la aplicación
@@ -71,6 +72,7 @@ export const routes: Routes = [
     // Rutas para administradores
     { path: 'crear-cupon', component: CrearCuponComponent, canActivate: [AuthAdminGuard] },
     { path: 'cupones', component: CuponesComponent, canActivate: [AuthAdminGuard] },
+    { path: 'editar-cupon/:id', component: EditarCuponComponent, canActivate: [AuthAdminGuard] },
 
     // Ruta comodín: redirige a la página principal cuando se ingresa una ruta inexistente
     { path: "**", pathMatch: "full", redirectTo: "" }

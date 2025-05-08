@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { QuejaDTO } from '../dto/queja/queja-dto';
 import { SugerenciaDTO } from '../dto/sugerencia/sugerencia-dto';
@@ -174,4 +175,15 @@ export class AdminService {
     listarCupones(): Observable<MensajeDTO<CuponDTO[]>> {
       return this.http.get<MensajeDTO<CuponDTO[]>>(`${this.authURL}/cupon/listar-cupones`);
     }
+
+    /**
+     * Obtiene la información de un cupón específico por su ID
+     * @param idCupon Identificador del cupón a consultar
+     * @returns Observable con la información del cupón
+     */
+    obtenerInformacionCupon(idCupon: string): Observable<MensajeDTO<CuponDTO>> {
+      console.log('Service - Getting coupon info:', idCupon);
+      return this.http.get<MensajeDTO<CuponDTO>>(`${this.authURL}/cupon/obtenerInformacionCupon/${idCupon}`);
+    }
+
 }
