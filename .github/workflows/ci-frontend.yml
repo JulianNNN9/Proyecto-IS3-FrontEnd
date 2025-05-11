@@ -69,8 +69,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/LaosFrontend:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/LaosFeontend:${{ steps.vars.outputs.VERSION }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/laosfrontend:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/laosfrontend:${{ steps.vars.outputs.VERSION }}
           labels: |
             org.opencontainers.image.created=${{ steps.vars.outputs.BUILD_DATE }}
             org.opencontainers.image.version=${{ steps.vars.outputs.VERSION }}
