@@ -31,7 +31,7 @@ jobs:
         run: npm run build -- --configuration production
         
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
@@ -78,28 +78,3 @@ jobs:
             org.opencontainers.image.created=${{ steps.vars.outputs.BUILD_DATE }}
             org.opencontainers.image.version=${{ steps.vars.outputs.VERSION }}
             backend.version=${{ steps.vars.outputs.BACKEND_TAG }}
-
-  deploy:
-    needs: docker
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Deploy to production
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          script: |
-            cd /path/to/deployment
-            docker-compose pull
-            docker-compose up -d
-            
-      - name: Notify deployment status
-        if: always()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_TITLE: "Frontend Deployment ${{ job.status }}"
-          SLACK_MESSAGE: "Frontend deployed to production with version v1.0.${{ github.run_number }}"
