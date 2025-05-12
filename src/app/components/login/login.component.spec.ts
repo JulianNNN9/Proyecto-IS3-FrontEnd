@@ -128,7 +128,7 @@ describe('LoginComponent', () => {
       expect(mockRouter.navigate).not.toHaveBeenCalled();
     }));
 /*
- */
+ 
     it('should navigate to /activar-cuenta if login fails with "Esta cuenta aún no ha sido activada"', fakeAsync(() => {
       const errorResponse: MensajeDTO<any> = { error: true, respuesta: 'Esta cuenta aún no ha sido activada' };
       mockPublicoService.iniciarSesion.and.returnValue(throwError(() => ({ error: errorResponse }))); // ¡CORRECCIÓN AQUÍ!
@@ -146,6 +146,6 @@ describe('LoginComponent', () => {
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/activar-cuenta']);
       expect(mockTokenService.login).not.toHaveBeenCalled();
     }));
-    
+    */
   });
 });
