@@ -26,8 +26,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  loginForm: FormGroup;    // Formulario reactivo para los datos de inicio de sesión
-  showPassword: boolean = false;  // Controla la visibilidad de la contraseña
+  loginForm: FormGroup;     // Formulario reactivo para los datos de inicio de sesión
+  showPassword: boolean = false;   // Controla la visibilidad de la contraseña
 
   /**
    * Constructor del componente
@@ -45,8 +45,8 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],  // Campo para email con validaciones
-      contrasenia: ['', Validators.required],                // Campo para contraseña
+      email: ['', [Validators.required, Validators.email]],   // Campo para email con validaciones
+      password: ['', Validators.required],                   // Campo para contraseña (¡CAMBIADO!)
     });
   }
 
