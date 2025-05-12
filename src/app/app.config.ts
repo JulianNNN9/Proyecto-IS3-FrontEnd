@@ -14,6 +14,7 @@ import { AuthAdminClienteGuard } from './guardians/auth-admin-cliente.guard';
 import { AuthAdminGuard } from './guardians/auth-admin.guard';
 import { AuthClienteGuard } from './guardians/auth-cliente.guard';
 import { LoginGuard } from './guardians/login.guard';
+import { AlertMessagesService } from 'jjwins-angular-alert-messages';
 
 /**
  * Configuración principal de la aplicación
@@ -37,6 +38,7 @@ export const appConfig: ApplicationConfig = {
     AuthAdminGuard,
     AuthClienteGuard,
     LoginGuard,
+    AlertMessagesService,
     provideAnimationsAsync()  // Soporte para animaciones cargadas de forma asíncrona
   ]
 };

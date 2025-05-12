@@ -1,19 +1,14 @@
 <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
   <div class="card shadow-lg login-card">
 
-    <!-- Título principal (h1) para evitar el error "Missing first level heading" -->
-    <h1 class="visually-hidden">Iniciar Sesión</h1> <!-- H1 oculto para accesibilidad -->
-
-    <!-- Título de la sección -->
-    <div class="card-header bg-primary text-white p-4 text-center rounded-top">
+    <h1 class="visually-hidden">Iniciar Sesión</h1> <div class="card-header bg-primary text-white p-4 text-center rounded-top">
       <h2 class="mb-0">
         <i class="fa-solid fa-sign-in-alt me-2"></i> Iniciar Sesión
       </h2>
     </div>
-    
+
     <div class="card-body p-4">
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-        <!-- Correo Electrónico -->
         <div class="mb-3">
           <label for="email" class="form-label">Correo Electrónico</label>
           <div class="input-group">
@@ -49,21 +44,17 @@
           </div>
         </div>
 
-        <!-- Contraseña -->
         <div class="mb-3">
-          <label for="contrasenia" class="form-label">Contraseña</label>
+          <label for="password" class="form-label">Contraseña</label>
           <div class="input-group">
             <input
               [type]="showPassword ? 'text' : 'password'"
-              id="contrasenia"
-              formControlName="contrasenia"
-              class="form-control form-control-lg"
+              id="password"
+              formControlName="password" class="form-control form-control-lg"
               placeholder="Ingrese su contraseña"
               [ngClass]="{
                 'is-invalid':
-                  loginForm.get('contrasenia')?.invalid &&
-                  loginForm.get('contrasenia')?.touched
-              }"
+                  loginForm.get('password')?.invalid && loginForm.get('password')?.touched }"
             />
             <button
               type="button"
@@ -78,19 +69,15 @@
             </button>
             <div
               *ngIf="
-                loginForm.get('contrasenia')?.invalid &&
-                loginForm.get('contrasenia')?.touched
-              "
+                loginForm.get('password')?.invalid && loginForm.get('password')?.touched "
               class="invalid-feedback"
             >
-              <span *ngIf="loginForm.get('contrasenia')?.errors?.['required']">
-                Contraseña es requerida.
+              <span *ngIf="loginForm.get('password')?.errors?.['required']"> Contraseña es requerida.
               </span>
             </div>
           </div>
         </div>
 
-        <!-- Botón de Iniciar Sesión -->
         <button
           type="submit"
           class="btn btn-primary btn-lg w-100"
@@ -102,7 +89,6 @@
 
       <jjwins-alert-messages></jjwins-alert-messages>
 
-      <!-- Enlace de recuperar contraseña -->
       <div class="mt-3 text-center">
         <a [routerLink]="['/olvidar-contrasenia']">¿Olvidaste tu contraseña?</a>
       </div>
