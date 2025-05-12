@@ -1,0 +1,49 @@
+<div class="container py-4">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Gestión de Cupones</h2>
+    <button class="btn btn-primary" routerLink="/crear-cupon">
+      <i class="bi bi-plus-lg"></i> Crear Nuevo Cupón
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Descuento</th>
+          <th>Vencimiento</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cupon of cupones">
+          <td>{{cupon.codigo}}</td>
+          <td>{{cupon.nombre}}</td>
+          <td>{{cupon.porcentajeDescuento}}%</td>
+          <td>{{cupon.fechaVencimiento | date:'medium'}}</td>
+          <td>
+            <span class="badge" [class.bg-success]="cupon.estadoCupon" 
+                               [class.bg-danger]="!cupon.estadoCupon">
+              {{cupon.estadoCupon ? 'Activo' : 'Inactivo'}}
+            </span>
+          </td>
+          <td>
+            <div class="btn-group" role="group">
+              <button class="btn btn-primary btn-sm me-2" [routerLink]="['/editar-cupon', cupon.id]">
+                <i class="bi bi-pencil-fill"></i> Editar
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="confirmarEliminar(cupon)">
+                <i class="bi bi-trash-fill"></i> Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

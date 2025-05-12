@@ -7,6 +7,7 @@ import { usuarioInterceptor } from './interceptor/usuario.interceptor';
 import { AdminService } from './services/admin.service';
 import { TokenService } from './services/token.service';
 import { PublicoService } from './services/publico.service';
+import { EstilistaService } from './services/estilista.service';
 import { ClienteService } from './services/cliente.service';
 import { AuthService } from './services/auth.service';
 import { AuthAdminClienteGuard } from './guardians/auth-admin-cliente.guard';
@@ -30,6 +31,7 @@ export const appConfig: ApplicationConfig = {
     AdminService,     // Servicio para operaciones administrativas
     TokenService,     // Servicio para gestión de tokens de autenticación
     PublicoService,   // Servicio para operaciones públicas (sin autenticación)
+    EstilistaService,  // Servicio para operaciones de estilistas
     ClienteService,   // Servicio para operaciones de clientes autenticados
     AuthService,      // Servicio de autenticación
     AuthAdminClienteGuard,

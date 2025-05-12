@@ -1,1 +1,85 @@
 <p>citas works!</p>
+<!-- Asegúrate de incluir Bootstrap Icons en index.html -->
+<div class="container py-5">
+  <!-- Hero Section -->
+  <div class="text-center mb-5 p-5 rounded hero-section">
+    <h1 class="display-4 fw-bold text-white mb-4">Experiencia Única en Cada Visita</h1>
+    <p class="lead text-white mb-4">Descubre por qué nuestros clientes nos prefieren</p>
+  </div>
+
+  <!-- Beneficios -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-4" *ngFor="let beneficio of beneficios">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body text-center">
+          <i [class]="beneficio.icono + ' display-4 text-primary mb-3'"></i>
+          <h3 class="h4 card-title">{{beneficio.titulo}}</h3>
+          <p class="card-text text-muted">{{beneficio.descripcion}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Información de Ubicación y Horarios -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <h2 class="h3 mb-4"><i class="bi bi-geo-alt-fill text-primary me-2"></i>Nuestra Ubicación</h2>
+          <p class="mb-2">Nos encontramos en el corazón de la ciudad:</p>
+          <p class="mb-4">
+            <strong>Dirección:</strong><br>
+            Calle Principal #123<br>
+            Ciudad, Estado<br>
+            Código Postal 12345
+          </p>
+          <p class="mb-0">
+            <i class="bi bi-telephone-fill text-primary me-2"></i>
+            <strong>Teléfono:</strong> (123) 456-7890
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <h2 class="h3 mb-4"><i class="bi bi-clock-fill text-primary me-2"></i>Horarios de Atención</h2>
+          <ul class="list-unstyled">
+            <li class="mb-2"><strong>Lunes:</strong> {{horarios.lunes}}</li>
+            <li class="mb-2"><strong>Martes:</strong> {{horarios.martes}}</li>
+            <li class="mb-2"><strong>Miércoles:</strong> {{horarios.miercoles}}</li>
+            <li class="mb-2"><strong>Jueves:</strong> {{horarios.jueves}}</li>
+            <li class="mb-2"><strong>Viernes:</strong> {{horarios.viernes}}</li>
+            <li class="mb-2"><strong>Sábado:</strong> {{horarios.sabado}}</li>
+            <li><strong>Domingo:</strong> {{horarios.domingo}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Información Adicional -->
+  <div class="card border-0 shadow-sm mb-5">
+    <div class="card-body p-4">
+      <h2 class="h3 mb-4 text-center">Información Importante</h2>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <h4><i class="bi bi-check-circle-fill text-primary me-2"></i>Política de Citas</h4>
+          <ul class="list-unstyled">
+            <li class="mb-2">• Se recomienda llegar 5 minutos antes de su cita</li>
+            <li class="mb-2">• En caso de cancelación, avisar con 24 horas de anticipación</li>
+            <li class="mb-2">• Primera consulta incluye evaluación personalizada</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h4><i class="bi bi-gift-fill text-primary me-2"></i>Beneficios Adicionales</h4>
+          <ul class="list-unstyled">
+            <li class="mb-2">• Wifi gratuito durante su visita</li>
+            <li class="mb-2">• Bebidas complementarias</li>
+            <li class="mb-2">• Estacionamiento disponible</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

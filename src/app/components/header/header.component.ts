@@ -27,7 +27,10 @@ export class HeaderComponent {
   menuItems: { nombre: string; ruta: string; rolesPermitidos: string[] }[] = [
     { nombre: 'Gestionar Quejas', ruta: '/gestionar-quejas', rolesPermitidos: ['ADMIN'] },
     { nombre: 'Gestionar Sugerencias', ruta: '/gestionar_sugerencias', rolesPermitidos: ['ADMIN'] },
+    { nombre: 'Gestionar Cupones', ruta: '/cupones', rolesPermitidos: ['ADMIN'] },
+    { nombre: 'Crear Cupon', ruta: '/crear-cupon', rolesPermitidos: ['ADMIN'] },
     { nombre: 'Mis Citas', ruta: '/mis-citas', rolesPermitidos: ['CLIENTE'] },
+    { nombre: 'Agendar una cita', ruta: '/agendar-cita', rolesPermitidos: ['CLIENTE'] },
     { nombre: 'Mis Quejas', ruta: '/mis-quejas', rolesPermitidos: ['CLIENTE'] },
     { nombre: 'Perfil', ruta: '/perfil', rolesPermitidos: ['CLIENTE', 'ADMIN'] }
   ];

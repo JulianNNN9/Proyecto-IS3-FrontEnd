@@ -12,14 +12,21 @@ import { NuevaQuejaComponent } from './components/nueva-queja/nueva-queja.compon
 import { MisQuejasComponent } from './components/mis-quejas/mis-quejas.component';
 import { ActivarCuentaComponent } from './components/activar-cuenta/activar-cuenta.component';
 import { OlvidarContraseniaComponent } from './components/olvidar-contrasenia/olvidar-contrasenia.component';
+import { CitasEstilistaComponent } from './components/citas-estilista/citas-estilista.component';
 import { SugerenciasComponent } from './components/sugerencias/sugerencias.component';
 import { GestionarSugerenciasComponent } from './components/gestionar-sugerencias/gestionar-sugerencias.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { CambiarContraseniaComponent } from './components/cambiar-contrasenia/cambiar-contrasenia.component';
+import { MisCitasComponent } from './components/mis-citas/mis-citas.component';
+import { AgendarCitaComponent } from './components/agendar-cita/agendar-cita.component';
+import { HistorialCitasComponent } from './components/historial-citas/historial-citas.component';
 import { AuthClienteGuard } from './guardians/auth-cliente.guard';
 import { AuthAdminClienteGuard } from './guardians/auth-admin-cliente.guard';
 import { LoginGuard } from './guardians/login.guard';
 import { AuthAdminGuard } from './guardians/auth-admin.guard';
+import { CrearCuponComponent } from './components/crear-cupon/crear-cupon.component';
+import { CuponesComponent } from './components/cupones/cupones.component';
+import { EditarCuponComponent } from './components/editar-cupon/editar-cupon.component';
 
 /**
  * Configuración de rutas de la aplicación
@@ -45,6 +52,9 @@ export const routes: Routes = [
     { path: 'servicios', component: ServiciosComponent},
     { path: 'faq', component: FaqComponent, canActivate: [AuthClienteGuard]},
     { path: 'citas', component: CitasComponent},
+    { path: 'mis-citas', component: MisCitasComponent},
+    { path: 'agendar-cita', component: AgendarCitaComponent},
+    { path: 'historial-citas', component: HistorialCitasComponent}, // Redirige a la misma página de citas
     
     // Rutas para el sistema de quejas y sugerencias (PQRS)
     { path: 'nueva-queja', component: NuevaQuejaComponent, canActivate: [AuthClienteGuard]},
@@ -55,6 +65,15 @@ export const routes: Routes = [
     { path: 'gestionar-quejas', component: GestionarQuejasComponent, canActivate: [AuthAdminGuard] },
     { path: 'gestionar_sugerencias', component: GestionarSugerenciasComponent, canActivate: [AuthAdminGuard] },
     
+
+    // Rutas para estilistas
+    { path: 'citas-estilista', component: CitasEstilistaComponent },
+
+    // Rutas para administradores
+    { path: 'crear-cupon', component: CrearCuponComponent, canActivate: [AuthAdminGuard] },
+    { path: 'cupones', component: CuponesComponent, canActivate: [AuthAdminGuard] },
+    { path: 'editar-cupon/:id', component: EditarCuponComponent, canActivate: [AuthAdminGuard] },
+
     // Ruta comodín: redirige a la página principal cuando se ingresa una ruta inexistente
     { path: "**", pathMatch: "full", redirectTo: "" }
 ];

@@ -1,11 +1,15 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { QuejaDTO } from '../dto/queja/queja-dto';
 import { SugerenciaDTO } from '../dto/sugerencia/sugerencia-dto';
 import { InformacionUsuarioDTO } from '../dto/cuenta/informacion-usuario-dto';
 import { EditarUsuarioDTO } from '../dto/cuenta/editar-usuario-dto';
+import { CrearCuponDTO } from '../dto/cupon/crear-cupon-dto';
+import { EditarCuponDTO } from '../dto/cupon/editar-cupon-dto';
+import { CuponDTO } from '../dto/cupon/cupon-dto';
 
 /**
  * Servicio para operaciones administrativas
@@ -128,10 +132,58 @@ export class AdminService {
   responderQueja(idQueja: string, respuesta: string): Observable<MensajeDTO<string>> {
     return this.http.put<MensajeDTO<string>>(`${this.authURL}/responder-queja/${idQueja}`, respuesta);
   }
+
   obtenerInformacionUsuarioAdmin(codigo: string): Observable<MensajeDTO<InformacionUsuarioDTO>> {
     return this.http.get<MensajeDTO<InformacionUsuarioDTO>>(`${this.authURL}/obtener-usuario/${codigo}`);
   }
+
   editarUsuarioAdmin(editarUsuarioDTO: EditarUsuarioDTO): Observable<MensajeDTO<string>> {
     return this.http.put<MensajeDTO<string>>(`${this.authURL}/editar-perfil`, editarUsuarioDTO);
   }
+
+    /**
+   * Crea un nuevo cupón en el sistema
+   * @param crearCuponDTO Datos necesarios para crear el cupón
+   * @returns Observable con mensaje de confirmación
+   */
+    crearCupon(crearCuponDTO: CrearCuponDTO): Observable<MensajeDTO<string>> {
+      return this.http.post<MensajeDTO<string>>(`${this.authURL}/cupon/crear-cupon`, crearCuponDTO);
+    }
+  
+    /**
+     * Edita un cupón existente
+     * @param editarCuponDTO Datos actualizados del cupón
+     * @returns Observable con mensaje de confirmación
+     */
+    editarCupon(editarCuponDTO: EditarCuponDTO): Observable<MensajeDTO<string>> {
+      return this.http.put<MensajeDTO<string>>(`${this.authURL}/cupon/editar-cupon`, editarCuponDTO);
+    }
+  
+    /**
+     * Elimina un cupón específico por su ID
+     * @param idCupon Identificador del cupón a eliminar
+     * @returns Observable con mensaje de confirmación
+     */
+    eliminarCupon(idCupon: string): Observable<MensajeDTO<string>> {
+      return this.http.get<MensajeDTO<string>>(`${this.authURL}/cupon/eliminar-cupon/${idCupon}`);
+    }
+  
+    /**
+     * Obtiene todos los cupones registrados en el sistema
+     * @returns Observable con lista de cupones
+     */
+    listarCupones(): Observable<MensajeDTO<CuponDTO[]>> {
+      return this.http.get<MensajeDTO<CuponDTO[]>>(`${this.authURL}/cupon/listar-cupones`);
+    }
+
+    /**
+     * Obtiene la información de un cupón específico por su ID
+     * @param idCupon Identificador del cupón a consultar
+     * @returns Observable con la información del cupón
+     */
+    obtenerInformacionCupon(idCupon: string): Observable<MensajeDTO<CuponDTO>> {
+      console.log('Service - Getting coupon info:', idCupon);
+      return this.http.get<MensajeDTO<CuponDTO>>(`${this.authURL}/cupon/obtenerInformacionCupon/${idCupon}`);
+    }
+
 }
