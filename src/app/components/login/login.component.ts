@@ -28,6 +28,7 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;     // Formulario reactivo para los datos de inicio de sesión
   showPassword: boolean = false;   // Controla la visibilidad de la contraseña
+  isLoading: boolean = false;     // Nueva propiedad para controlar el estado de carga
 
   /**
    * Constructor del componente
@@ -45,8 +46,8 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],   // Campo para email con validaciones
-      password: ['', Validators.required],                   // Campo para contraseña (¡CAMBIADO!)
+      email: ['', [Validators.required, Validators.email]],    // Campo para email con validaciones
+      password: ['', Validators.required],                      // Campo para contraseña (¡CAMBIADO!)
     });
   }
 
@@ -85,10 +86,12 @@ export class LoginComponent {
       );
       return;
     } else {
+      this.isLoading = true; // Establecer isLoading a true al iniciar la petición
       console.log('Formulario válido');
       // Realiza la petición al servicio de autenticación
       this.publicoService.iniciarSesion(value).subscribe({
         next: (data) => {
+          this.isLoading = false; // Establecer isLoading a false al recibir la respuesta
           // Si la autenticación es exitosa, muestra mensaje de éxito
           Swal.fire({
             title: 'Inicio de Sesión',
@@ -103,6 +106,7 @@ export class LoginComponent {
           });
         },
         error: (error) => {
+          this.isLoading = false; // Establecer isLoading a false en caso de error
           // En caso de error, muestra mensaje de error
           Swal.fire({
             title: 'Error',

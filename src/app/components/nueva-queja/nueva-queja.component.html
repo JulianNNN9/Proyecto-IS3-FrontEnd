@@ -2,18 +2,15 @@
   <div class="row justify-content-center w-100">
     <div class="col-md-8 col-lg-6">
       <div class="card shadow-lg p-4">
-        
-        <!-- Encabezado principal -->
+
         <h1 class="main-heading text-center mb-4">📣 Formulario de Quejas</h1>
 
-        <!-- Descripción breve -->
         <p class="text-muted text-center mb-4">
           Lamentamos cualquier inconveniente que hayas tenido. ¡Estamos aquí para escucharte y mejorar!
         </p>
 
         <form [formGroup]="quejaForm" (ngSubmit)="onSubmit()">
-          
-          <!-- Tipo de Servicio -->
+
           <div class="mb-3">
             <label for="nombreServicio" class="form-label">Tipo de Servicio</label>
             <select id="nombreServicio" formControlName="nombreServicio" class="form-control">
@@ -22,7 +19,6 @@
             </select>
           </div>
 
-          <!-- Estilista -->
           <div class="mb-3">
             <label for="nombreEstilista" class="form-label">Estilista que Atendió</label>
             <select id="nombreEstilista" formControlName="nombreEstilista" class="form-control">
@@ -31,19 +27,32 @@
             </select>
           </div>
 
-          <!-- Descripción de la Queja -->
           <div class="mb-3">
             <label for="descripcion" class="form-label">Descripción de la Queja</label>
             <textarea id="descripcion" formControlName="descripcion" class="form-control" rows="5" placeholder="Escribe tu queja aquí"></textarea>
           </div>
 
-          <!-- Botones -->
           <div class="d-flex flex-column gap-2 d-md-flex flex-md-row justify-content-between">
             <button type="button" class="btn btn-secondary w-100 w-md-auto" (click)="onClear()">Limpiar</button>
-            <button type="submit" class="btn btn-danger w-100 w-md-auto" [disabled]="quejaForm.invalid">Enviar Queja</button>
+            <button
+              type="submit"
+              class="btn btn-danger w-100 w-md-auto"
+              [disabled]="quejaForm.invalid || isLoading"
+            >
+              <i class="fa-solid fa-exclamation-triangle" *ngIf="!isLoading"></i>
+              <i class="fa fa-spinner fa-spin me-2" *ngIf="isLoading"></i>
+              <span *ngIf="isLoading">Enviando...</span>
+              <span *ngIf="!isLoading">Enviar Queja</span>
+            </button>
           </div>
         </form>
       </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner-border text-danger" role="status">
+      <span class="visually-hidden">Enviando queja...</span>
     </div>
   </div>
 </div>

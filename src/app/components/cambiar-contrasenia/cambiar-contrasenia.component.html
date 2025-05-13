@@ -7,7 +7,6 @@
     </div>
     <div class="card-body p-4">
       <form #cambiarContraseniaForm="ngForm" (ngSubmit)="cambiarContrasenia(cambiarContraseniaForm)">
-        <!-- Contraseña Antigua -->
         <div class="mb-3">
           <label for="contraseniaAntigua" class="form-label">Contraseña Antigua</label>
           <input
@@ -28,7 +27,6 @@
           </div>
         </div>
 
-        <!-- Nueva Contraseña -->
         <div class="mb-3">
           <label for="contraseniaNueva" class="form-label">Nueva Contraseña</label>
           <input
@@ -51,7 +49,6 @@
           </div>
         </div>
 
-        <!-- Confirmar Nueva Contraseña -->
         <div class="mb-3">
           <label for="confirmarContraseniaNueva" class="form-label">Confirmar Nueva Contraseña</label>
           <input
@@ -72,12 +69,26 @@
           </div>
         </div>
 
-        <!-- Botón de Guardar Cambios -->
         <div class="d-grid">
-          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="cambiarContraseniaForm.invalid || isLoading"
+          >
+            <i class="fa-solid fa-floppy-disk" *ngIf="!isLoading"></i>
+            <i class="fa fa-spinner fa-spin me-2" *ngIf="isLoading"></i>
+            <span *ngIf="isLoading">Guardando...</span>
+            <span *ngIf="!isLoading">Guardar Cambios</span>
+          </button>
         </div>
       </form>
       <jjwins-alert-messages></jjwins-alert-messages>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Guardando cambios...</span>
     </div>
   </div>
 </div>

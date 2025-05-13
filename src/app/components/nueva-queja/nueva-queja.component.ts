@@ -32,6 +32,7 @@ export class NuevaQuejaComponent implements OnInit {
   quejaForm: FormGroup;       // Formulario reactivo para capturar los datos de la queja
   servicios: ServicioDTO[] = []; // Lista de servicios disponibles para seleccionar
   estilistas: EstilistaDTO[] = []; // Lista de estilistas disponibles para seleccionar
+  isLoading: boolean = false; // Propiedad para controlar el estado de carga
 
   /**
    * Constructor del componente
@@ -49,8 +50,8 @@ export class NuevaQuejaComponent implements OnInit {
     private authService: AuthService,
   ) {
     this.quejaForm = this.formBuilder.group({
-      nombreServicio: ['', Validators.required],  // Campo obligatorio para el nombre del servicio
-      nombreEstilista: ['', Validators.required], // Campo obligatorio para el nombre del estilista
+      nombreServicio: ['', Validators.required],   // Campo obligatorio para el nombre del servicio
+      nombreEstilista: ['', Validators.required],  // Campo obligatorio para el nombre del estilista
       descripcion: ['', [Validators.required, Validators.minLength(10)]] // Campo obligatorio con mínimo 10 caracteres
     });
   }
@@ -101,33 +102,24 @@ export class NuevaQuejaComponent implements OnInit {
       }
     );
   }
-  
+
   /**
    * Método principal para enviar la queja al servidor
    * Valida el formulario y la autenticación del usuario antes de enviar
    */
   onSubmit(): void {
-    // Obtiene información del usuario autenticado
-    const usuario = this.authService.obtenerIdUsuario();
-  
     // Valida que el formulario esté correctamente completado
     if (this.quejaForm.valid) {
-      // Verifica que exista un usuario autenticado
-      if (!usuario) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'No se pudo obtener la información del usuario. Intenta iniciar sesión nuevamente.',
-          confirmButtonColor: '#d33'
-        });
-        return;
-      }
-      
-      console.log('Usuario autenticado:', usuario.id);
-  
+      this.isLoading = true; // Establecer isLoading a true al iniciar la petición
+
       // Envía la queja al servidor utilizando el servicio
-      this.clienteService.crearQueja(this.quejaForm.value.nombreServicio, this.quejaForm.value.nombreEstilista, this.quejaForm.value.descripcion).subscribe({
+      this.clienteService.crearQueja(
+        this.quejaForm.value.nombreServicio,
+        this.quejaForm.value.nombreEstilista,
+        this.quejaForm.value.descripcion
+      ).subscribe({
         next: (response: MensajeDTO<string>) => {
+          this.isLoading = false; // Establecer isLoading a false al recibir la respuesta
           // Muestra mensaje de éxito si la operación fue correcta
           Swal.fire({
             icon: 'success',
@@ -138,6 +130,7 @@ export class NuevaQuejaComponent implements OnInit {
           this.quejaForm.reset(); // Limpia el formulario
         },
         error: (error) => {
+          this.isLoading = false; // Establecer isLoading a false en caso de error
           // Muestra mensaje de error si la operación falló
           Swal.fire({
             icon: 'error',
@@ -150,7 +143,7 @@ export class NuevaQuejaComponent implements OnInit {
       });
     }
   }
-  
+
   /**
    * Limpia el formulario, eliminando todos los datos ingresados
    */

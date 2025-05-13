@@ -44,6 +44,11 @@ export class RegistrarseComponent {
   @ViewChild('clienteForm') clienteForm: NgForm;
 
   /**
+   * Propiedad para controlar el estado de carga
+   */
+  isLoading: boolean = false;
+
+  /**
    * Constructor del componente
    * @param publicoService Servicio para realizar operaciones públicas como registro de usuarios
    * @param alertMessageService Servicio para mostrar mensajes de alerta
@@ -61,14 +66,14 @@ export class RegistrarseComponent {
    * @param clienteForm Formulario con los datos del cliente a registrar
    */
   public registrar(clienteForm: NgForm) {
-    const { value, valid, controls } = clienteForm;
-    if (!valid) {
+    if (clienteForm.invalid) {
+      console.log('Formulario inválido');
       // Crear un array para almacenar los campos inválidos
       const camposInvalidos = [];
 
       // Iterar sobre los controles del formulario
-      for (const controlName in controls) {
-        if (controls[controlName].invalid) {
+      for (const controlName in clienteForm.controls) {
+        if (clienteForm.controls[controlName].invalid) {
           camposInvalidos.push(controlName);
         }
       }
@@ -82,9 +87,11 @@ export class RegistrarseComponent {
       );
       return;
     } else {
+      this.isLoading = true; // Establecer isLoading a true al iniciar la petición
       // Si el formulario es válido, envía la solicitud de registro
-      this.publicoService.crearUsuario(value).subscribe({
+      this.publicoService.crearUsuario(this.cliente).subscribe({
         next: (data) => {
+          this.isLoading = false; // Establecer isLoading a false al recibir la respuesta
           // Muestra mensaje de éxito si el registro es exitoso
           Swal.fire({
             title: 'Cuenta creada',
@@ -96,6 +103,7 @@ export class RegistrarseComponent {
           this.router.navigate(['/login']);
         },
         error: (error) => {
+          this.isLoading = false; // Establecer isLoading a false en caso de error
           // Muestra mensaje de error si falla el registro
           Swal.fire({
             title: 'Error',
