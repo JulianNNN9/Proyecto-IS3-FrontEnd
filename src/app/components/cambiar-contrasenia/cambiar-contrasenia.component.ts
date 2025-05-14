@@ -3,16 +3,12 @@ import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AlertMessagesModule, AlertMessagesService } from 'jjwins-angular-alert-messages';
 import { CambiarContraseniaDTO } from '../../dto/cuenta/cambiar-contrasenia-dto';
-import { ClienteService } from '../../services/cliente.service';
 import { CommonModule } from '@angular/common';
-import { TokenService } from '../../services/token.service';
-import { AdminService } from '../../services/admin.service';
 import { Router } from '@angular/router';
+import { TokenService } from '../../services/token.service';
+import { ClienteService } from '../../services/cliente.service';
+import { AdminService } from '../../services/admin.service';
 
-/**
- * Componente para cambiar la contraseña del usuario
- * Permite a usuarios modificar sus credenciales de acceso
- */
 @Component({
   selector: 'app-cambiar-contrasenia',
   standalone: true,
@@ -22,7 +18,7 @@ import { Router } from '@angular/router';
 })
 export class CambiarContraseniaComponent {
 
-  // Objeto para almacenar los datos del formulario
+  // Objeto para almacenar los datos del formulario de cambio de contraseña
   contrasenia: CambiarContraseniaDTO = {
     idUsuario: '',
     contraseniaAntigua: '',
@@ -30,17 +26,13 @@ export class CambiarContraseniaComponent {
     confirmarContraseniaNueva: ''
   };
 
-  // Referencia al formulario en el HTML
+  // Referencia al formulario HTML
   @ViewChild('cambiarContraseniaForm') cambiarContraseniaForm: NgForm;
 
-  /**
-   * Constructor del componente
-   * @param router - Servicio para la navegación entre rutas
-   * @param tokenService - Servicio para gestionar el token del usuario
-   * @param cuentaService - Servicio para operaciones relacionadas con la cuenta del cliente
-   * @param adminService - Servicio para operaciones administrativas
-   * @param alertMessageService - Servicio para mostrar mensajes de alerta
-   */
+  // Propiedad para controlar el estado de carga
+  isLoading: boolean = false;
+
+  // Constructor del componente, inyecta los servicios necesarios
   constructor(
     private router: Router,
     private tokenService: TokenService,
@@ -49,86 +41,105 @@ export class CambiarContraseniaComponent {
     private alertMessageService: AlertMessagesService
   ) {}
 
-  /**
-   * Método principal para cambiar la contraseña del usuario
-   * Valida los datos y realiza la petición al servidor correspondiente según el rol
-   * @param cambiarContraseniaForm - Formulario con los datos de cambio de contraseña
-   */
+  // Método que se llama al enviar el formulario de cambio de contraseña
   public cambiarContrasenia(cambiarContraseniaForm: NgForm) {
+    // Obtiene los valores del formulario y su estado de validez
     const { value, valid } = cambiarContraseniaForm;
 
-    // Verifica que las contraseñas nuevas coincidan
+    // Verifica si la nueva contraseña y su confirmación coinciden
     if (value.contraseniaNueva !== value.confirmarContraseniaNueva) {
+      // Muestra un mensaje de error si no coinciden
       this.alertMessageService.show('Las contraseñas no coinciden',
         { cssClass: 'alerts-error', timeOut: 3000 }
       );
-      return;
+      return; // Detiene la ejecución del método
     }
 
-    // Verifica que el formulario esté correctamente completado
+    // Verifica si el formulario es válido
     if (!valid) {
+      // Muestra un mensaje de error si el formulario no es válido
       this.alertMessageService.show('Por favor llena el formulario correctamente',
         { cssClass: 'alerts-error', timeOut: 3000 }
       );
     } else {
-      // Asigna el ID del usuario obtenido del token
+      this.isLoading = true; // Establece isLoading a true al iniciar la petición
+
+      // Asigna el ID del usuario al objeto de contraseña
       this.cambiarContraseniaForm.value.idUsuario = this.tokenService.getIDCuenta();
-      
-      // Realiza diferentes acciones según el rol del usuario
+
+      // Determina si el usuario es un cliente
       if (this.isCliente()) {
-        // Petición al servicio para cambiar la contraseña del cliente
+        // Llama al servicio para cambiar la contraseña del cliente
         this.cuentaService.cambiarContrasenia(value).subscribe({
           next: (data) => {
-            // Muestra mensaje de éxito
+            this.isLoading = false; // Establece isLoading a false al recibir la respuesta
+            // Muestra un mensaje de éxito con la respuesta del servidor
             Swal.fire({
               title: 'Contraseña actualizada',
               text: data.respuesta,
               icon: 'success',
               confirmButtonText: 'Aceptar',
             }).then(() => {
-              // Redirecciona a la página de edición de cuenta
+              // Redirige al usuario a la página de edición de cuenta
               this.router.navigate([`/editar-cuenta/${this.tokenService.getIDCuenta()}`]);
             });
           },
           error: (error) => {
-            // Maneja errores en la petición
+            this.isLoading = false; // Establece isLoading a false en caso de error
+            // Muestra un mensaje de error con la respuesta del servidor o un mensaje genérico
             Swal.fire({
               title: 'Error',
-              text: error.error.mensaje || 'Hubo un error al cambiar la contraseña',
+              text: error.error.respuesta || 'Hubo un error al cambiar la contraseña',
               icon: 'error',
               confirmButtonText: 'Aceptar',
             });
           },
         });
-        // Limpia el formulario
-        this.cambiarContraseniaForm.resetForm();
-      } /*else if (this.isAdmin()) {
-        // Código para cambiar contraseña de administrador (comentado)
-      }*/
+        this.cambiarContraseniaForm.resetForm(); // Limpia el formulario después del envío
+      } else if (this.isAdmin()) {
+        // Llama al servicio para cambiar la contraseña del administrador
+        this.adminService.cambiarContraseniaAdmin(value).subscribe({
+          next: (data) => {
+            this.isLoading = false; // Establece isLoading a false al recibir la respuesta
+            // Muestra un mensaje de éxito con la respuesta del servidor
+            Swal.fire({
+              title: 'Contraseña actualizada',
+              text: data.respuesta,
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+            }).then(() => {
+              // Redirige al usuario a la página de edición de cuenta
+              this.router.navigate([`/editar-cuenta/${this.tokenService.getIDCuenta()}`]);
+            });
+          },
+          error: (error) => {
+            this.isLoading = false; // Establece isLoading a false en caso de error
+            // Muestra un mensaje de error con la respuesta del servidor o un mensaje genérico
+            Swal.fire({
+              title: 'Error',
+              text: error.error.respuesta || 'Hubo un error al cambiar la contraseña',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+            });
+          },
+        });
+        this.cambiarContraseniaForm.resetForm(); // Limpia el formulario después del envío
+      }
     }
   }
 
-  /**
-   * Verifica si el usuario ha iniciado sesión
-   * @returns true si el usuario está autenticado, false en caso contrario
-   */
+  // Método para verificar si el usuario está logueado
   isLogged() {
     return this.tokenService.isLogged();
   }
 
-  /**
-   * Verifica si el usuario tiene rol de cliente
-   * @returns true si el usuario es cliente, false en caso contrario
-   */
-  isCliente() {
+  // Método para verificar si el usuario tiene el rol de CLIENTE
+  isCliente(){
     return this.isLogged() && this.tokenService.getRol() === 'CLIENTE';
   }
 
-  /**
-   * Verifica si el usuario tiene rol de administrador
-   * @returns true si el usuario es administrador, false en caso contrario
-   */
-  isAdmin() {
+  // Método para verificar si el usuario tiene el rol de ADMINISTRADOR
+  isAdmin(){
     return this.isLogged() && this.tokenService.getRol() === 'ADMINISTRADOR';
   }
 }

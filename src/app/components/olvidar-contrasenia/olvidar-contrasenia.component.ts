@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PublicoService } from '../../services/publico.service';
 import { Router } from '@angular/router';
@@ -16,9 +16,10 @@ import Swal from 'sweetalert2';
   templateUrl: './olvidar-contrasenia.component.html',
   styleUrl: './olvidar-contrasenia.component.css'
 })
-export class OlvidarContraseniaComponent {
+export class OlvidarContraseniaComponent implements OnInit {
   olvidarContraseniaForm!: FormGroup; // Formulario para capturar los datos de recuperación
   resendInProgress = false; // Indica si hay una solicitud de reenvío en progreso
+  isResetting = false; // Indica si el proceso de restablecimiento está en curso
 
   /**
    * Constructor del componente
@@ -40,7 +41,7 @@ export class OlvidarContraseniaComponent {
       correoUsuario: ['', [Validators.required, Validators.email]], // Email con validaciones
       codigoVerificacion: ['', Validators.required], // Código recibido por email
       contraseniaNueva: [
-        '', 
+        '',
         [
           Validators.required,
           Validators.minLength(8), // Mínimo 8 caracteres
@@ -57,7 +58,9 @@ export class OlvidarContraseniaComponent {
    * Valida el formulario, compara las contraseñas y realiza la petición al servidor
    */
   onResetPassword(): void {
+    // Verifica si el formulario es válido
     if (this.olvidarContraseniaForm.valid) {
+      this.isResetting = true; // Indica que el proceso de restablecimiento ha comenzado
       const formValue = this.olvidarContraseniaForm.value;
       // Verifica que las contraseñas coincidan
       if (formValue.contraseniaNueva !== formValue.confirmarContraseniaNueva) {
@@ -67,22 +70,26 @@ export class OlvidarContraseniaComponent {
           icon: 'error',
           confirmButtonText: 'Aceptar'
         });
+        this.isResetting = false; // Indica que el proceso de restablecimiento ha terminado (con error)
         return;
       }
 
       // Envía la solicitud para restablecer la contraseña
       this.publicoService.recuperarContrasenia(formValue).subscribe({
         next: (response) => {
+          this.isResetting = false; // Indica que el proceso de restablecimiento ha terminado
           // Muestra mensaje de éxito y redirige al login
           Swal.fire({
             title: 'Contraseña Restablecida',
             text: response.respuesta,
             icon: 'success',
             confirmButtonText: 'Aceptar'
+          }).then(() => {
+            this.router.navigate(['/login']);
           });
-          this.router.navigate(['/login']);
         },
         error: (error) => {
+          this.isResetting = false; // Indica que el proceso de restablecimiento ha terminado (con error)
           // Muestra mensaje de error
           Swal.fire({
             title: 'Error',
@@ -103,7 +110,7 @@ export class OlvidarContraseniaComponent {
     const email = this.olvidarContraseniaForm.get('correoUsuario')?.value;
     if (email && this.olvidarContraseniaForm.get('correoUsuario')?.valid) {
       this.resendInProgress = true; // Indica que hay una solicitud en progreso
-      
+
       // Envía la solicitud para obtener un nuevo código
       this.publicoService.enviarCodigoRecuperacion(email).subscribe({
         next: (response) => {

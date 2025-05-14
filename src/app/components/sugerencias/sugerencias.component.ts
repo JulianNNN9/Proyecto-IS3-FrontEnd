@@ -20,6 +20,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SugerenciasComponent {
   sugerenciasForm: FormGroup; // Formulario reactivo para capturar los datos de la sugerencia
+  isLoading: boolean = false; // Propiedad para controlar el estado de carga
 
   /**
    * Constructor del componente
@@ -41,7 +42,7 @@ export class SugerenciasComponent {
   onSubmit(): void {
     // Obtiene la información del usuario autenticado
     const usuario = this.authService.obtenerUsuarioAutenticado();
-    
+
     // Verifica que el formulario sea válido antes de procesar
     if (this.sugerenciasForm.valid) {
       // Valida que exista un usuario autenticado
@@ -55,11 +56,13 @@ export class SugerenciasComponent {
         return;
       }
 
+      this.isLoading = true; // Establecer isLoading a true al iniciar la petición
       console.log('Usuario autenticado:', usuario.email);
-  
+
       // Envía la sugerencia al servidor utilizando el servicio
       this.clienteService.crearSugerencia(this.sugerenciasForm.value.motivo, this.sugerenciasForm.value.mensaje).subscribe({
         next: (response: MensajeDTO<string>) => {
+          this.isLoading = false; // Establecer isLoading a false al recibir la respuesta
           // Muestra mensaje de éxito si la sugerencia se envió correctamente
           Swal.fire({
             icon: 'success',
@@ -70,6 +73,7 @@ export class SugerenciasComponent {
           this.sugerenciasForm.reset(); // Limpia el formulario después del envío exitoso
         },
         error: (error) => {
+          this.isLoading = false; // Establecer isLoading a false en caso de error
           // Muestra mensaje de error si hay un problema al enviar
           Swal.fire({
             icon: 'error',

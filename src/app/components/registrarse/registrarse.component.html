@@ -1,17 +1,14 @@
-<!-- Contenedor del formulario -->
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
   <div class="card shadow-lg" style="max-width: 500px; width: 100%">
-      <!-- Encabezado principal -->
-  <h1 class="visually-hidden">
-    <i class="fa-solid fa-file-signature me-2"></i>Formulario de Registro
-  </h1>
+    <h1 class="visually-hidden">
+      <i class="fa-solid fa-file-signature me-2"></i>Formulario de Registro
+    </h1>
     <div class="card-header bg-primary text-white text-center">
       <h2 class="mb-0"><i class="fa-solid fa-user-plus me-2"></i>Registro</h2>
     </div>
     <div class="card-body">
       <form #clienteForm="ngForm" (ngSubmit)="registrar(clienteForm)">
         <div class="row">
-          <!-- Cédula -->
           <div class="col-12 mb-3">
             <label for="cedula" class="form-label">Cédula</label>
             <input
@@ -37,7 +34,6 @@
             </div>
           </div>
 
-          <!-- Nombre Completo -->
           <div class="col-12 mb-3">
             <label for="nombreCompleto" class="form-label">Nombre Completo</label>
             <input
@@ -48,7 +44,7 @@
               [(ngModel)]="cliente.nombreCompleto"
               #nombreCompleto="ngModel"
               required
-              maxlength="30"
+              maxlength="100"
               [ngClass]="{
                 'is-invalid': nombreCompleto.errors && nombreCompleto.touched
               }"
@@ -62,7 +58,6 @@
             </div>
           </div>
 
-          <!-- Dirección -->
           <div class="col-12 mb-3">
             <label for="direccion" class="form-label">Dirección</label>
             <input
@@ -85,7 +80,6 @@
             </div>
           </div>
 
-          <!-- Teléfono -->
           <div class="col-md-6 mb-3">
             <label for="telefono" class="form-label">Teléfono</label>
             <input
@@ -111,7 +105,6 @@
             </div>
           </div>
 
-          <!-- Email -->
           <div class="col-md-6 mb-3">
             <label for="email" class="form-label">Email</label>
             <input
@@ -133,7 +126,6 @@
             </div>
           </div>
 
-          <!-- Contraseña -->
           <div class="col-12 mb-3">
             <label for="contrasenia" class="form-label">Contraseña</label>
             <input
@@ -164,10 +156,25 @@
         </div>
 
         <div class="d-grid">
-          <button type="submit" class="btn btn-primary">Registrarse</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!clienteForm.valid || isLoading"
+          >
+            <i class="fa-solid fa-user-plus" *ngIf="!isLoading"></i>
+            <i class="fa fa-spinner fa-spin me-2" *ngIf="isLoading"></i>
+            <span *ngIf="isLoading">Registrando...</span>
+            <span *ngIf="!isLoading"> Registrarse</span>
+          </button>
         </div>
         <jjwins-alert-messages></jjwins-alert-messages>
       </form>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Registrando...</span>
     </div>
   </div>
 </div>

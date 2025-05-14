@@ -1,61 +1,84 @@
-<div class="container mt-5">
-  <!-- Título principal para accesibilidad -->
-  <h1 class="visually-hidden">Activar Cuenta</h1> <!-- Este es el h1 oculto para cumplir con la accesibilidad -->
+<div class="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 p-5 card-style shadow-lg">
+    <h1 class="visually-hidden">Activar Cuenta</h1>
+    <h2 class="text-center mb-4 text-primary">🔐 Activar Cuenta</h2>
 
-  <h2>Activar Cuenta</h2>
-  
-  <form [formGroup]="activarCuentaForm" (ngSubmit)="onActivateAccount()">
-    <div class="mb-3">
-      <label for="email" class="form-label">Correo electrónico</label>
-      <input
-        type="email"
-        id="email"
-        class="form-control"
-        formControlName="email"
-        placeholder="Ingrese su correo"
-      />
-      <div
-        *ngIf="activarCuentaForm.get('email')?.invalid && activarCuentaForm.get('email')?.touched"
-        class="text-danger"
+    <form [formGroup]="activarCuentaForm" (ngSubmit)="onActivateAccount()">
+      <div class="mb-4">
+        <label for="email" class="form-label fw-semibold">Correo electrónico</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control form-control-lg rounded-pill"
+          formControlName="email"
+          placeholder="ejemplo@correo.com"
+        />
+        <div
+          *ngIf="activarCuentaForm.get('email')?.invalid && activarCuentaForm.get('email')?.touched"
+          class="text-danger small mt-1"
+        >
+          Correo electrónico inválido
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="codigoActivacion" class="form-label fw-semibold">Código de activación</label>
+        <input
+          type="text"
+          id="codigoActivacion"
+          class="form-control form-control-lg rounded-pill"
+          formControlName="codigoActivacion"
+          placeholder="Código enviado a tu correo"
+        />
+        <div
+          *ngIf="activarCuentaForm.get('codigoActivacion')?.invalid && activarCuentaForm.get('codigoActivacion')?.touched"
+          class="text-danger small mt-1"
+        >
+          Código requerido
+        </div>
+      </div>
+
+      <div class="d-grid mb-4">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg rounded-pill shadow-sm"
+          [disabled]="activarCuentaForm.invalid || isActivating"
+        >
+          <i class="fa-solid fa-check-circle me-2" *ngIf="!isActivating"></i>
+          <i class="fa fa-spinner fa-spin me-2" *ngIf="isActivating"></i>
+          <span *ngIf="isActivating">Activando...</span>
+          <span *ngIf="!isActivating">Activar cuenta</span>
+        </button>
+      </div>
+    </form>
+
+    <hr class="my-4" />
+
+    <div class="text-center">
+      <p class="mb-3">¿No recibiste el código o ha expirado?</p>
+      <button
+        class="btn btn-outline-secondary btn-lg w-100 rounded-pill"
+        (click)="onResendCode()"
+        [disabled]="resendInProgress"
       >
-        Correo electrónico inválido
+        <i class="fa-solid fa-envelope-open-text me-2" *ngIf="!resendInProgress"></i>
+        <i class="fa fa-spinner fa-spin me-2" *ngIf="resendInProgress"></i>
+        <span *ngIf="resendInProgress">Reenviando...</span>
+        <span *ngIf="!resendInProgress">Reenviar código</span>
+      </button>
+    </div>
+
+    <!-- Overlays -->
+    <div *ngIf="isActivating" class="loading-overlay">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Activando cuenta...</span>
       </div>
     </div>
 
-    <div class="mb-3">
-      <label for="codigoActivacion" class="form-label">Código de activación</label>
-      <input
-        type="text"
-        id="codigoActivacion"
-        class="form-control"
-        formControlName="codigoActivacion"
-        placeholder="Ingrese el código de activación"
-      />
-      <div
-        *ngIf="activarCuentaForm.get('codigo')?.invalid && activarCuentaForm.get('codigo')?.touched"
-        class="text-danger"
-      >
-        Código requerido
+    <div *ngIf="resendInProgress" class="loading-overlay">
+      <div class="spinner-border text-secondary" role="status">
+        <span class="visually-hidden">Reenviando código...</span>
       </div>
     </div>
-
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="activarCuentaForm.invalid"
-    >
-      Activar cuenta
-    </button>
-  </form>
-
-  <hr />
-
-  <p>¿El código ha expirado?</p>
-  <button
-    class="btn btn-secondary"
-    (click)="onResendCode()"
-    [disabled]="resendInProgress"
-  >
-    Reenviar código de activación
-  </button>
+  </div>
 </div>

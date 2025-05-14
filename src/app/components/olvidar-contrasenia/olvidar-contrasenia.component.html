@@ -1,99 +1,121 @@
-<div class="container mt-5">
-  <!-- Encabezado principal accesible pero oculto visualmente -->
-  <h1 class="visually-hidden">Restablecer Contraseña</h1>
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="col-12 col-sm-10 col-md-8 col-lg-6 p-5 card-custom shadow-lg">
+    <h1 class="visually-hidden">Restablecer Contraseña</h1>
+    <h2 class="text-center mb-4 text-primary">🔒 Restablecer Contraseña</h2>
 
-  <h2>Restablecer Contraseña</h2> <!-- Este es el encabezado visible para los usuarios -->
+    <form [formGroup]="olvidarContraseniaForm" (ngSubmit)="onResetPassword()">
 
-  <form [formGroup]="olvidarContraseniaForm" (ngSubmit)="onResetPassword()">
-    <!-- Correo Electrónico -->
-    <div class="mb-3">
-      <label for="correoUsuario" class="form-label">Correo electrónico</label>
-      <input
-        type="email"
-        id="correoUsuario"
-        class="form-control"
-        formControlName="correoUsuario"
-        placeholder="Ingrese su correo"
-      />
-      <div
-        *ngIf="olvidarContraseniaForm.get('correoUsuario')?.invalid && olvidarContraseniaForm.get('correoUsuario')?.touched"
-        class="text-danger"
-      >
-        Correo electrónico inválido
+      <div class="mb-4">
+        <label for="correoUsuario" class="form-label fw-semibold">Correo electrónico</label>
+        <input
+          type="email"
+          id="correoUsuario"
+          class="form-control form-control-lg rounded-pill"
+          formControlName="correoUsuario"
+          placeholder="ejemplo@correo.com"
+        />
+        <div
+          class="text-danger small mt-1"
+          *ngIf="olvidarContraseniaForm.get('correoUsuario')?.touched && olvidarContraseniaForm.get('correoUsuario')?.errors"
+        >
+          <span *ngIf="olvidarContraseniaForm.get('correoUsuario')?.errors?.['required']">Correo electrónico es requerido.</span>
+          <span *ngIf="olvidarContraseniaForm.get('correoUsuario')?.errors?.['email']">Formato de email no válido.</span>
+        </div>
       </div>
+
+      <div class="mb-4">
+        <label for="codigoVerificacion" class="form-label fw-semibold">Código de verificación</label>
+        <input
+          type="text"
+          id="codigoVerificacion"
+          class="form-control form-control-lg rounded-pill"
+          formControlName="codigoVerificacion"
+          placeholder="Ingrese el código"
+        />
+        <div
+          class="text-danger small mt-1"
+          *ngIf="olvidarContraseniaForm.get('codigoVerificacion')?.invalid && olvidarContraseniaForm.get('codigoVerificacion')?.touched"
+        >
+          Código requerido
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="contraseniaNueva" class="form-label fw-semibold">Nueva Contraseña</label>
+        <input
+          type="password"
+          id="contraseniaNueva"
+          class="form-control form-control-lg rounded-pill"
+          formControlName="contraseniaNueva"
+          placeholder="Mín. 8 caracteres, empieza con mayúscula y termina con especial"
+        />
+        <div
+          class="text-danger small mt-1"
+          *ngIf="olvidarContraseniaForm.get('contraseniaNueva')?.touched && olvidarContraseniaForm.get('contraseniaNueva')?.errors"
+        >
+          <span *ngIf="olvidarContraseniaForm.get('contraseniaNueva')?.errors?.['required']">La contraseña es requerida.</span>
+          <span *ngIf="olvidarContraseniaForm.get('contraseniaNueva')?.errors?.['minlength']">Debe tener al menos 8 caracteres.</span>
+          <span *ngIf="olvidarContraseniaForm.get('contraseniaNueva')?.errors?.['pattern']">Debe iniciar con mayúscula y terminar con un carácter especial.</span>
+          <span *ngIf="olvidarContraseniaForm.get('contraseniaNueva')?.errors?.['maxlength']">Debe tener como máximo 24 caracteres.</span>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="confirmarContraseniaNueva" class="form-label fw-semibold">Confirmar Contraseña</label>
+        <input
+          type="password"
+          id="confirmarContraseniaNueva"
+          class="form-control form-control-lg rounded-pill"
+          formControlName="confirmarContraseniaNueva"
+          placeholder="Confirma tu contraseña"
+        />
+        <div
+          class="text-danger small mt-1"
+          *ngIf="olvidarContraseniaForm.get('confirmarContraseniaNueva')?.invalid && olvidarContraseniaForm.get('confirmarContraseniaNueva')?.touched"
+        >
+          Confirmación inválida
+        </div>
+      </div>
+
+      <div class="d-grid mb-4">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg rounded-pill shadow-sm"
+          [disabled]="olvidarContraseniaForm.invalid || isResetting"
+        >
+          <i class="fa-solid fa-rotate-left me-2" *ngIf="!isResetting"></i>
+          <i class="fa fa-spinner fa-spin me-2" *ngIf="isResetting"></i>
+          <span *ngIf="isResetting">Restableciendo...</span>
+          <span *ngIf="!isResetting">Restablecer Contraseña</span>
+        </button>
+      </div>
+    </form>
+
+    <hr class="my-4" />
+
+    <div class="text-center">
+      <p class="mb-3">¿No recibiste el código o expiró?</p>
+      <button
+        class="btn btn-outline-secondary btn-lg w-100 rounded-pill"
+        (click)="onResendCode()"
+        [disabled]="resendInProgress"
+      >
+        <i class="fa-solid fa-envelope-open-text me-2" *ngIf="!resendInProgress"></i>
+        <i class="fa fa-spinner fa-spin me-2" *ngIf="resendInProgress"></i>
+        <span *ngIf="resendInProgress">Reenviando...</span>
+        <span *ngIf="!resendInProgress">Reenviar código</span>
+      </button>
     </div>
 
-    <!-- Código de verificación -->
-    <div class="mb-3">
-      <label for="codigoVerificacion" class="form-label">Código de verificación</label>
-      <input
-        type="text"
-        id="codigoVerificacion"
-        class="form-control"
-        formControlName="codigoVerificacion"
-        placeholder="Ingrese el código de verificación"
-      />
-      <div
-        *ngIf="olvidarContraseniaForm.get('codigoVerificacion')?.invalid && olvidarContraseniaForm.get('codigoVerificacion')?.touched"
-        class="text-danger"
-      >
-        Código requerido
+    <div *ngIf="isResetting" class="loading-overlay">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
       </div>
     </div>
-
-    <!-- Nueva Contraseña -->
-    <div class="mb-3">
-      <label for="contraseniaNueva" class="form-label">Nueva Contraseña</label>
-      <input
-        type="password"
-        id="contraseniaNueva"
-        class="form-control"
-        formControlName="contraseniaNueva"
-        placeholder="Ingrese su nueva contraseña"
-      />
-      <div
-        *ngIf="olvidarContraseniaForm.get('contraseniaNueva')?.invalid && olvidarContraseniaForm.get('contraseniaNueva')?.touched"
-        class="text-danger"
-      >
-        Contraseña inválida (mínimo 8 caracteres, máximo 24, debe iniciar con letra mayúscula y terminar con un carácter especial)
+    <div *ngIf="resendInProgress" class="loading-overlay">
+      <div class="spinner-border text-secondary" role="status">
+        <span class="visually-hidden">Cargando...</span>
       </div>
     </div>
-
-    <!-- Confirmar Nueva Contraseña -->
-    <div class="mb-3">
-      <label for="confirmarContraseniaNueva" class="form-label">Confirmar Nueva Contraseña</label>
-      <input
-        type="password"
-        id="confirmarContraseniaNueva"
-        class="form-control"
-        formControlName="confirmarContraseniaNueva"
-        placeholder="Confirme su nueva contraseña"
-      />
-      <div
-        *ngIf="olvidarContraseniaForm.get('confirmarContraseniaNueva')?.invalid && olvidarContraseniaForm.get('confirmarContraseniaNueva')?.touched"
-        class="text-danger"
-      >
-        Confirmación de contraseña inválida
-      </div>
-    </div>
-
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="olvidarContraseniaForm.invalid"
-    >
-      Restablecer Contraseña
-    </button>
-  </form>
-
-  <hr />
-
-  <p>¿El código ha expirado?</p>
-  <button
-    class="btn btn-secondary"
-    (click)="onResendCode()"
-    [disabled]="resendInProgress"
-  >
-    Reenviar código de verificación
-  </button>
+  </div>
 </div>

@@ -21,6 +21,8 @@ export class ActivarCuentaComponent implements OnInit {
   activarCuentaForm!: FormGroup;
   // Bandera para controlar el estado del proceso de reenvío
   resendInProgress = false;
+  // Bandera para controlar el estado del proceso de activación
+  isActivating = false;
 
   /**
    * Constructor del componente
@@ -50,11 +52,14 @@ export class ActivarCuentaComponent implements OnInit {
    * Se ejecuta cuando el usuario envía el formulario con su código
    */
   onActivateAccount(): void {
+    // Verifica si el formulario es válido
     if (this.activarCuentaForm.valid) {
+      this.isActivating = true; // Activa el indicador de activación en curso
       console.log(this.activarCuentaForm.value);
       // Llama al servicio que comunica con el backend para activar la cuenta
       this.publicoService.activarCuenta(this.activarCuentaForm.value).subscribe({
         next: (response) => {
+          this.isActivating = false; // Desactiva el indicador de activación
           // Muestra mensaje de éxito al usuario
           Swal.fire({
             title: 'Cuenta Activada',
@@ -66,6 +71,7 @@ export class ActivarCuentaComponent implements OnInit {
           this.router.navigate(['/login']);
         },
         error: (error) => {
+          this.isActivating = false; // Desactiva el indicador de activación en caso de error
           // Manejo de errores con mensaje al usuario
           Swal.fire({
             title: 'Error',
@@ -87,7 +93,7 @@ export class ActivarCuentaComponent implements OnInit {
     // Verifica que el email existe y es válido
     if (email && this.activarCuentaForm.get('email')?.valid) {
       this.resendInProgress = true; // Activa indicador de proceso en curso
-      
+
       // Llama al servicio para solicitar un nuevo código de activación
       this.publicoService.enviarCodigoActivacion(email).subscribe({
         next: (response) => {

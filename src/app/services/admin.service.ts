@@ -10,6 +10,7 @@ import { EditarUsuarioDTO } from '../dto/cuenta/editar-usuario-dto';
 import { CrearCuponDTO } from '../dto/cupon/crear-cupon-dto';
 import { EditarCuponDTO } from '../dto/cupon/editar-cupon-dto';
 import { CuponDTO } from '../dto/cupon/cupon-dto';
+import { CambiarContraseniaDTO } from '../dto/cuenta/cambiar-contrasenia-dto';
 
 /**
  * Servicio para operaciones administrativas
@@ -139,6 +140,9 @@ export class AdminService {
 
   editarUsuarioAdmin(editarUsuarioDTO: EditarUsuarioDTO): Observable<MensajeDTO<string>> {
     return this.http.put<MensajeDTO<string>>(`${this.authURL}/editar-perfil`, editarUsuarioDTO);
+  }
+  cambiarContraseniaAdmin(cambiarContraseniaDTO: CambiarContraseniaDTO): Observable<MensajeDTO<string>> {
+    return this.http.put<MensajeDTO<string>>(`${this.authURL}/cambiar-contrasenia`, cambiarContraseniaDTO);
   }
 
     /**

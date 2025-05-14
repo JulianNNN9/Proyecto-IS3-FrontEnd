@@ -3,16 +3,13 @@
     <div class="col-md-8 col-lg-6">
       <div class="card shadow-lg p-4">
 
-        <!-- Título principal -->
         <h1 class="main-heading text-center mb-4">💬 Formulario de Sugerencias</h1>
 
-        <!-- Descripción opcional -->
         <p class="text-muted text-center mb-4">
           Tu opinión nos ayuda a mejorar. ¡Gracias por tomarte el tiempo de compartirla!
         </p>
 
         <form [formGroup]="sugerenciasForm" (ngSubmit)="onSubmit()">
-          <!-- Motivo -->
           <div class="mb-3">
             <label for="motivo" class="form-label">Motivo</label>
             <input
@@ -25,7 +22,6 @@
             />
           </div>
 
-          <!-- Sugerencia -->
           <div class="mb-3">
             <label for="mensaje" class="form-label">Tu Sugerencia</label>
             <textarea
@@ -38,16 +34,24 @@
             ></textarea>
           </div>
 
-          <!-- Botón de envío -->
           <button
             type="submit"
             class="btn btn-success w-100 fw-bold"
-            [disabled]="sugerenciasForm.invalid"
+            [disabled]="sugerenciasForm.invalid || isLoading"
           >
-            ✉️ Enviar Sugerencia
+            <i class="fa-solid fa-paper-plane" *ngIf="!isLoading"></i>
+            <i class="fa fa-spinner fa-spin me-2" *ngIf="isLoading"></i>
+            <span *ngIf="isLoading">Enviando...</span>
+            <span *ngIf="!isLoading"> ✉️ Enviar Sugerencia</span>
           </button>
         </form>
       </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Enviando sugerencia...</span>
     </div>
   </div>
 </div>
