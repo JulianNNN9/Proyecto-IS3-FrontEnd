@@ -211,6 +211,6 @@ export class PerfilComponent {
     return this.isLogged() && this.tokenService.getRol() === 'CLIENTE';
   }
   isAdmin() {
-    return this.isLogged() && this.tokenService.getRol() === 'ADMINISTRADOR';
+    return this.isLogged() && this.tokenService.getRol() === 'ADMIN';
   }
 }

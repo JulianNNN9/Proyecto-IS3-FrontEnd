@@ -140,6 +140,6 @@ export class CambiarContraseniaComponent {
 
   // Método para verificar si el usuario tiene el rol de ADMINISTRADOR
   isAdmin(){
-    return this.isLogged() && this.tokenService.getRol() === 'ADMINISTRADOR';
+    return this.isLogged() && this.tokenService.getRol() === 'ADMIN';
   }
 }
