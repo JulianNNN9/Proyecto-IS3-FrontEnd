@@ -47,7 +47,7 @@ export class LoginComponent {
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],    // Campo para email con validaciones
-      password: ['', Validators.required],                      // Campo para contraseña (¡CAMBIADO!)
+      contrasenia: ['', Validators.required],                  // Campo para contraseña
     });
   }
 

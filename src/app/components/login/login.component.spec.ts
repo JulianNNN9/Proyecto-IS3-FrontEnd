@@ -60,13 +60,13 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize the loginForm with email and password controls', () => {
+  it('should initialize the loginForm with email and contrasenia controls', () => {
     expect(component.loginForm.contains('email')).toBeTrue();
-    expect(component.loginForm.contains('password')).toBeTrue();
+    expect(component.loginForm.contains('contrasenia')).toBeTrue();
     expect(component.loginForm.get('email')?.value).toBe('');
-    expect(component.loginForm.get('password')?.value).toBe('');
+    expect(component.loginForm.get('contrasenia')?.value).toBe('');
     expect(component.loginForm.get('email')?.validator).toBeTruthy();
-    expect(component.loginForm.get('password')?.validator).toBeTruthy();
+    expect(component.loginForm.get('contrasenia')?.validator).toBeTruthy();
   });
 
   it('should toggle showPassword when togglePassword is called', () => {
@@ -82,7 +82,7 @@ describe('LoginComponent', () => {
   describe('onLogin with valid form', () => {
     beforeEach(() => {
       component.loginForm.controls['email'].setValue('test@example.com');
-      component.loginForm.controls['password'].setValue('testpassword');
+      component.loginForm.controls['contrasenia'].setValue('testpassword');
     });
 
     it('should call publicoService.iniciarSesion with form value', () => {
@@ -90,7 +90,7 @@ describe('LoginComponent', () => {
       component.onLogin();
       expect(mockPublicoService.iniciarSesion).toHaveBeenCalledWith({
         email: 'test@example.com',
-        password: 'testpassword',
+        contrasenia: 'testpassword',
       });
     });
 
@@ -127,8 +127,8 @@ describe('LoginComponent', () => {
       expect(mockTokenService.login).not.toHaveBeenCalled();
       expect(mockRouter.navigate).not.toHaveBeenCalled();
     }));
-/*
- 
+
+    /*
     it('should navigate to /activar-cuenta if login fails with "Esta cuenta aún no ha sido activada"', fakeAsync(() => {
       const errorResponse: MensajeDTO<any> = { error: true, respuesta: 'Esta cuenta aún no ha sido activada' };
       mockPublicoService.iniciarSesion.and.returnValue(throwError(() => ({ error: errorResponse }))); // ¡CORRECCIÓN AQUÍ!

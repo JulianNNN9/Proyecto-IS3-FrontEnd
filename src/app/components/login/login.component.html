@@ -46,18 +46,18 @@
         </div>
 
         <div class="mb-3">
-          <label for="password" class="form-label">Contraseña</label>
+          <label for="contrasenia" class="form-label">Contraseña</label>
           <div class="input-group">
             <input
               [type]="showPassword ? 'text' : 'password'"
-              id="password"
-              formControlName="password"
+              id="contrasenia"
+              formControlName="contrasenia"
               class="form-control form-control-lg"
               placeholder="Ingrese su contraseña"
               [ngClass]="{
                 'is-invalid':
-                  loginForm.get('password')?.invalid &&
-                  loginForm.get('password')?.touched
+                  loginForm.get('contrasenia')?.invalid &&
+                  loginForm.get('contrasenia')?.touched
               }"
             />
             <button
@@ -73,12 +73,12 @@
             </button>
             <div
               *ngIf="
-                loginForm.get('password')?.invalid &&
-                loginForm.get('password')?.touched
+                loginForm.get('contrasenia')?.invalid &&
+                loginForm.get('contrasenia')?.touched
               "
               class="invalid-feedback"
             >
-              <span *ngIf="loginForm.get('password')?.errors?.['required']">
+              <span *ngIf="loginForm.get('contrasenia')?.errors?.['required']">
                 Contraseña es requerida.
               </span>
             </div>
