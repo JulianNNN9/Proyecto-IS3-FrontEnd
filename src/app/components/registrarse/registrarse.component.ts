@@ -89,7 +89,7 @@ export class RegistrarseComponent {
     } else {
       this.isLoading = true; // Establecer isLoading a true al iniciar la petición
       // Si el formulario es válido, envía la solicitud de registro
-      this.publicoService.crearUsuario(this.cliente).subscribe({
+      this.publicoService.crearUsuario(clienteForm.value).subscribe({
         next: (data) => {
           this.isLoading = false; // Establecer isLoading a false al recibir la respuesta
           // Muestra mensaje de éxito si el registro es exitoso
