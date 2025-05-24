@@ -1,31 +1,45 @@
 <div class="container mt-4">
   <h2 class="text-center mb-4">Agendar Cita</h2>
 
-  <!-- Selección de estilista -->
-  <div class="mb-3">
-    <label for="estilista" class="form-label">Selecciona un estilista</label>
-    <select id="estilista" class="form-select" [(ngModel)]="cita.estilistaId" name="estilistaId" required>
-      <option *ngFor="let estilista of estilistas" [value]="estilista.id">{{ estilista.nombre }}</option>
-    </select>
-  </div>
-
-  <!-- Selección de servicio -->
-  <div class="mb-3">
-    <label for="servicio" class="form-label">Selecciona un servicio</label>
-    <select id="servicio" class="form-select" [(ngModel)]="cita.servicioId" name="servicioId" required>
-      <option *ngFor="let servicio of servicios" [value]="servicio.id">{{ servicio.nombre }}</option>
-    </select>
-  </div>
-
-  <!-- Calendario -->
+  <ng-container *ngIf="isPlatformBrowser(platformId)">
+    <!-- Selección de estilista -->
     <div class="mb-3">
-    <full-calendar [options]="calendarOptions"></full-calendar>
-  </div>
+      <label for="estilista" class="form-label">Selecciona un estilista</label>
+      <select id="estilista" class="form-select" [(ngModel)]="cita.estilistaId" name="estilistaId" required>
+        <option value="">Seleccione un estilista</option>
+        <option *ngFor="let estilista of estilistas" [value]="estilista.id">{{ estilista.nombre }}</option>
+      </select>
+    </div>
 
-  <!-- Botón para agendar -->
-  <div class="text-center p-3">
-    <button type="button" class="btn btn-primary" (click)="agendarCita()" [disabled]="!cita.fechaHora || !cita.servicioId || !cita.estilistaId">
-      Agendar Cita
-    </button>
-  </div>
+    <!-- Selección de servicio -->
+    <div class="mb-3">
+      <label for="servicio" class="form-label">Selecciona un servicio</label>
+      <select id="servicio" class="form-select" [(ngModel)]="cita.servicioId" name="servicioId" required>
+        <option value="">Seleccione un servicio</option>
+        <option *ngFor="let servicio of servicios" [value]="servicio.id">{{ servicio.nombre }}</option>
+      </select>
+    </div>
+
+    <!-- Calendario -->
+    <div class="mb-3">
+      <full-calendar *ngIf="calendarOptions?.plugins" [options]="calendarOptions"></full-calendar>
+    </div>
+
+    <!-- Botón para agendar -->
+    <div class="text-center p-3">
+      <button type="button" 
+              class="btn btn-primary" 
+              (click)="agendarCita()" 
+              [disabled]="!cita.fechaHora || !cita.servicioId || !cita.estilistaId">
+        Agendar Cita
+      </button>
+    </div>
+  </ng-container>
+
+  <!-- Mensaje para cuando no está en el navegador -->
+  <ng-container *ngIf="!isPlatformBrowser(platformId)">
+    <div class="alert alert-info text-center">
+      Cargando calendario...
+    </div>
+  </ng-container>
 </div>

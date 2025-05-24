@@ -52,9 +52,30 @@ export const routes: Routes = [
     { path: 'servicios', component: ServiciosComponent},
     { path: 'faq', component: FaqComponent, canActivate: [AuthClienteGuard]},
     { path: 'citas', component: CitasComponent},
-    { path: 'mis-citas', component: MisCitasComponent},
-    { path: 'agendar-cita', component: AgendarCitaComponent},
-    { path: 'historial-citas', component: HistorialCitasComponent}, // Redirige a la misma página de citas
+    { 
+    path: 'mis-citas', 
+    component: MisCitasComponent,
+    canActivate: [AuthClienteGuard],
+    data: { ssr: false }
+    },
+    {
+    path: 'agendar-cita',
+    component: AgendarCitaComponent,
+    canActivate: [AuthClienteGuard],
+    data: { 
+        ssr: false,
+        preload: false 
+    }
+    },
+    {
+    path: 'historial-citas',
+    component: HistorialCitasComponent,
+    canActivate: [AuthClienteGuard],
+    data: { 
+        ssr: false,
+        preload: false 
+    }
+    },
     
     // Rutas para el sistema de quejas y sugerencias (PQRS)
     { path: 'nueva-queja', component: NuevaQuejaComponent, canActivate: [AuthClienteGuard]},

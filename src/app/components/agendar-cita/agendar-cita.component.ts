@@ -10,6 +10,10 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarioCitasDTO } from '../../dto/cita/calendario-citas-dto';
 import { HttpHeaders } from '@angular/common/http';
+import {PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Calendar } from '@fullcalendar/core';
+
 
 @Component({
   selector: 'app-agendar-cita',
@@ -26,17 +30,37 @@ export class AgendarCitaComponent implements OnInit {
     servicioId: '',
     fechaHora: ''
   };
-  calendarOptions: any; // Opciones para FullCalendar
+  calendarOptions: any = {}; // Initialize as empty object
+  private calendar: Calendar | null = null;
   horariosOcupados: any[] = []; // Lista de horarios ocupados
 
   constructor(
     private clienteService: ClienteService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    @Inject(PLATFORM_ID) public platformId: Object
   ) {}
 
-    ngOnInit(): void {
-    this.cargarEstilistas();
-    this.cargarServicios();
+  isPlatformBrowser(platformId: Object): boolean {
+    return isPlatformBrowser(platformId);
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.cargarEstilistas();
+      this.cargarServicios();
+      this.cargarHorariosOcupados();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        this.initializeCalendar();
+      });
+    }
+  }
+
+  private initializeCalendar(): void {
     this.calendarOptions = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       initialView: 'timeGridWeek',
@@ -44,10 +68,10 @@ export class AgendarCitaComponent implements OnInit {
       slotMinTime: '08:00:00',
       slotMaxTime: '19:00:00',
       slotDuration: '01:00:00',
-      // Agregar validación de fechas
-      validRange: function(nowDate: Date) {
+      validRange: (nowDate: Date) => {
         return {
-          start: nowDate // Usar nowDate en lugar de new Date()
+          start: nowDate,
+          end: new Date(nowDate.getTime() + 30 * 24 * 60 * 60 * 1000) // 30 days ahead
         };
       },
       headerToolbar: {
@@ -64,7 +88,6 @@ export class AgendarCitaComponent implements OnInit {
         endTime: '19:00',
       }
     };
-    this.cargarHorariosOcupados();
   }
 
   cargarEstilistas(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, PLATFORM_ID, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClienteService } from '../../services/cliente.service';
 import { InformacionCitaDTO } from '../../dto/mis-citas/informacion-cita-dto';
@@ -6,6 +6,7 @@ import { ReprogramarCitaDTO } from '../../dto/mis-citas/reprogramar-cita-dto';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../services/token.service';	
 import { RouterModule } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 declare var bootstrap: any; // Para manejar el modal de Bootstrap
 
@@ -22,10 +23,12 @@ export class MisCitasComponent implements OnInit {
   citaSeleccionada: string = ''; // ID de la cita seleccionada
   nuevaFechaHora: string = ''; // Nueva fecha y hora para la reprogramación
 
-  constructor(private clienteService: ClienteService, private tokenService: TokenService) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private clienteService: ClienteService, private tokenService: TokenService) {}
 
   ngOnInit(): void {
-    this.cargarCitas();
+    if (isPlatformBrowser(this.platformId)) {
+      this.cargarCitas();
+    }
   }
 
   cargarCitas(): void {
