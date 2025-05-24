@@ -15,6 +15,8 @@ import { AuthAdminGuard } from './guardians/auth-admin.guard';
 import { AuthClienteGuard } from './guardians/auth-cliente.guard';
 import { LoginGuard } from './guardians/login.guard';
 import { AlertMessagesService } from 'jjwins-angular-alert-messages';
+import { provideClientHydration } from '@angular/platform-browser';
+import { withViewTransitions } from '@angular/router';
 
 /**
  * Configuración principal de la aplicación
@@ -22,18 +24,20 @@ import { AlertMessagesService } from 'jjwins-angular-alert-messages';
  */
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),  // Proveedor para el enrutamiento de la aplicación
-    provideHttpClient(      // Configuración del cliente HTTP
-      withFetch(),          // Utiliza la API fetch para las peticiones HTTP
-      withInterceptors([usuarioInterceptor])),  // Agrega interceptor para manejo de autenticación
+    provideRouter(routes, withViewTransitions()),  // Proveedor para el enrutamiento con transiciones
+    provideHttpClient(      
+      withFetch(),         // Utiliza la API fetch para las peticiones HTTP
+      withInterceptors([usuarioInterceptor])  // Agrega interceptor para manejo de autenticación
+    ),
+    provideClientHydration(),  // Soporte para hidratación del cliente
     
     // Registro de los servicios principales de la aplicación
-    AdminService,     // Servicio para operaciones administrativas
-    TokenService,     // Servicio para gestión de tokens de autenticación
-    PublicoService,   // Servicio para operaciones públicas (sin autenticación)
-    EstilistaService,  // Servicio para operaciones de estilistas
-    ClienteService,   // Servicio para operaciones de clientes autenticados
-    AuthService,      // Servicio de autenticación
+    AdminService,     
+    TokenService,     
+    PublicoService,   
+    EstilistaService,  
+    ClienteService,   
+    AuthService,      
     AuthAdminClienteGuard,
     AuthAdminGuard,
     AuthClienteGuard,
